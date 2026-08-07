@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1200px; height: 630px; }
+  body {
+    background: #F2F1ED;
+    color: #15181B;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+    padding: 76px 80px 64px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; overflow: hidden;
+  }
+  .mono { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace; font-variant-numeric: tabular-nums; }
+
+  .eyebrow { font-size: 19px; letter-spacing: 0.18em; color: #6A7075; }
+
+  h1 { font-size: 112px; line-height: 0.94; letter-spacing: -0.045em; font-weight: 680; margin-top: 26px; }
+  .latin { font-size: 30px; letter-spacing: 0.14em; color: #6A7075; font-weight: 500; margin-top: 16px; }
+
+  .thesis { font-size: 38px; font-weight: 640; letter-spacing: -0.025em; margin-top: 34px; }
+
+  .rule { height: 1px; background: #15181B; margin-top: 40px; }
+
+  .facts { display: flex; gap: 52px; margin-top: 26px; }
+  .fact .v { font-size: 25px; font-weight: 640; letter-spacing: -0.015em; }
+  .fact .k { font-size: 16px; color: #6A7075; margin-top: 5px; letter-spacing: 0.04em; }
+
+  .foot { display: flex; align-items: flex-end; justify-content: space-between; }
+  .url { font-size: 22px; color: #15181B; letter-spacing: 0.02em; }
+
+  /* 우측 하단의 전환율 스파크 — 유일한 장식이자 실제 데이터 */
+  .spark { display: flex; align-items: flex-end; gap: 14px; }
+  .spark .cap { font-size: 15px; color: #6A7075; text-align: right; line-height: 1.5; }
+  .spark .cap b { display: block; font-size: 20px; color: #B5711C; font-weight: 680; }
+</style>
+</head>
+<body>
+
+  <div>
+    <div class="eyebrow mono">PRODUCT MANAGER · SEOUL</div>
+    <h1>오현석</h1>
+    <div class="latin mono">OH HYUNSEOK</div>
+    <div class="thesis">데이터로 결정하고, 코드로 검증하는 PM입니다.</div>
+  </div>
+
+  <div>
+    <div class="rule"></div>
+    <div class="facts">
+      <div class="fact"><div class="v">KX엔터테인먼트</div><div class="k">PM 인턴</div></div>
+      <div class="fact"><div class="v">팀 프로젝트 5건</div><div class="k">팀장·PM 4회</div></div>
+      <div class="fact"><div class="v">서비스 1개</div><div class="k">직접 만들어 운영 중</div></div>
+    </div>
+
+    <div class="foot" style="margin-top: 40px">
+      <div class="url mono">reallies.github.io</div>
+      <div class="spark">
+        <svg width="150" height="46" viewBox="0 0 150 46" aria-hidden="true">
+          <polyline points="5,38 75,20 145,7" fill="none" stroke="#B5711C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="145" cy="7" r="5.5" fill="#B5711C"/>
+        </svg>
+        <div class="cap"><b>20.2% → 42.0%</b>CheckMate 진입 전환율</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
