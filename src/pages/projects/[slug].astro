@@ -32,6 +32,20 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <div class="prose">
         <Content />
       </div>
+
+      {(d.links.length > 0 || d.linksNote) && (
+        <div class="links">
+          <h2>링크</h2>
+          {d.links.length > 0 && (
+            <ul>
+              {d.links.map((l) => (
+                <li><a href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗</a></li>
+              ))}
+            </ul>
+          )}
+          {d.linksNote && <p class="note">{d.linksNote}</p>}
+        </div>
+      )}
     </section>
   </div>
 </Base>

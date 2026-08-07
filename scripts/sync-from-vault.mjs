@@ -44,6 +44,43 @@ function list(fm, key) {
   return m[1].split('\n').map((l) => l.replace(/^\s*-\s*/, '').trim()).filter(Boolean);
 }
 
+/**
+ * 공개용 정제 — 내부 거버넌스 장치를 본문에서 걷어낸다.
+ *
+ * 볼트의 T1/T2/T3 출처 등급과 ⚠️ 무결성 메모는 "내가 나에게 사실을 증명하는" 장치다.
+ * 채용담당자는 T1이 뭔지 모르고, 회의록 28건을 열어볼 수도 없다.
+ * 사실의 범위 표시(PM 2인 중 1인 등)는 web_caveat 로 따로 노출하므로 여기서 지워도 안전하다.
+ */
+function publicize(body) {
+  const INTERNAL_HEADING = /^(#{2,})\s*.*(증빙|미확인|무결성|TODO)/;
+
+  // 내부 전용 섹션은 같은 레벨 이상의 다음 제목이 나올 때까지 통째로 버린다.
+  const kept = [];
+  let skipDepth = 0;
+  for (const line of body.split('\n')) {
+    const h = line.match(/^(#{1,6})\s/);
+    if (skipDepth) {
+      if (h && h[1].length <= skipDepth) skipDepth = 0;
+      else continue;
+    }
+    const m = line.match(INTERNAL_HEADING);
+    if (m) { skipDepth = m[1].length; continue; }
+    kept.push(line);
+  }
+
+  return kept.join('\n')
+    // 출처 등급 태그 — [T1], [T2 회의록], [T1 git] …
+    .replace(/\s*[\[(]T[123][^\])]*[\])]/g, '')
+    // 내부 메모 인용블록 — ⚠️ 무결성 / 출처 각주 / 검토 메모
+    .replace(/^>\s*(⚠️|\*?출처|❌|🔍).*$/gm, '')
+    // 내부 검증 표현 — 나에게 사실을 증명하려고 붙인 괄호들
+    .replace(/\s*[(（](검증된 것만|git blame 검증|코드 재검증|본인 확인|추정 금지|정본)[)）]/g, '')
+    // 옵시디언 위키 임베드 (웹에서 깨진다)
+    .replace(/!?\[\[[^\]]*\]\]/g, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
 async function reset(dir) {
   await rm(dir, { recursive: true, force: true });
   await mkdir(dir, { recursive: true });
@@ -74,6 +111,8 @@ async function syncProjects() {
       resultNote: field(parts.fm, 'web_result_note') ?? '',
       caveat: field(parts.fm, 'web_caveat') ?? '',
       name: field(parts.fm, 'web_name') ?? slug,
+      links: JSON.parse(field(parts.fm, 'web_links') ?? '[]'),
+      linksNote: field(parts.fm, 'web_links_note') ?? '',
       tags: list(parts.fm, '유형'),
     };
 
@@ -82,7 +121,7 @@ async function syncProjects() {
       Object.entries(fm)
         .map(([k, v]) => `${k}: ${Array.isArray(v) ? JSON.stringify(v) : typeof v === 'string' ? JSON.stringify(v) : v}`)
         .join('\n') +
-      '\n---\n' + parts.body;
+      '\n---\n' + publicize(parts.body);
 
     await writeFile(path.join(OUT_PROJECTS, `${slug}.md`), out);
     n++;
@@ -113,7 +152,7 @@ async function syncCapabilities() {
       Object.entries(fm)
         .map(([k, v]) => `${k}: ${Array.isArray(v) ? JSON.stringify(v) : typeof v === 'string' ? JSON.stringify(v) : v}`)
         .join('\n') +
-      '\n---\n' + parts.body;
+      '\n---\n' + publicize(parts.body);
 
     await writeFile(path.join(OUT_CAPS, `${fm.order}-${fm.name}.md`), out);
     n++;

@@ -202,6 +202,18 @@
   /* 넓은 표는 표 안에서만 가로 스크롤 */
   .prose table { display: block; width: max-content; max-width: 100%; overflow-x: auto; }
 
+  .links { margin-top: 44px; }
+  .links h2 { font-size: 19px; font-weight: 650; letter-spacing: -0.02em; margin: 0 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--hairline); }
+  .links ul { list-style: none; margin: 0 0 10px; padding: 0; display: flex; gap: 10px; flex-wrap: wrap; }
+  .links li a {
+    display: inline-block; font-size: 14px; font-weight: 600; text-decoration: none;
+    padding: 8px 14px; border: 1px solid var(--hairline); border-radius: 3px; color: var(--ink);
+    transition: border-color .15s, color .15s;
+  }
+  .links li a:hover { border-color: var(--accent); color: var(--accent); }
+  .links li a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .links .note { font-size: 13.5px; color: var(--muted); margin: 0; }
+
   .contact-print { display: none; }
 
   /* ---------- 인쇄 (이력서 PDF는 여기서 뽑는다 · 04 §6) ---------- */

@@ -16,6 +16,8 @@ const projects = defineCollection({
     caveat: z.string().default(''),
     name: z.string(),
     tags: z.array(z.string()).default([]),
+    links: z.array(z.object({ label: z.string(), url: z.string() })).default([]),
+    linksNote: z.string().default(''),
   }),
 });
 
