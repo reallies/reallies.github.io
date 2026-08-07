@@ -39,22 +39,25 @@ care-hub는 현재 `web_slug` 가 없어서 제외 상태다. 임베디드·IoT 
 
 ## 배포
 
-`main` 브랜치 푸시 → GitHub Actions → Pages.
+https://reallies.github.io — `main` 브랜치 푸시 → GitHub Actions → Pages.
 
-**CI에는 볼트가 없다.** 최초 1회 `.gitignore` 에서 아래 3줄을 지우고 동기화 산출물을 커밋해야 한다.
+**CI에는 볼트가 없다.** 그래서 동기화 산출물(`src/content/`, `src/data/profile.json`)을 **커밋해 둔다.**
+볼트를 고쳤으면 반드시 `npm run sync` 를 돌리고 그 결과를 함께 커밋한다.
 
+```bash
+npm run sync && git add -A && git commit -m "내용 갱신" && git push
 ```
-src/content/projects/
-src/content/capabilities/
-src/data/profile.json
-```
-
-`astro.config.mjs` 의 `base`:
-- `reallies.github.io/portfolio` → `base: '/portfolio'` (현재)
-- `reallies.github.io` (사용자 페이지) → `base` 줄 삭제
 
 ## 남은 작업
 
-- [ ] 이력서 PDF — 인쇄 CSS(`@media print`)는 넣었다. 브라우저 인쇄 → PDF 저장 후 `public/오현석_이력서.pdf` 로 둔다
+- [x] 이력서 PDF — `public/오현석_이력서.pdf` (3p). 갱신은 아래 명령으로 다시 뽑는다
+
+  ```bash
+  npm run build && npx astro preview --port 4322 &
+  "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
+    --no-pdf-header-footer --run-all-compositor-stages-before-draw --virtual-time-budget=8000 \
+    --print-to-pdf="public/오현석_이력서.pdf" "http://localhost:4322/"
+  npm run build   # PDF를 dist에 포함시키려면 한 번 더
+  ```
 - [ ] `og:image` 이미지
 - [ ] 커스텀 도메인 (선택)

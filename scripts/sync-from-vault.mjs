@@ -73,8 +73,7 @@ async function syncProjects() {
       result: field(parts.fm, 'web_result') ?? '',
       resultNote: field(parts.fm, 'web_result_note') ?? '',
       caveat: field(parts.fm, 'web_caveat') ?? '',
-      title: (parts.body.match(/^#\s+(.*)$/m)?.[1] ?? slug)
-        .replace(/^[\p{Emoji_Presentation}\p{Extended_Pictographic}\s]+/u, '').trim(),
+      name: field(parts.fm, 'web_name') ?? slug,
       tags: list(parts.fm, '유형'),
     };
 

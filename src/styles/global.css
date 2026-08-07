@@ -202,6 +202,8 @@
   /* 넓은 표는 표 안에서만 가로 스크롤 */
   .prose table { display: block; width: max-content; max-width: 100%; overflow-x: auto; }
 
+  .contact-print { display: none; }
+
   /* ---------- 인쇄 (이력서 PDF는 여기서 뽑는다 · 04 §6) ---------- */
   @media print {
     :root {
@@ -209,16 +211,34 @@
       --muted: #555; --hairline: #bbb; --accent: #000; --signal: #000;
     }
     .topbar, .back, .skip { display: none !important; }
-    body { font-size: 10.5pt; line-height: 1.5; }
+    body { font-size: 9.5pt; line-height: 1.42; }
     .wrap { max-width: none; padding: 0; }
     header.hero { padding-top: 0; }
-    h1 { font-size: 26pt; }
+    .contact-print {
+      display: flex; gap: 8px; margin: 8px 0 0;
+      font-size: 9.5pt; color: #333;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    h1 { font-size: 22pt; }
     h1 .latin { font-size: 11pt; margin-top: 6px; }
     .thesis { font-size: 12pt; margin-top: 12px; }
-    section { padding-top: 22px; break-inside: avoid; }
+    section { padding-top: 15px; }
+    .shead { margin-bottom: 10px; }
+    .shead h2 { font-size: 13pt; }
+    .hrow { padding: 5px 0; grid-template-columns: 118px 1fr 130px; gap: 14px; }
+    .caps, .creds { grid-template-columns: 1fr 1fr; gap: 0 28px; }
+    .prow { padding: 9px 0; gap: 16px; grid-template-columns: 150px 1fr; }
+    .pdesc { font-size: 9pt; }
+    .presult { margin-top: 5px; font-size: 9pt; }
+    .cap { padding: 8px 0; }
+    .cap p, .cap .src { font-size: 8.5pt; }
+    .cgroup li { padding: 4px 0; }
+    .facts { margin-top: 16px; padding-top: 12px; }
+    .facts li { font-size: 9.5pt; }
+    footer { margin-top: 22px; padding: 12px 0 0; }
     .prow, .hrow, .cap, .cgroup li { break-inside: avoid; }
     .presult { color: #000; font-weight: 700; }
     .live { border-color: #000; color: #000; }
     a { color: inherit; text-decoration: none; }
-    @page { margin: 14mm 12mm; }
+    @page { margin: 11mm 11mm; }
   }

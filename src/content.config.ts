@@ -14,7 +14,7 @@ const projects = defineCollection({
     result: z.string(),
     resultNote: z.string().default(''),
     caveat: z.string().default(''),
-    title: z.string(),
+    name: z.string(),
     tags: z.array(z.string()).default([]),
   }),
 });

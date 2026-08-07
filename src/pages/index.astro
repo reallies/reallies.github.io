@@ -15,6 +15,13 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <h1>{profile.name}<span class="latin mono">{profile.name_latin}</span></h1>
       <p class="thesis">{profile.thesis}</p>
 
+      {/* 화면에서는 상단바가 연락처를 담당하고, 인쇄본에서만 노출된다 */}
+      <p class="contact-print">
+        <a href="#" data-mail data-mail-text></a>
+        <span>·</span>
+        <span>{profile.github.replace('https://', '')}</span>
+      </p>
+
       <ul class="facts">
         {profile.facts.map((f) => (
           <li><span class="k mono">{f.k}</span><span>{f.v}</span></li>
@@ -41,7 +48,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         {projects.map((p) => (
           <a class="prow" href={`${base}/projects/${p.data.slug}`}>
             <div>
-              <div class="pname">{p.data.title.split('—')[0].trim()}
+              <div class="pname">{p.data.name}
                 {p.data.live && <span class="live mono">운영 중</span>}
               </div>
               <div class="pmeta mono">{p.data.meta}</div>

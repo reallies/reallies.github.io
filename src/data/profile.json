@@ -1,0 +1,100 @@
+{
+  "web_profile": true,
+  "name": "오현석",
+  "name_latin": "OH HYUNSEOK",
+  "eyebrow": "PRODUCT MANAGER · SEOUL",
+  "thesis": "데이터로 결정하고, 코드로 검증하는 PM입니다.",
+  "email": "0323eric@naver.com",
+  "github": "https://github.com/reallies",
+  "facts": [
+    {
+      "k": "경력",
+      "v": "KX엔터테인먼트 PM 인턴 (2026.06–07)"
+    },
+    {
+      "k": "교육",
+      "v": "멋쟁이사자처럼 PM 실무 부트캠프 수료"
+    },
+    {
+      "k": "프로젝트",
+      "v": "팀 프로젝트 5건 · 팀장·PM 4회"
+    },
+    {
+      "k": "운영",
+      "v": "직접 만든 서비스 1개 운영 중"
+    }
+  ],
+  "history": [
+    {
+      "when": "2026.06–07",
+      "what": "KX엔터테인먼트",
+      "role": "PM 인턴 · 6인"
+    },
+    {
+      "when": "2026.04–",
+      "what": "CheckMate",
+      "role": "팀장 · 7인",
+      "live": true
+    },
+    {
+      "when": "2025.12–2026.06",
+      "what": "멋쟁이사자처럼 PM 실무 부트캠프",
+      "role": "수료 · 2기"
+    },
+    {
+      "when": 2026.03,
+      "what": "댕냥여지도",
+      "role": "데이터·프론트 · 7~8인"
+    },
+    {
+      "when": "2025.02–06",
+      "what": "SLAY",
+      "role": "팀장 · 캡스톤 4인"
+    },
+    {
+      "when": "2024.09–12",
+      "what": "SW20",
+      "role": "팀장 · 기업연계 5인"
+    }
+  ],
+  "certs": [
+    {
+      "name": "정보처리기사",
+      "sub": "국가기술자격",
+      "date": 2026.06
+    },
+    {
+      "name": "SQLD",
+      "sub": "SQL 개발자",
+      "date": 2025.04
+    },
+    {
+      "name": "ADsP",
+      "sub": "데이터분석 준전문가",
+      "date": 2025.03
+    },
+    {
+      "name": "TOEIC 905",
+      "sub": "LC 485 / RC 420",
+      "date": 2025.11
+    },
+    {
+      "name": "OPIc IM1",
+      "sub": "Intermediate Mid",
+      "date": 2025.12
+    }
+  ],
+  "education": [
+    {
+      "name": "멋쟁이사자처럼 PM 실무 부트캠프",
+      "sub": "2기 수료",
+      "date": "2025.12–2026.06"
+    },
+    {
+      "name": "한성대학교 컴퓨터공학부",
+      "sub": "빅데이터 + 모바일SW 복수트랙",
+      "date": "2020.03–2026.02"
+    }
+  ],
+  "footnote": "수치는 실측과 목표·설계값을 구분해 표기하고, 성과는 본인 기여와 팀 산출물을 구분합니다."
+}
