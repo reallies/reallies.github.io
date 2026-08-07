@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+# 볼트에서 동기화되는 산출물 — 직접 편집하지 않는다
+src/content/projects/
+src/content/capabilities/
+src/data/profile.json

@@ -1,0 +1,106 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import profile from '../data/profile.json';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const caps = (await getCollection('capabilities')).sort((a, b) => a.data.order - b.data.order);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base>
+  <div class="wrap">
+
+    <header class="hero">
+      <p class="eyebrow mono">{profile.eyebrow}</p>
+      <h1>{profile.name}<span class="latin mono">{profile.name_latin}</span></h1>
+      <p class="thesis">{profile.thesis}</p>
+
+      <ul class="facts">
+        {profile.facts.map((f) => (
+          <li><span class="k mono">{f.k}</span><span>{f.v}</span></li>
+        ))}
+      </ul>
+    </header>
+
+    <section>
+      <div class="shead"><h2>이력</h2></div>
+      <div class="hist">
+        {profile.history.map((h) => (
+          <div class="hrow">
+            <div class="when mono">{h.when}</div>
+            <div class="what">{h.what}{h.live && <span class="live mono">운영 중</span>}</div>
+            <div class="role">{h.role}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="shead"><h2>프로젝트</h2></div>
+      <div class="proj">
+        {projects.map((p) => (
+          <a class="prow" href={`${base}/projects/${p.data.slug}`}>
+            <div>
+              <div class="pname">{p.data.title.split('—')[0].trim()}
+                {p.data.live && <span class="live mono">운영 중</span>}
+              </div>
+              <div class="pmeta mono">{p.data.meta}</div>
+            </div>
+            <div>
+              <div class="pkind">{p.data.kind}</div>
+              <div class="pdesc">{p.data.summary}</div>
+              <div class="presult">
+                <span class="arrow">결과</span>
+                <span class="mono">{p.data.result}</span>
+                {p.data.spark && (
+                  <svg width="80" height="22" viewBox="0 0 80 22" aria-hidden="true">
+                    <polyline points="4,17 40,9 76,4" fill="none" stroke="var(--signal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                    <circle cx="76" cy="4" r="2.8" fill="var(--signal)" />
+                  </svg>
+                )}
+                {p.data.resultNote && <span class="arrow">{p.data.resultNote}</span>}
+              </div>
+              {p.data.caveat && <div class="pcaveat">{p.data.caveat}</div>}
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <div class="shead"><h2>역량</h2></div>
+      <div class="caps">
+        {caps.map((c) => (
+          <div class="cap">
+            <h3>{c.data.name}</h3>
+            <p>{c.data.tags.join(' · ')}</p>
+            {c.data.source && <div class="src mono"><b>근거</b> {c.data.source}</div>}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section>
+      <div class="shead"><h2>자격 · 학력</h2></div>
+      <div class="creds">
+        <div class="cgroup">
+          <h3 class="mono">자격 · 어학</h3>
+          <ul>
+            {profile.certs.map((c) => (
+              <li><div><b>{c.name}</b><span class="sub">{c.sub}</span></div><span class="date mono">{c.date}</span></li>
+            ))}
+          </ul>
+        </div>
+        <div class="cgroup">
+          <h3 class="mono">학력 · 교육</h3>
+          <ul>
+            {profile.education.map((e) => (
+              <li><div><b>{e.name}</b><span class="sub">{e.sub}</span></div><span class="date mono">{e.date}</span></li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</Base>

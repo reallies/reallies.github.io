@@ -1,0 +1,62 @@
+---
+import '../styles/global.css';
+import profile from '../data/profile.json';
+
+interface Props { title?: string; description?: string }
+const { title, description } = Astro.props;
+
+const pageTitle = title ? `${title} — ${profile.name}` : `${profile.name} — ${profile.thesis}`;
+const desc = description ?? profile.thesis;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="ko_KR" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>📊</text></svg>" />
+  </head>
+  <body>
+    <a class="skip" href="#main">본문으로 건너뛰기</a>
+
+    <div class="topbar">
+      <div class="wrap">
+        <a class="who mono" href={`${base}/`} style="text-decoration:none">{profile.name_latin}</a>
+        <nav class="cta">
+          <a class="btn" href={`${base}/#projects`}>프로젝트</a>
+          <a class="btn" href={`${base}/오현석_이력서.pdf`}>이력서 PDF</a>
+          <a class="btn primary" href="#" data-mail>이메일</a>
+        </nav>
+      </div>
+    </div>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer>
+      <div class="wrap">
+        <p class="fnote">{profile.footnote}</p>
+      </div>
+    </footer>
+
+    {/* 이메일 난독화 — 평문 mailto를 소스에 남기지 않는다 (04 §7) */}
+    <script type="module" define:vars={{ user: profile.email.split('@')[0], host: profile.email.split('@')[1] }}>
+      const addr = `${user}@${host}`;
+      for (const el of document.querySelectorAll('[data-mail]')) {
+        el.setAttribute('href', `mailto:${addr}`);
+        if (el.dataset.mailText !== undefined) el.textContent = addr;
+      }
+    </script>
+  </body>
+</html>
