@@ -2,14 +2,51 @@
 import '../styles/global.css';
 import profile from '../data/profile.json';
 
-interface Props { title?: string; description?: string }
-const { title, description } = Astro.props;
+interface Props { title?: string; description?: string; jsonld?: unknown[] }
+const { title, description, jsonld = [] } = Astro.props;
 
 const pageTitle = title ? `${title} — ${profile.name}` : `${profile.name} — ${profile.thesis}`;
 const desc = description ?? profile.thesis;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(`${base}/og.png`, Astro.site).href;
+const siteUrl = new URL(`${base}/`, Astro.site).href;
+
+// 구조화 데이터 — 검색엔진 색인과 AI 검색(GEO) 인용에 쓰인다.
+// 이메일·전화번호는 넣지 않는다. 소스에 평문으로 남으면 난독화가 무의미해진다 (04 §7).
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': `${siteUrl}#person`,
+  name: profile.name,
+  alternateName: profile.name_latin,
+  jobTitle: '프로덕트 매니저',
+  description: profile.thesis,
+  url: siteUrl,
+  sameAs: [profile.github],
+  alumniOf: profile.education.map((e) => ({ '@type': 'Organization', name: e.name })),
+  hasCredential: profile.certs.map((c) => ({
+    '@type': 'EducationalOccupationalCredential',
+    name: c.name,
+    description: c.sub,
+  })),
+  knowsAbout: [
+    '제품 기획', '데이터 기반 의사결정', '퍼널 분석', '그로스', '지표 설계',
+    'PRD 작성', '프로젝트 운영', '생성형 AI 활용', 'SQL', 'NestJS', 'React',
+  ],
+};
+
+const siteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${siteUrl}#website`,
+  url: siteUrl,
+  name: `${profile.name} 포트폴리오`,
+  inLanguage: 'ko-KR',
+  author: { '@id': `${siteUrl}#person` },
+};
+
+const schemas = [personSchema, siteSchema, ...jsonld];
 ---
 <!doctype html>
 <html lang="ko">
@@ -32,6 +69,9 @@ const ogImage = new URL(`${base}/og.png`, Astro.site).href;
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>📊</text></svg>" />
+    {schemas.map((s) => (
+      <script type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
   </head>
   <body>
     <a class="skip" href="#main">본문으로 건너뛰기</a>

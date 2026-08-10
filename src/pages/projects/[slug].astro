@@ -11,8 +11,23 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const siteUrl = new URL(`${base}/`, Astro.site).href;
+
+// 케이스별 구조화 데이터 — AI 검색이 "이 사람이 무엇을 만들었나"를 인용할 수 있게 한다.
+const workSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name: d.name,
+  headline: d.kind,
+  description: d.summary,
+  url: new URL(Astro.url.pathname, Astro.site).href,
+  inLanguage: 'ko-KR',
+  creator: { '@id': `${siteUrl}#person` },
+  ...(d.tags?.length ? { keywords: d.tags.join(', ') } : {}),
+  ...(d.links?.length ? { sameAs: d.links.map((l) => l.url) } : {}),
+};
 ---
-<Base title={d.name} description={d.kind}>
+<Base title={d.name} description={d.summary || d.kind} jsonld={[workSchema]}>
   <div class="wrap">
     <section style="padding-top:48px">
       <a class="back" href={`${base}/#projects`}>← 프로젝트 목록</a>
