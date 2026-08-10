@@ -20,6 +20,8 @@ const personSchema = {
   '@id': `${siteUrl}#person`,
   name: profile.name,
   alternateName: profile.name_latin,
+  givenName: '현석',
+  familyName: '오',
   jobTitle: '프로덕트 매니저',
   description: profile.thesis,
   url: siteUrl,
@@ -90,12 +92,6 @@ const schemas = [personSchema, siteSchema, ...jsonld];
     <main id="main">
       <slot />
     </main>
-
-    <footer>
-      <div class="wrap">
-        <p class="fnote">{profile.footnote}</p>
-      </div>
-    </footer>
 
     {/* 이메일 난독화 — 평문 mailto를 소스에 남기지 않는다 (04 §7) */}
     <script type="module" define:vars={{ user: profile.email.split('@')[0], host: profile.email.split('@')[1] }}>

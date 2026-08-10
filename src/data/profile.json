@@ -1,7 +1,7 @@
 {
   "web_profile": true,
   "name": "오현석",
-  "name_latin": "OH HYUNSEOK",
+  "name_latin": "HYUNSEOK OH",
   "eyebrow": "PRODUCT MANAGER · SEOUL",
   "thesis": "데이터로 결정하고, 코드로 검증하는 PM입니다.",
   "email": "0323eric@naver.com",
@@ -95,6 +95,5 @@
       "sub": "빅데이터 + 모바일SW 복수트랙",
       "date": "2020.03–2026.02"
     }
-  ],
-  "footnote": "수치는 실측과 목표·설계값을 구분해 표기하고, 성과는 본인 기여와 팀 산출물을 구분합니다."
+  ]
 }

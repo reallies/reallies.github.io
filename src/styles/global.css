@@ -87,11 +87,16 @@
     background: var(--paper);
   }
   .topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding-top: 14px; padding-bottom: 14px; }
-  .topbar .who { font-size: 12.5px; letter-spacing: 0.1em; color: var(--muted); }
-  .cta { display: flex; gap: 8px; flex-wrap: wrap; }
+  /* 이름은 줄어들 수 있게(min-width:0), 버튼은 줄지도 줄바꿈되지도 않게.
+     폭이 좁아지면 이름이 먼저 사라지고 버튼은 항상 한 줄로 남는다. */
+  .topbar .who {
+    font-size: 12.5px; letter-spacing: 0.1em; color: var(--muted);
+    white-space: nowrap; overflow: hidden; min-width: 0;
+  }
+  .cta { display: flex; gap: 8px; flex-wrap: nowrap; flex-shrink: 0; }
   .btn {
     font-size: 14px; font-weight: 600; text-decoration: none;
-    padding: 7px 14px; border-radius: 3px;
+    padding: 7px 14px; border-radius: 3px; white-space: nowrap;
     border: 1px solid var(--ink); color: var(--ink); background: transparent;
     transition: background .15s, color .15s;
   }
@@ -158,8 +163,9 @@
   .cgroup li .sub { display: block; color: var(--muted); font-size: 12.5px; font-weight: 400; margin-top: 1px; }
   .cgroup li .date { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
 
-  footer { margin-top: 66px; border-top: 1px solid var(--hairline); padding: 26px 0 64px; }
-  .fnote { font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+  /* 푸터 제거(2026-08-10) — 말미에 단서를 모아두면 자백 목록처럼 읽힌다(03 §5-5).
+     각 케이스 페이지에 항목별 단서가 이미 들어가 있다. 대신 본문 하단 여백만 남긴다. */
+  main { padding-bottom: 88px; }
 
   @media (max-width: 800px) {
     .facts { grid-template-columns: 1fr; }
@@ -169,6 +175,21 @@
     .caps, .creds { grid-template-columns: 1fr; gap: 0; }
     .creds .cgroup + .cgroup { margin-top: 26px; }
     header.hero { padding-top: 48px; }
+
+    /* 상단바 — 이름이 두 줄로 깨지고 버튼이 랩되던 문제 */
+    .topbar .wrap { gap: 10px; padding-top: 10px; padding-bottom: 10px; }
+    .topbar .who { font-size: 11px; letter-spacing: 0.06em; }
+    .cta { gap: 6px; }
+    .btn { font-size: 12.5px; padding: 6px 10px; }
+  }
+
+  /* 좁은 화면 — 이름을 빼고 버튼만 남긴다.
+     이름은 바로 아래 히어로에 크게 나오므로 정보 손실이 없다. */
+  @media (max-width: 560px) {
+    .topbar .who { display: none; }
+    .topbar .wrap { justify-content: flex-end; }
+    .cta { gap: 6px; }
+    .btn { font-size: 12.5px; padding: 6px 10px; }
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 
@@ -247,7 +268,7 @@
     .cgroup li { padding: 4px 0; }
     .facts { margin-top: 16px; padding-top: 12px; }
     .facts li { font-size: 9.5pt; }
-    footer { margin-top: 22px; padding: 12px 0 0; }
+    main { padding-bottom: 0; }
     .prow, .hrow, .cap, .cgroup li { break-inside: avoid; }
     .presult { color: #000; font-weight: 700; }
     .live { border-color: #000; color: #000; }
