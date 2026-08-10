@@ -48,7 +48,7 @@ LLM 호출을 비동기 큐로 처리하려던 계획은 동기 처리로 우선
 
 ## 🛠 직접 만든 것
 
-결정을 검증하려고 백엔드를 직접 구현했다. **NestJS · Prisma · PostgreSQL(Supabase) · OpenAI**, 배포는 **Docker · Nginx · pm2**.
+결정을 검증하려고 백엔드를 직접 구현했다. **NestJS · Prisma · PostgreSQL(Supabase) · OpenAI**. 프론트는 Vercel, 백엔드는 **AWS EC2에 Nginx + PM2**로 올렸다.
 
 - **LLM 체크리스트 자동 생성** — 컨텍스트 캐시(dedup)로 동일 조건 재요청 비용 절감, throttler로 rate limit (`modules/llm`)
 - **행동 분석 + 관리자 대시보드** — 이벤트 로깅(`UserEvent`) → 지표 산출 → 시각화. 위 판단의 근거가 전부 여기서 나왔다
