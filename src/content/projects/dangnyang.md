@@ -10,8 +10,8 @@ result: "어디서 이탈하는지 보이는 측정 체계 구축"
 resultNote: ""
 caveat: "측정 체계 구현 · 운영 실측치 아님"
 name: "댕냥여지도"
-links: []
-linksNote: "비공개 레포 · 요청 시 코드·대시보드 시연"
+links: [{"label":"시연영상","url":"https://youtu.be/vLeeBJN0WdA"},{"label":"데이터 분석 대시보드","url":"https://youtu.be/A5QiMEJ4ZE8"}]
+linksNote: "레포는 비공개입니다. 코드는 요청 시 공유합니다."
 tags: ["웹사이트 개발","데이터","데이터 분석","Frontend","PM","팀프로젝트"]
 ---
 # 댕냥여지도 — 반려동물 동반시설 검색 + 행동 분석
