@@ -50,13 +50,13 @@ npm run sync && git add -A && git commit -m "내용 갱신" && git push
 
 ## 남은 작업
 
-- [x] 이력서 PDF — `public/오현석_이력서.pdf` (3p). 갱신은 아래 명령으로 다시 뽑는다
+- [x] 포트폴리오 PDF — `public/hyunseok-oh-portfolio.pdf`. **웹 인쇄 CSS에서 뽑으므로 사이트를 고치면 반드시 다시 뽑을 것**(안 하면 PDF만 옛 내용으로 남는다). URL은 영문(메일 클라이언트·ATS 호환), 내려받을 때 파일명은 `download` 속성으로 한글 지정
 
   ```bash
   npm run build && npx astro preview --port 4322 &
   "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu \
     --no-pdf-header-footer --run-all-compositor-stages-before-draw --virtual-time-budget=8000 \
-    --print-to-pdf="public/오현석_이력서.pdf" "http://localhost:4322/"
+    --print-to-pdf="public/hyunseok-oh-portfolio.pdf" "http://localhost:4322/"
   npm run build   # PDF를 dist에 포함시키려면 한 번 더
   ```
 - [ ] `og:image` 이미지
