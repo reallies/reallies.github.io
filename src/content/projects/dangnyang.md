@@ -11,7 +11,7 @@ resultNote: ""
 caveat: "측정 체계 구현 · 운영 실측치 아님"
 name: "댕냥여지도"
 links: [{"label":"시연영상","url":"https://youtu.be/vLeeBJN0WdA"},{"label":"데이터 분석 대시보드","url":"https://youtu.be/A5QiMEJ4ZE8"}]
-linksNote: "레포는 비공개입니다. 코드는 요청 시 공유합니다."
+linksNote: "대시보드 영상의 수치는 샘플 데이터입니다. 실제 사용자 트래픽이 아니라 측정 체계가 동작하는 것을 보여줍니다. 레포는 비공개이며 코드는 요청 시 공유합니다."
 tags: ["웹사이트 개발","데이터","데이터 분석","Frontend","PM","팀프로젝트"]
 ---
 # 댕냥여지도 — 반려동물 동반시설 검색 + 행동 분석
