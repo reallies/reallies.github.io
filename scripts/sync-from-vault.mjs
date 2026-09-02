@@ -81,6 +81,32 @@ function publicize(body) {
     .trim();
 }
 
+/**
+ * 카드 머리 인용의 메타 줄 제거 — 케이스 페이지 헤더가 이미 같은 말을 한다.
+ *
+ * 볼트 카드는 옵시디언에서 단독으로 읽히므로 `역할 · 팀 · 기간` 줄이 필요하지만,
+ * 웹에서는 바로 위에 kind·meta·caveat 가 이미 찍혀 있어 같은 줄이 두 번 나온다.
+ * 기여 범위 표기(PM 2인 중 1인 · 7인 팀 공동)는 web_caveat 로 따로 노출되므로
+ * 여기서 지워도 과대주장이 되지 않는다. (06 G1 판정법)
+ */
+function dropHeroMeta(body) {
+  const out = [];
+  let seenH1 = false;
+  let done = false;
+  for (const line of body.split('\n')) {
+    if (done) { out.push(line); continue; }
+    if (!seenH1) { if (/^#\s/.test(line)) seenH1 = true; out.push(line); continue; }
+    if (/^##\s/.test(line)) { done = true; out.push(line); continue; }   // 첫 섹션부터는 손대지 않는다
+    if (/^>\s*`/.test(line)) {
+      while (out.length && out[out.length - 1].trim() === '>') out.pop();  // 문단 가르려고 넣은 빈 인용줄
+      done = true;
+      continue;
+    }
+    out.push(line);
+  }
+  return out.join('\n');
+}
+
 async function reset(dir) {
   await rm(dir, { recursive: true, force: true });
   await mkdir(dir, { recursive: true });
@@ -121,7 +147,7 @@ async function syncProjects() {
       Object.entries(fm)
         .map(([k, v]) => `${k}: ${Array.isArray(v) ? JSON.stringify(v) : typeof v === 'string' ? JSON.stringify(v) : v}`)
         .join('\n') +
-      '\n---\n' + publicize(parts.body);
+      '\n---\n' + dropHeroMeta(publicize(parts.body));
 
     await writeFile(path.join(OUT_PROJECTS, `${slug}.md`), out);
     n++;
