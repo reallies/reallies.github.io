@@ -4,6 +4,13 @@ import Base from '../layouts/Base.astro';
 import profile from '../data/profile.json';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+
+/* 메타 한 줄(`기간 · 소속 · 인원 · 역할`)을 세 줄로 가른다 — 기간 / 소속 / 인원 · 역할.
+   좌단이 좁아(화면 190px · 인쇄 168px) 한 줄로 두면 구분점 뒤에서 아무 데나 접힌다. */
+const splitMeta = (meta) => {
+  const [term = '', org = '', ...rest] = (meta ?? '').split(' · ');
+  return { term, org, who: rest.join(' · ') };
+};
 const caps = (await getCollection('capabilities')).sort((a, b) => a.data.order - b.data.order);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
@@ -51,7 +58,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
               <div class="pname">{p.data.name}
                 {p.data.live && <span class="live mono">운영 중</span>}
               </div>
-              <div class="pmeta mono">{p.data.meta}</div>
+              <div class="pmeta mono">
+                <span class="pterm">{splitMeta(p.data.meta).term}</span>
+                <span class="porg">{splitMeta(p.data.meta).org}</span>
+                <span class="pwho">{splitMeta(p.data.meta).who}</span>
+              </div>
             </div>
             <div>
               <div class="pkind">{p.data.kind}</div>

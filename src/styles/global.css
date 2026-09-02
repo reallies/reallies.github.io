@@ -142,7 +142,13 @@
   .prow:hover .pname { color: var(--accent); }
   .prow:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .pname { display: flex; align-items: center; flex-wrap: wrap; font-size: 16px; font-weight: 650; letter-spacing: -0.015em; transition: color .15s; }
-  .pmeta { font-size: 12px; color: var(--muted); margin-top: 3px; white-space: nowrap; }
+  /* 메타는 세 줄이다 — 기간 / 소속 / 인원 · 역할.
+     한 줄로 두면 좁은 단(화면 190px · 인쇄 168px)에서 구분점 뒤가 아무 데나 접힌다. */
+  .pmeta { font-size: 12px; color: var(--muted); margin-top: 3px; }
+  .pmeta span { display: block; }
+  .pmeta .pterm { white-space: nowrap; }
+  .pmeta .porg, .pmeta .pwho { margin-top: 1px; }
+  .pmeta span:empty { display: none; }
   .pdesc { font-size: 14.5px; line-height: 1.6; }
   .pcaveat { font-size: 12px; color: var(--muted); margin-top: 5px; }
 
@@ -171,7 +177,6 @@
     .facts { grid-template-columns: 1fr; }
     .hrow { grid-template-columns: 1fr; gap: 3px; padding: 14px 0; }
     .prow { grid-template-columns: 1fr; gap: 10px; }
-    .pmeta { white-space: normal; }
     .caps, .creds { grid-template-columns: 1fr; gap: 0; }
     .creds .cgroup + .cgroup { margin-top: 26px; }
     header.hero { padding-top: 48px; }
@@ -261,7 +266,9 @@
     .shead h2 { font-size: 13pt; }
     .hrow { padding: 5px 0; grid-template-columns: 118px 1fr 130px; gap: 14px; }
     .caps, .creds { grid-template-columns: 1fr 1fr; gap: 0 28px; }
-    .prow { padding: 9px 0; gap: 16px; grid-template-columns: 150px 1fr; }
+    .prow { padding: 9px 0; gap: 16px; grid-template-columns: 168px 1fr; }
+    .pname { font-size: 11.5pt; }
+    .pmeta { font-size: 8.5pt; line-height: 1.35; margin-top: 2px; }
     .pdesc { font-size: 9pt; }
     .presult { margin-top: 5px; font-size: 9pt; }
     .cap { padding: 8px 0; }
