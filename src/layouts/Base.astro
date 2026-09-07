@@ -70,7 +70,7 @@ const schemas = [personSchema, siteSchema, ...jsonld];
     <meta property="og:site_name" content={profile.name} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>📊</text></svg>" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     {schemas.map((s) => (
       <script type="application/ld+json" set:html={JSON.stringify(s)} />
     ))}
