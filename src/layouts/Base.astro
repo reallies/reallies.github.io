@@ -1,11 +1,12 @@
 ---
+import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
 import '../styles/global.css';
 import profile from '../data/profile.json';
 
 interface Props { title?: string; description?: string; jsonld?: unknown[] }
 const { title, description, jsonld = [] } = Astro.props;
 
-const pageTitle = title ? `${title} — ${profile.name}` : `${profile.name} — ${profile.thesis}`;
+const pageTitle = title ? `${title} | ${profile.name}` : `${profile.name} | ${profile.thesis}`;
 const desc = description ?? profile.thesis;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -66,7 +67,7 @@ const schemas = [personSchema, siteSchema, ...jsonld];
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={`${profile.name} — ${profile.thesis}`} />
+    <meta property="og:image:alt" content={`${profile.name} | ${profile.thesis}`} />
     <meta property="og:site_name" content={profile.name} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={ogImage} />

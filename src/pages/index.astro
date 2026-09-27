@@ -13,30 +13,34 @@ const splitMeta = (meta) => {
 };
 const caps = (await getCollection('capabilities')).sort((a, b) => a.data.order - b.data.order);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+/* 첫 프로젝트는 화면 캡처와 함께 넓게 싣는다 — 만든 화면을 보여줄 수 있는 유일한 운영 서비스다 */
+const FEATURE = 'checkmate';
 ---
 <Base>
   <div class="wrap">
 
     <header class="hero">
-      <p class="eyebrow mono">{profile.eyebrow}</p>
-      <h1>{profile.name}<span class="latin mono">{profile.name_latin}</span></h1>
-      <p class="thesis">{profile.thesis}</p>
+      <div class="hero-main">
+        {/* 눈썹 라벨(profile.eyebrow)은 화면에 싣지 않는다 — 지역·직함 띠는 템플릿 인상을 준다. 데이터는 볼트 원본이라 남겨 둔다 */}
+        <h1>{profile.name}<span class="latin mono">{profile.name_latin}</span></h1>
+        <p class="thesis">{profile.thesis}</p>
 
-      {/* 화면에서는 상단바가 연락처를 담당하고, 인쇄본에서만 노출된다 */}
-      <p class="contact-print">
-        <a href="#" data-mail data-mail-text></a>
-        <span>·</span>
-        <span>{profile.github.replace('https://', '')}</span>
-      </p>
+        {/* 화면에서는 상단바가 연락처를 담당하고, 인쇄본에서만 노출된다 */}
+        <p class="contact-print">
+          <a href="#" data-mail data-mail-text></a>
+          <span>·</span>
+          <span>{profile.github.replace('https://', '')}</span>
+        </p>
+      </div>
 
-      <ul class="facts">
+      <dl class="facts">
         {profile.facts.map((f) => (
-          <li><span class="k mono">{f.k}</span><span>{f.v}</span></li>
+          <div><dt class="mono">{f.k}</dt><dd>{f.v}</dd></div>
         ))}
-      </ul>
+      </dl>
     </header>
 
-    <section>
+    <section class="reveal">
       <div class="shead"><h2>이력</h2></div>
       <div class="hist">
         {profile.history.map((h) => (
@@ -49,11 +53,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </div>
     </section>
 
-    <section id="projects">
+    <section id="projects" class="reveal">
       <div class="shead"><h2>프로젝트</h2></div>
       <div class="proj">
         {projects.map((p) => (
-          <a class="prow" href={`${base}/projects/${p.data.slug}`}>
+          <a class:list={['prow', { feature: p.data.slug === FEATURE }]} href={`${base}/projects/${p.data.slug}`}>
             <div>
               <div class="pname">{p.data.name}
                 {p.data.live && <span class="live mono">운영 중</span>}
@@ -80,12 +84,18 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
               </div>
               {p.data.caveat && <div class="pcaveat">{p.data.caveat}</div>}
             </div>
+            {p.data.slug === FEATURE && (
+              <figure class="pshot">
+                <img src={`${base}/img/checkmate-dashboard.webp`} width="1300" height="725" loading="lazy" decoding="async"
+                     alt="CheckMate 관리자 대시보드 개요 탭 화면" />
+              </figure>
+            )}
           </a>
         ))}
       </div>
     </section>
 
-    <section>
+    <section class="reveal">
       <div class="shead"><h2>역량</h2></div>
       <div class="caps">
         {caps.map((c) => (
@@ -98,7 +108,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </div>
     </section>
 
-    <section>
+    <section class="reveal">
       <div class="shead"><h2>자격 · 학력</h2></div>
       <div class="creds">
         <div class="cgroup">
