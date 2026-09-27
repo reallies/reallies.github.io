@@ -54,7 +54,7 @@ tags: ["웹사이트 개발","UI/UX","DB","Node","AI","기획","팀프로젝트"
 | 외부 API | OpenAI · **Kakao Map**(지도·로드뷰) · **Google Places**(영업시간) · OpenWeather · 기상청 |
 | 배포 | **AWS + Nginx** (모노레포 / npm workspaces) |
 
-React(FE) ↔ Nginx → Node.js(+JWT)(BE) ↔ Prisma → PostgreSQL, 외부 API 6종 오케스트레이션.
+React(프론트) ↔ Nginx → Node.js(+JWT)(백엔드) ↔ Prisma → PostgreSQL, 외부 API 6종 오케스트레이션.
 
 ## 역할 구분
 

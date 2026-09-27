@@ -314,19 +314,19 @@
     h1 { font-size: 22pt; }
     h1 .latin { font-size: 11pt; margin-top: 6px; }
     .thesis { font-size: 12pt; margin-top: 12px; }
-    section { padding-top: 15px; }
-    .shead { margin-bottom: 10px; }
+    section { padding-top: 8px; }
+    .shead { margin-bottom: 8px; }
     .shead h2 { font-size: 13pt; }
-    .hrow { padding: 5px 0; grid-template-columns: 118px 1fr 130px; gap: 14px; }
+    .hrow { padding: 4px 0; grid-template-columns: 118px 1fr 130px; gap: 14px; }
     .caps, .creds { grid-template-columns: 1fr 1fr; gap: 0 28px; }
-    .prow { padding: 9px 0; gap: 16px; grid-template-columns: 168px 1fr; }
+    .prow { padding: 7px 0; gap: 16px; grid-template-columns: 168px 1fr; }
     .pname { font-size: 11.5pt; }
     .pmeta { font-size: 8.5pt; line-height: 1.35; margin-top: 2px; }
     .pdesc { font-size: 9pt; }
     .presult { margin-top: 5px; font-size: 9pt; }
-    .cap { padding: 8px 0; }
+    .cap { padding: 4px 0; }
     .cap p, .cap .src { font-size: 8.5pt; }
-    .cgroup li { padding: 4px 0; }
+    .cgroup li { padding: 2px 0; }
     .facts { margin-top: 16px; padding-top: 12px; }
     main { padding-bottom: 0; }
     .prow, .hrow, .cap, .cgroup li { break-inside: avoid; }

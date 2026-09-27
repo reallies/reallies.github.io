@@ -25,9 +25,9 @@ tags: ["웹사이트 개발","데이터","데이터 분석","Frontend","PM","팀
 ## 핵심 구현
 
 ### 데이터 분석 (백엔드)
-- **퍼널 분석 SQL 직접 구현** — P1(search→detail)·P2(detail→check_condition)·P3(check_condition→intent) 전환율 + Repeat·Intent·LCP·LSI 등 (`analytics_queries_minimal_final.sql`, MySQL 8)
+- **퍼널 분석 SQL 직접 구현** — 단계별 전환율(검색→상세 · 상세→조건확인 · 조건확인→방문의향)과 재탐색률·루프 완주율·재사용 지수 등 (`analytics_queries_minimal_final.sql`, MySQL 8)
 - **이벤트 분석 스키마 설계** — `event_logs` 중심 스키마 (`schema_event_analytics_minimal.sql`)
-- **Streamlit 분석 대시보드** — pandas + Plotly로 퍼널·전환·Repeat·LCP/LSI 시각화 (`streamlit_app.py`)
+- **Streamlit 분석 대시보드** — pandas + Plotly로 퍼널·전환율·재탐색률·루프 완주율 시각화 (`streamlit_app.py`)
 
 ### 프론트엔드
 - React + Vite + TypeScript **모노레포**(apps/web·apps/api, packages/shared)
@@ -43,8 +43,8 @@ tags: ["웹사이트 개발","데이터","데이터 분석","Frontend","PM","팀
 
 ## 지표 설계
 
-5단 퍼널(Search→Condition→Detail→Intent→Reuse)을 정의하고 각 단계 전환율(P1~P3), 루프 완성도(LCP), 안정성(LSI)을 수식으로 설계.
-**OKR 목표값**: P1≥25% · P2≥50% · P3≥30% · Repeat≤40% · LCP≥0.5 · LSI≥0.3 · 이벤트 수집률≥95%.
+5단 퍼널(검색→상세→조건확인→방문의향→재방문)을 정의하고 단계별 전환율, 루프 완주율(검색한 사람 중 방문의향 행동까지 간 비율), 재사용 지수(사용자당 평균 루프 반복 횟수)를 수식으로 설계.
+**목표값**: 검색→상세 ≥25% · 상세→조건확인 ≥50% · 조건확인→방문의향 ≥30% · 재탐색률 ≤40% · 루프 완주율 ≥0.5 · 재사용 지수 ≥0.3 · 이벤트 수집률 ≥95%.
 
 ## 역할 구분
 
@@ -52,9 +52,9 @@ tags: ["웹사이트 개발","데이터","데이터 분석","Frontend","PM","팀
 
 | 영역 | 내가 맡은 것 | 팀 |
 | --- | --- | --- |
-| 지표 정의 | 사용자 행동을 5단 퍼널로 정의, P1~P3·LCP·LSI 수식 설계 (PDD·결정로그 저자) | 기획 논의는 7인 공동 |
+| 지표 정의 | 사용자 행동을 5단 퍼널로 정의, 단계별 전환율·루프 완주율 수식 설계 (문제 정의서·결정 로그 저자) | 기획 논의는 7인 공동 |
 | **측정 구현** | **event 스키마 · SQL 퍼널 쿼리 · Streamlit 대시보드**를 직접 구현 | 분석 담당 1인과 공동 |
-| 프론트 | React·Vite·TS 모노레포 화면 구현 주도 | 프론트 1인과 공동 |
+| 프론트 | React·Vite·TypeScript 모노레포 화면 구현 주도 | 프론트 1인과 공동 |
 | 서비스 기획·디자인 | — | 팀원 분담 |
 
 ## 배운 점
