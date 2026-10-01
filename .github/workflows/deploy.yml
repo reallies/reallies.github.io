@@ -29,6 +29,9 @@ jobs:
       - run: npx astro build
       # PDF를 이 빌드에서 다시 뽑아 dist/ 에 덮어쓴다 — 사이트를 고치면 PDF도 같이 바뀐다.
       # 실패해도 배포는 막지 않는다(커밋된 public/ PDF가 남는다). 대신 경고를 띄운다.
+      # 러너에 한글 글꼴이 없으면 고정폭(monospace) 자리의 한글이 □ 로 찍힌다(2026-10-01 실측).
+      - name: Install Korean fonts
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-cjk && fc-cache -f
       - name: Regenerate portfolio PDF
         run: node scripts/pdf.mjs --dist || echo "::warning::PDF 재생성 실패 — 커밋된 public/hyunseok-oh-portfolio.pdf 가 배포된다"
       - uses: actions/upload-pages-artifact@v3
