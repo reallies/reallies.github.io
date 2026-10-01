@@ -27,6 +27,10 @@ jobs:
       # CI에는 볼트가 없으므로 동기화 산출물을 커밋해 두고 sync를 건너뛴다.
       # (content/ 를 커밋하려면 .gitignore 에서 해당 3줄을 제거할 것)
       - run: npx astro build
+      # PDF를 이 빌드에서 다시 뽑아 dist/ 에 덮어쓴다 — 사이트를 고치면 PDF도 같이 바뀐다.
+      # 실패해도 배포는 막지 않는다(커밋된 public/ PDF가 남는다). 대신 경고를 띄운다.
+      - name: Regenerate portfolio PDF
+        run: node scripts/pdf.mjs --dist || echo "::warning::PDF 재생성 실패 — 커밋된 public/hyunseok-oh-portfolio.pdf 가 배포된다"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist

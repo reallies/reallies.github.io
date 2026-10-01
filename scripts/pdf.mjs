@@ -7,11 +7,13 @@
  * 🔴 file:// 로 뽑지 않는다 — 웹폰트가 로드되지 않아 글자가 시스템 폰트로 대체된다
  *    (실측: file:// 280KB vs http:// 664KB). 로컬 서버를 띄우고 그 주소로 인쇄한다.
  *
- * 실행: npm run pdf   (npm run build 뒤에)
+ * 실행: npm run pdf   (npm run build 뒤에) — `npm run build` 가 마지막에 자동으로 부른다
+ *       CI(deploy.yml)는 `node scripts/pdf.mjs --dist` 로 dist/ 에도 써서 배포본 PDF가
+ *       항상 그 빌드의 내용과 같게 한다. 사이트를 고치고 PDF를 잊는 일을 구조로 막는다(2026-10-01).
  */
 import { createServer } from 'node:http';
 import { spawn } from 'node:child_process';
-import { readFile, rename, stat } from 'node:fs/promises';
+import { readFile, rename, stat, copyFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -20,13 +22,22 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = path.join(ROOT, 'dist');
 const OUT = path.join(ROOT, 'public/hyunseok-oh-portfolio.pdf');
 const TMP = path.join(ROOT, 'public/.portfolio.pdf.tmp');
-const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+const TO_DIST = process.argv.includes('--dist');
+// macOS(로컬) · Linux(GitHub Actions ubuntu-latest 에 google-chrome 기본 설치) · CHROME_PATH 로 덮어쓰기
+const CHROME = [
+  process.env.CHROME_PATH,
+  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  '/usr/bin/google-chrome',
+  '/usr/bin/google-chrome-stable',
+  '/usr/bin/chromium-browser',
+  '/usr/bin/chromium',
+].find((p) => p && existsSync(p));
 const PORT = 8099;
 
 const die = (msg) => { console.error(`\n✗ ${msg}\n`); process.exit(1); };
 
 if (!existsSync(DIST)) die('dist/ 가 없습니다. npm run build 를 먼저 돌리세요.');
-if (!existsSync(CHROME)) die(`Chrome을 찾을 수 없습니다: ${CHROME}`);
+if (!CHROME) die('Chrome을 찾을 수 없습니다. CHROME_PATH 로 경로를 지정하세요.');
 
 const TYPES = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript',
   '.svg': 'image/svg+xml', '.png': 'image/png', '.woff2': 'font/woff2', '.xml': 'application/xml' };
@@ -48,6 +59,7 @@ await new Promise((r) => server.listen(PORT, r));
 const code = await new Promise((resolve) => {
   spawn(CHROME, [
     '--headless', '--disable-gpu', '--no-pdf-header-footer',
+    ...(process.platform === 'linux' ? ['--no-sandbox'] : []),
     `--print-to-pdf=${TMP}`,
     '--run-all-compositor-stages-before-draw',
     '--virtual-time-budget=8000',
@@ -64,3 +76,7 @@ if (size < 400_000) die(`PDF가 ${Math.round(size / 1024)}KB 입니다. 웹폰�
 
 await rename(TMP, OUT);
 console.log(`✓ PDF 생성  ${path.relative(ROOT, OUT)}  ${Math.round(size / 1024)}KB`);
+if (TO_DIST) {
+  await copyFile(OUT, path.join(DIST, path.basename(OUT)));
+  console.log(`✓ dist/ 에도 반영  ${path.basename(OUT)}`);
+}
