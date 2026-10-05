@@ -319,6 +319,8 @@
     .shead h2 { font-size: 13pt; }
     .hrow { padding: 4px 0; grid-template-columns: 118px 1fr 130px; gap: 14px; }
     .caps, .creds { grid-template-columns: 1fr 1fr; gap: 0 28px; }
+    /* A4 본문 폭(~710px)에서는 max-width:800px 규칙도 걸린다 — 세로로 쌓을 때의 위 여백이 2칸 배치에 남아 오른쪽 칸이 내려갔다(2026-10-05) */
+    .creds .cgroup + .cgroup { margin-top: 0; }
     .prow { padding: 7px 0; gap: 16px; grid-template-columns: 168px 1fr; }
     .pname { font-size: 11.5pt; }
     .pmeta { font-size: 8.5pt; line-height: 1.35; margin-top: 2px; }
