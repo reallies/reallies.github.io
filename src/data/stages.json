@@ -267,12 +267,26 @@
       "title": "행동이 적을 때 무엇부터 확인했나",
       "meta": "CheckMate · AI 여행 준비물 체크리스트 서비스 · 2026.04 ~ 운영 중(이 장 2026.05 ~ 08) · 팀장",
       "fig": {
-        "img": {
-          "src": "img/checkmate-dashboard.webp",
-          "w": 1300,
-          "h": 725,
-          "alt": "CheckMate 관리자 대시보드 개요 탭 화면"
-        },
+        "gallery": [
+          {
+            "src": "img/checkmate-home-desktop.jpg",
+            "w": 1280,
+            "h": 800,
+            "cap": "운영 중인 첫 화면"
+          },
+          {
+            "src": "img/checkmate-home-mobile.jpg",
+            "w": 390,
+            "h": 844,
+            "cap": "모바일 첫 화면"
+          },
+          {
+            "src": "img/checkmate-dashboard.webp",
+            "w": 1300,
+            "h": 725,
+            "cap": "관리자 대시보드 개요 탭"
+          }
+        ],
         "bars": [
           {
             "t": "방문 세션 중 탐색까지 간 비율",

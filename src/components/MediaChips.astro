@@ -1,0 +1,19 @@
+---
+/* 작은 실물 링크 묶음 — 표 행 머리용. 영상 = 페이지 안 플레이어 · 나머지 = 새 탭 */
+import { splitLinks } from '../lib/media.js';
+interface Props { links?: { label: string; url: string }[]; note?: string; name: string }
+const { links = [], note = '', name } = Astro.props;
+const { videos, others } = splitLinks(links);
+---
+{(videos.length > 0 || others.length > 0) && (
+  <span class="mchips">
+    {videos.map((v) => (
+      <button type="button" class="mchip play" data-yt={v.id} data-title={`${name} · ${v.label}`} data-note={note}>
+        <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.8v8.4L10 6z" fill="currentColor" /></svg>{v.label}
+      </button>
+    ))}
+    {others.map((l) => (
+      <a class="mchip" href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗</a>
+    ))}
+  </span>
+)}

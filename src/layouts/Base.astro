@@ -102,5 +102,43 @@ const schemas = [personSchema, siteSchema, ...jsonld];
         if (el.dataset.mailText !== undefined) el.textContent = addr;
       }
     </script>
+    {/* 페이지 안 영상 플레이어 — 바깥으로 나가지 않고 시연을 본다. 닫으면 iframe을 비워 재생을 멈춘다 */}
+    <dialog id="player" class="player" aria-label="영상 보기">
+      <div class="phead"><p class="ptitle"></p><button type="button" class="pclose" aria-label="닫기">✕</button></div>
+      <div class="pframe"></div>
+      <p class="pnote"></p>
+    </dialog>
+    <script>
+      const dlg = document.getElementById('player') as HTMLDialogElement;
+      const frame = dlg.querySelector('.pframe')!;
+      document.addEventListener('click', (e) => {
+        const b = (e.target as HTMLElement).closest<HTMLElement>('[data-yt]');
+        if (!b) return;
+        e.preventDefault();
+        frame.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${b.dataset.yt}?autoplay=1&rel=0" title="${b.dataset.title ?? ''}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+        dlg.querySelector('.ptitle')!.textContent = b.dataset.title ?? '';
+        dlg.querySelector('.pnote')!.textContent = b.dataset.note ?? '';
+        dlg.showModal();
+      });
+      dlg.querySelector('.pclose')!.addEventListener('click', () => dlg.close());
+      dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+      dlg.addEventListener('close', () => { frame.innerHTML = ''; });
+
+      /* 섹션 등장 — 2026-10-11 스크롤 연동 애니메이션(animation-timeline: view())을 걷어냈다.
+         뒤로가기로 돌아오면 스크롤 위치만 복원되고 타임라인이 멈춰, 화면 안 섹션이 투명하게 남았다(실측: 자격·학력 opacity 0).
+         지금은 화면에 들어오면 한 번 보이고 다시 숨지 않는다 · 복원(pageshow)·움직임 줄이기·관찰 불가 브라우저는 바로 보인다 */
+      const els = [...document.querySelectorAll<HTMLElement>('.reveal')];
+      const showAll = () => els.forEach((el) => el.classList.add('in'));
+      if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) showAll();
+      else {
+        document.documentElement.classList.add('js-reveal');
+        const io = new IntersectionObserver((ents) => {
+          for (const en of ents) if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        }, { rootMargin: '0px 0px -8% 0px' });
+        els.forEach((el) => { if (el.getBoundingClientRect().top < innerHeight) el.classList.add('in'); else io.observe(el); });
+      }
+      addEventListener('pageshow', (e) => { if (e.persisted) showAll(); });
+      addEventListener('beforeprint', showAll);
+    </script>
   </body>
 </html>

@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import MediaBlock from '../../components/MediaBlock.astro';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -48,19 +49,7 @@ const workSchema = {
         <Content />
       </div>
 
-      {(d.links.length > 0 || d.linksNote) && (
-        <div class="links">
-          <h2>링크</h2>
-          {d.links.length > 0 && (
-            <ul>
-              {d.links.map((l) => (
-                <li><a href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗</a></li>
-              ))}
-            </ul>
-          )}
-          {d.linksNote && <p class="note">{d.linksNote}</p>}
-        </div>
-      )}
+      <MediaBlock links={d.links} note={d.linksNote} name={d.name} title="링크" />
     </section>
   </div>
 </Base>

@@ -1,6 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import stages from '../../data/stages.json';
+import { getCollection } from 'astro:content';
+import MediaBlock from '../../components/MediaBlock.astro';
 
 /* 단계별 대표 사례 — 경로는 단계 이름으로 낸다(프로젝트 이름이 아니다 · 04 §3-B).
    문제·해결·결과 문장은 볼트 지원서 원고 그대로(sync) · 그림 값은 웹_단계.md 사실 줄 */
@@ -16,6 +18,7 @@ const prev = stages.cases[i - 1];
 const next = stages.cases[i + 1];
 const no = (n) => String(n).padStart(2, '0');
 const fig = c.fig;
+const pd = row ? (await getCollection('projects')).find((p) => p.data.slug === row.slug)?.data : undefined;
 ---
 <Base title={`${c.stageName} · ${c.title}`} description={`${c.meta} · ${c.steps[0].paras[0]}`}>
   <div class="wrap">
@@ -29,8 +32,22 @@ const fig = c.fig;
       </header>
 
       <figure class="cfig">
-        {fig.img && (
-          <img class="cshot" src={`${base}/${fig.img.src}`} width={fig.img.w} height={fig.img.h} alt={fig.img.alt} loading="lazy" decoding="async" />
+        {fig.gallery && (
+          <div class="gal">
+            <div class="gtrack" tabindex="0" aria-label={`${c.pj} 화면 — 옆으로 넘겨 보기`}>
+              {fig.gallery.map((g, k) => (
+                <figure class:list={['gitem', { tall: g.h > g.w }]}>
+                  <img src={`${base}/${g.src}`} width={g.w} height={g.h} alt={g.cap} loading={k ? 'lazy' : 'eager'} decoding="async" />
+                  <figcaption>{g.cap}</figcaption>
+                </figure>
+              ))}
+            </div>
+            <div class="gnav">
+              <button type="button" data-dir="-1" aria-label="이전 화면">←</button>
+              <span class="gcount mono"><b>1</b> / {fig.gallery.length}</span>
+              <button type="button" data-dir="1" aria-label="다음 화면">→</button>
+            </div>
+          </div>
         )}
         {fig.bars && (
           <div class="cbars">
@@ -76,6 +93,8 @@ const fig = c.fig;
         ))}
       </div>
 
+      {pd && <MediaBlock links={pd.links} note={pd.linksNote} name={c.pj} title={`${c.pj} 실물 보기`} />}
+
       <nav class="cnav">
         {row && <a href={`${base}/projects/${row.slug}`}>{c.pj} 프로젝트 전체 보기</a>}
         <span class="sp"></span>
@@ -84,4 +103,19 @@ const fig = c.fig;
       </nav>
     </section>
   </div>
+  <script>
+    /* 화면 갤러리 — 가로로 밀거나 버튼으로 넘긴다(scroll-snap) · 현재 번호 표시 */
+    for (const gal of document.querySelectorAll<HTMLElement>('.gal')) {
+      const track = gal.querySelector<HTMLElement>('.gtrack')!;
+      const items = [...track.children] as HTMLElement[];
+      const count = gal.querySelector('.gcount b')!;
+      const x = (el: HTMLElement) => el.offsetLeft - items[0].offsetLeft;
+      const cur = () => items.reduce((best, el, i) => Math.abs(x(el) - track.scrollLeft) < Math.abs(x(items[best]) - track.scrollLeft) ? i : best, 0);
+      track.addEventListener('scroll', () => { count.textContent = String(cur() + 1); }, { passive: true });
+      gal.querySelectorAll<HTMLButtonElement>('.gnav button').forEach((b) => b.addEventListener('click', () => {
+        const n = Math.min(items.length - 1, Math.max(0, cur() + Number(b.dataset.dir)));
+        track.scrollTo({ left: x(items[n]), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      }));
+    }
+  </script>
 </Base>

@@ -1,0 +1,31 @@
+---
+/* 큰 실물 블록 — 사례·프로젝트 페이지용. 영상은 썸네일 카드(누르면 페이지 안 플레이어), 나머지는 버튼 */
+import { splitLinks } from '../lib/media.js';
+interface Props { links?: { label: string; url: string }[]; note?: string; name: string; title?: string }
+const { links = [], note = '', name, title = '실물 보기' } = Astro.props;
+const { videos, others } = splitLinks(links);
+---
+{(videos.length > 0 || others.length > 0 || note) && (
+  <section class="media">
+    <h2>{title}</h2>
+    {videos.length > 0 && (
+      <div class="vcards">
+        {videos.map((v) => (
+          <button type="button" class="vcard" data-yt={v.id} data-title={`${name} · ${v.label}`} data-note={note}>
+            <span class="thumb">
+              <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" width="480" height="360" loading="lazy" decoding="async" />
+              <span class="pbtn" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M3.5 1.8v8.4L10.5 6z" fill="currentColor" /></svg></span>
+            </span>
+            <span class="vlabel">{v.label}<span class="mono">재생</span></span>
+          </button>
+        ))}
+      </div>
+    )}
+    {others.length > 0 && (
+      <ul class="mlinks">
+        {others.map((l) => <li><a href={l.url} target="_blank" rel="noopener noreferrer">{l.label} ↗</a></li>)}
+      </ul>
+    )}
+    {note && <p class="note">{note}</p>}
+  </section>
+)}
