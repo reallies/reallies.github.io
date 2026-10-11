@@ -20,6 +20,12 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
         <h1>{profile.name}<span class="latin mono">{profile.name_latin}</span></h1>
         <p class="thesis">{profile.thesis}</p>
 
+        {/* 첫 행동 — 주 = 대표 사례(짧게 읽기) · 보조 = PDF(외부 피드백 #8 · 10-12). 인쇄본에서는 숨긴다 */}
+        <div class="hero-cta">
+          <a class="btn primary" href="#cases">대표 사례 보기</a>
+          <a class="btn" href={`${base}/hyunseok-oh-portfolio.pdf`} download="오현석_포트폴리오.pdf">포트폴리오 PDF</a>
+        </div>
+
         {/* 화면에서는 상단바가 연락처를 담당하고, 인쇄본에서만 노출된다 */}
         <p class="contact-print">
           <a href="#" data-mail data-mail-text></a>
@@ -67,7 +73,7 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
                 <div class:list={['scell', { lead }]} role="cell" data-col={i + 1}>
                   <span class="sname mono">{String(i + 1).padStart(2, '0')} {stages.stages[i].name}</span>
                   <ol>{t.split(' → ').map((x) => <li>{x.split(' · ').map((y) => <span>{y}</span>)}</li>)}</ol>
-                  {lead && <a class="slead" href={`${base}/cases/${lead.path}`}>대표 사례 보기 →</a>}
+                  {lead && <a class="slead" href={`${base}/cases/${lead.path}`}>사례 읽기 →</a>}
                 </div>
               ) : (
                 <div class="scell none" role="cell" aria-label="해당 없음" data-col={i + 1}></div>
@@ -83,10 +89,11 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
       <div class="cases">
         {stages.cases.map((c) => (
           <a class="ccard" href={`${base}/cases/${c.path}`}>
+            {c.thumb && <img class="cthumb" src={`${base}/${c.thumb.src}`} width={c.thumb.w} height={c.thumb.h} alt={c.thumb.alt} loading="lazy" decoding="async" />}
             <span class="cno mono">STEP {String(c.stage).padStart(2, '0')} · {c.stageName}</span>
             <h3>{c.title}</h3>
             <span class="cmeta">{c.meta.split(' · ').slice(0, 2).join(' · ')}</span>
-            <span class="cgo">사례 보기 →</span>
+            <span class="cgo">사례 읽기 →</span>
           </a>
         ))}
       </div>

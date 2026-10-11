@@ -14,7 +14,6 @@ links: [{"label":"GitHub","url":"https://github.com/reallies/SLAY"},{"label":"�
 linksNote: ""
 tags: ["웹사이트 개발","UI/UX","DB","Node","AI","기획","팀프로젝트"]
 ---
-# SLAY — 일행이 짠 일정을 AI가 검수하는 여행 플랫폼
 
 > **사람이 짠 일정을 외부 데이터로 검수하는 AI를 설계한 4인 캡스톤 팀장**
 

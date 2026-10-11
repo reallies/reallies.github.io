@@ -14,7 +14,6 @@ links: [{"label":"서비스 바로가기","url":"https://www.checkmate-v.com"},{
 linksNote: ""
 tags: ["웹사이트 개발","AI","Backend","데이터","PM","팀프로젝트"]
 ---
-# CheckMate — AI 여행 준비 큐레이션·체크리스트 플랫폼
 
 > **배포하고 나서 아무도 쓰지 않았다. 원인을 퍼널로 규명하고 유입 채널을 다시 잡은 기록**
 

@@ -82,6 +82,12 @@
       "prefix": "사례3",
       "title": "무엇을 만들지 정할 때 무엇을 근거로 삼았나",
       "meta": "iDB(댕냥여지도) · 반려동물 동반 시설 탐색 서비스 · 2026.03 · 서브리드",
+      "thumb": {
+        "src": "img/dangnyang-6.jpg",
+        "w": 1280,
+        "h": 720,
+        "alt": "iDB 검색 · 상세 필터와 지도 화면"
+      },
       "fig": {
         "scope": [
           {
@@ -175,6 +181,12 @@
       "prefix": "사례2",
       "title": "범위와 일정이 흔들릴 때 어떻게 끝까지 냈나",
       "meta": "GeNova · 방송 콘티 사내 AI 도구 · 2026.06 ~ 07 · 기획 담당",
+      "thumb": {
+        "src": "img/genova-5.jpg",
+        "w": 1600,
+        "h": 827,
+        "alt": "GeNova 3×3 그리드 스토리보드와 통합 영문 프롬프트 화면"
+      },
       "fig": {
         "scope": [
           {
@@ -267,6 +279,12 @@
       "prefix": "사례1",
       "title": "행동이 적을 때 무엇부터 확인했나",
       "meta": "CheckMate · AI 여행 준비물 체크리스트 서비스 · 2026.04 ~ 운영 중(이 장 2026.05 ~ 08) · 팀장",
+      "thumb": {
+        "src": "img/checkmate-home-desktop.jpg",
+        "w": 2000,
+        "h": 1250,
+        "alt": "CheckMate 운영 중인 첫 화면"
+      },
       "fig": {
         "gallery": [
           {

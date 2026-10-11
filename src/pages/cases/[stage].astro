@@ -24,7 +24,7 @@ const pd = row ? (await getCollection('projects')).find((p) => p.data.slug === r
 <Base title={`${c.stageName} · ${c.title}`} description={`${c.meta} · ${c.steps[0].paras[0]}`}>
   <div class="wrap">
     <section style="padding-top:48px">
-      <a class="back" href={`${base}/#overview`}>← 단계 표</a>
+      <a class="back" href={`${base}/#overview`}>← 전체 프로젝트</a>
 
       <header class="case-head">
         <p class="stage mono">STEP {no(c.stage)} · {c.stageName}</p>
@@ -81,7 +81,7 @@ const pd = row ? (await getCollection('projects')).find((p) => p.data.slug === r
       {pd && <MediaBlock links={pd.links} note={pd.linksNote} name={c.pj} title={`${c.pj} 실물 보기`} />}
 
       <nav class="cnav">
-        {row && <a href={`${base}/projects/${row.slug}`}>{c.pj} 프로젝트 전체 보기</a>}
+        {row && <a href={`${base}/projects/${row.slug}`}>{c.pj} 프로젝트 전체 보기 →</a>}
         <span class="sp"></span>
         {prev && <a href={`${base}/cases/${prev.path}`}>← STEP {no(prev.stage)} {prev.stageName}</a>}
         {next && <a href={`${base}/cases/${next.path}`}>STEP {no(next.stage)} {next.stageName} →</a>}
