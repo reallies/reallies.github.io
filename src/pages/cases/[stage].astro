@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import stages from '../../data/stages.json';
 import { getCollection } from 'astro:content';
 import MediaBlock from '../../components/MediaBlock.astro';
-import { tlCols } from '../../lib/figs.js';
+import { tlCols, gallery } from '../../lib/figs.js';
 
 /* 단계별 대표 사례 — 경로는 단계 이름으로 낸다(프로젝트 이름이 아니다 · 04 §3-B).
    문제·해결·결과 문장은 볼트 지원서 원고 그대로(sync) · 그림 값은 웹_단계.md 사실 줄 */
@@ -33,23 +33,7 @@ const pd = row ? (await getCollection('projects')).find((p) => p.data.slug === r
       </header>
 
       <figure class="cfig">
-        {fig.gallery && (
-          <div class="gal">
-            <div class="gtrack" tabindex="0" aria-label={`${c.pj} 화면 — 옆으로 넘겨 보기`}>
-              {fig.gallery.map((g, k) => (
-                <figure class:list={['gitem', { tall: g.h > g.w }]}>
-                  <img src={`${base}/${g.src}`} width={g.w} height={g.h} alt={g.cap} loading={k ? 'lazy' : 'eager'} decoding="async" />
-                  <figcaption>{g.cap}</figcaption>
-                </figure>
-              ))}
-            </div>
-            <div class="gnav">
-              <button type="button" data-dir="-1" aria-label="이전 화면">←</button>
-              <span class="gcount mono"><b>1</b> / {fig.gallery.length}</span>
-              <button type="button" data-dir="1" aria-label="다음 화면">→</button>
-            </div>
-          </div>
-        )}
+        {fig.gallery && <Fragment set:html={gallery(fig.gallery, base, `${c.pj} 화면`)} />}
         {fig.bars && (
           <div class="cbars">
             {fig.bars.map((g) => (

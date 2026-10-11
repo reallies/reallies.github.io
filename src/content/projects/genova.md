@@ -69,7 +69,7 @@ tags: ["PM","AI","팀프로젝트","기업실무"]
 | 배포 | AWS EC2 · Vercel |
 
 
-<figure class="cfig pfig"><div class="gal"><div class="gtrack" tabindex="0" aria-label="화면 — 옆으로 넘겨 보기"><figure class="gitem"><img src="/img/genova-5.jpg" width="1280" height="720" alt="3×3 그리드 스토리보드와 통합 영문 프롬프트" loading="eager" decoding="async"><figcaption>3×3 그리드 스토리보드와 통합 영문 프롬프트</figcaption></figure><figure class="gitem"><img src="/img/genova-3.jpg" width="1280" height="720" alt="고급설정 · 이미지 생성 모델과 그림체 선택" loading="lazy" decoding="async"><figcaption>고급설정 · 이미지 생성 모델과 그림체 선택</figcaption></figure><figure class="gitem"><img src="/img/genova-12.jpg" width="1280" height="720" alt="캔버스" loading="lazy" decoding="async"><figcaption>캔버스</figcaption></figure></div><div class="gnav"><button type="button" data-dir="-1" aria-label="이전 화면">←</button><span class="gcount mono"><b>1</b> / 3</span><button type="button" data-dir="1" aria-label="다음 화면">→</button></div></div><figcaption class="fcap">시연영상 화면</figcaption></figure>
+<figure class="cfig pfig"><p class="gsrc">시연영상 화면</p><div class="gal"><div class="gtrack" tabindex="0" aria-label="화면 — 옆으로 넘겨 보기"><figure class="gitem"><img src="/img/genova-5.jpg" width="1600" height="827" alt="3×3 그리드 스토리보드와 통합 영문 프롬프트" loading="eager" decoding="async"><figcaption>3×3 그리드 스토리보드와 통합 영문 프롬프트</figcaption></figure><figure class="gitem"><img src="/img/genova-12.jpg" width="1600" height="827" alt="캔버스" loading="lazy" decoding="async"><figcaption>캔버스</figcaption></figure></div><div class="gnav"><button type="button" data-dir="-1" aria-label="이전 화면">←</button><span class="gcount mono"><b>1</b> / 2</span><button type="button" data-dir="1" aria-label="다음 화면">→</button></div></div></figure>
 
 ## 결과
 

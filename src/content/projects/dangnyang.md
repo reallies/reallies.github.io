@@ -88,7 +88,7 @@ React·Vite·TypeScript 모노레포에서 화면 구현을 맡았다. 구조는
 | 데이터 모델 | event_logs 중심 이벤트 스키마 |
 
 
-<figure class="cfig pfig"><div class="gal"><div class="gtrack" tabindex="0" aria-label="화면 — 옆으로 넘겨 보기"><figure class="gitem"><img src="/img/dangnyang-6.jpg" width="1280" height="720" alt="검색 · 상세 필터와 지도" loading="eager" decoding="async"><figcaption>검색 · 상세 필터와 지도</figcaption></figure><figure class="gitem"><img src="/img/dangnyang-14.jpg" width="1280" height="720" alt="시설 상세" loading="lazy" decoding="async"><figcaption>시설 상세</figcaption></figure></div><div class="gnav"><button type="button" data-dir="-1" aria-label="이전 화면">←</button><span class="gcount mono"><b>1</b> / 2</span><button type="button" data-dir="1" aria-label="다음 화면">→</button></div></div><figcaption class="fcap">시연영상 화면</figcaption></figure>
+<figure class="cfig pfig"><p class="gsrc">시연영상 화면</p><div class="gal"><div class="gtrack" tabindex="0" aria-label="화면 — 옆으로 넘겨 보기"><figure class="gitem"><img src="/img/dangnyang-6.jpg" width="1280" height="720" alt="검색 · 상세 필터와 지도" loading="eager" decoding="async"><figcaption>검색 · 상세 필터와 지도</figcaption></figure><figure class="gitem"><img src="/img/dangnyang-14.jpg" width="1280" height="720" alt="시설 상세" loading="lazy" decoding="async"><figcaption>시설 상세</figcaption></figure></div><div class="gnav"><button type="button" data-dir="-1" aria-label="이전 화면">←</button><span class="gcount mono"><b>1</b> / 2</span><button type="button" data-dir="1" aria-label="다음 화면">→</button></div></div></figure>
 
 ## 결과
 

@@ -9,13 +9,16 @@ const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 const nb = (s) => esc(s).replaceAll(' · ', '\u00a0· ');
 const cls = (base, flags) => [base, ...Object.entries(flags).filter(([, v]) => v).map(([k]) => k)].join(' ');
 
-function gallery(items, base) {
-  const tr = items.map((g, k) =>
-    `<figure class="${cls('gitem', { tall: g.h > g.w })}"><img src="${base}/${esc(g.src)}" width="${g.w}" height="${g.h}" alt="${esc(g.cap)}" loading="${k ? 'lazy' : 'eager'}" decoding="async"><figcaption>${esc(g.cap)}</figcaption></figure>`).join('');
+/* 화면 갤러리 — 사례·프로젝트 페이지 공용. pair = 데스크톱+모바일을 한 장면에 같은 높이로 나란히 */
+export function gallery(items, base, label = '화면') {
+  const img = (g, k, alt) => `<img src="${base}/${esc(g.src)}" width="${g.w}" height="${g.h}" alt="${esc(alt)}" loading="${k ? 'lazy' : 'eager'}" decoding="async">`;
+  const tr = items.map((g, k) => g.pair
+    ? `<figure class="gitem pair"><div class="gpair">${g.pair.map((x) => `<span class="gp" style="flex:${(x.w / x.h).toFixed(3)}">${img(x, k, g.cap)}</span>`).join('')}</div><figcaption>${esc(g.cap)}</figcaption></figure>`
+    : `<figure class="${cls('gitem', { tall: g.h > g.w })}">${img(g, k, g.cap)}<figcaption>${esc(g.cap)}</figcaption></figure>`).join('');
   const nav = items.length > 1
     ? `<div class="gnav"><button type="button" data-dir="-1" aria-label="이전 화면">←</button><span class="gcount mono"><b>1</b> / ${items.length}</span><button type="button" data-dir="1" aria-label="다음 화면">→</button></div>`
     : '';
-  return `<div class="gal"><div class="gtrack" tabindex="0" aria-label="화면 — 옆으로 넘겨 보기">${tr}</div>${nav}</div>`;
+  return `<div class="gal"><div class="gtrack" tabindex="0" aria-label="${esc(label)} — 옆으로 넘겨 보기">${tr}</div>${nav}</div>`;
 }
 
 function bars(groups) {
@@ -58,11 +61,12 @@ export { tlCols };
 export function figHtml(fig, base = '') {
   const parts = [];
   if (fig.title) parts.push(`<p class="ftitle">${esc(fig.title)}</p>`);
+  if (fig.gallery && fig.cap) parts.push(`<p class="gsrc">${esc(fig.cap)}</p>`);
   if (fig.gallery) parts.push(gallery(fig.gallery, base));
   if (fig.flow) parts.push(flow(fig.flow));
   if (fig.bars) parts.push(bars(fig.bars));
   if (fig.scope) parts.push(scope(fig.scope));
   if (fig.tl) parts.push(tl(fig.tl));
-  if (fig.cap) parts.push(`<figcaption class="fcap">${esc(fig.cap)}</figcaption>`);
+  if (fig.cap && !fig.gallery) parts.push(`<figcaption class="fcap">${esc(fig.cap)}</figcaption>`);
   return `<figure class="cfig pfig">${parts.join('')}</figure>`;
 }

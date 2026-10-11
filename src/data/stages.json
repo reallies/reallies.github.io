@@ -270,16 +270,19 @@
       "fig": {
         "gallery": [
           {
-            "src": "img/checkmate-home-desktop.jpg",
-            "w": 1280,
-            "h": 800,
-            "cap": "운영 중인 첫 화면"
-          },
-          {
-            "src": "img/checkmate-home-mobile.jpg",
-            "w": 1290,
-            "h": 2040,
-            "cap": "모바일 첫 화면"
+            "pair": [
+              {
+                "src": "img/checkmate-home-desktop.jpg",
+                "w": 2000,
+                "h": 1250
+              },
+              {
+                "src": "img/checkmate-home-mobile.jpg",
+                "w": 1290,
+                "h": 2040
+              }
+            ],
+            "cap": "운영 중인 첫 화면 · 데스크톱·모바일"
           },
           {
             "src": "img/checkmate-dashboard.webp",

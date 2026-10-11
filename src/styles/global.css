@@ -462,14 +462,15 @@
   /* ---------- 영상 카드 · 링크 (사례·프로젝트 페이지) ---------- */
   .media { margin-top: 44px; }
   .media h2 { font-size: 19px; font-weight: 650; letter-spacing: -0.02em; margin: 0 0 14px; padding-bottom: 8px; border-bottom: 1px solid var(--hairline); }
-  .vcards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-bottom: 14px; }
+  .vcards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 14px; }
   .vcard { font: inherit; color: inherit; text-align: left; padding: 0; border: 1px solid var(--hairline); border-radius: 4px; background: var(--surface); cursor: pointer; overflow: hidden; transition: border-color .15s, transform .25s cubic-bezier(0.16, 1, 0.3, 1); }
+  .vcards:has(> :only-child) { max-width: 520px; }
   .vcard:hover { border-color: var(--accent); transform: translateY(-2px); }
   .vcard:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .vcard .thumb { position: relative; display: block; aspect-ratio: 16 / 9; overflow: hidden; background: var(--hairline); }
-  .vcard .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .vcard .pbtn { position: absolute; inset: 0; margin: auto; width: 54px; height: 54px; border-radius: 50%; background: color-mix(in srgb, var(--ink) 78%, transparent); color: var(--paper); display: grid; place-items: center; transition: transform .2s; }
-  .vcard .pbtn svg { width: 18px; height: 18px; margin-left: 3px; }
+  .vcard .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transform: scale(1.08); }  /* 유튜브 썸네일(4:3)의 위아래 검은 띠 감춤 */
+  .vcard .pbtn { position: absolute; right: 10px; bottom: 10px; width: 40px; height: 40px; border-radius: 50%; background: color-mix(in srgb, var(--ink) 78%, transparent); color: var(--paper); display: grid; place-items: center; transition: transform .2s; }
+  .vcard .pbtn svg { width: 14px; height: 14px; margin-left: 2px; }
   .vcard:hover .pbtn { transform: scale(1.08); background: var(--accent); }
   .vcard .vlabel { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 12px; font-size: 14px; font-weight: 640; }
   .vcard .vlabel .mono { font-size: 11px; color: var(--accent); font-weight: 500; }
@@ -493,13 +494,19 @@
 
   /* ---------- 화면 갤러리 (사례 페이지) ---------- */
   .gal { display: flex; flex-direction: column; gap: 10px; }
-  .gtrack { position: relative; display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; border-radius: 6px; }
+  /* 트랙 높이는 지금 보이는 화면에 맞춘다(Base.astro 스크립트) — 큰 화면 기준이면 작은 화면 아래가 비었다(#11) */
+  .gtrack { position: relative; display: flex; align-items: flex-start; gap: 14px; overflow-x: auto; transition: height .3s cubic-bezier(0.16, 1, 0.3, 1); scroll-snap-type: x mandatory; scrollbar-width: none; border-radius: 6px; }
   .gtrack::-webkit-scrollbar { display: none; }
   .gtrack:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .gitem { flex: 0 0 100%; margin: 0; scroll-snap-align: start; display: flex; flex-direction: column; gap: 8px; }
   .gitem img { width: 100%; height: auto; max-height: 560px; object-fit: contain; border: 1px solid var(--hairline); border-radius: 6px; background: var(--surface); display: block; }
   .gitem.tall img { width: auto; max-width: 100%; height: 560px; margin: 0 auto; }
   .gitem figcaption { font-size: 12.5px; color: var(--muted); text-align: center; }
+  .gpair { display: flex; align-items: flex-end; gap: 14px; }
+  .gpair .gp { min-width: 0; }
+  .gpair img { width: 100%; height: auto; max-height: none; }
+  .gsrc { font-size: 12px; font-weight: 650; color: var(--muted); margin: 0 0 -10px; }
+  @media (prefers-reduced-motion: reduce) { .gtrack { transition: none; } }
   .gnav { display: flex; justify-content: center; align-items: center; gap: 14px; }
   .gnav button { font: inherit; font-size: 14px; cursor: pointer; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--hairline); background: var(--surface); color: var(--ink); transition: border-color .15s; }
   .gnav button:hover { border-color: var(--accent); color: var(--accent); }
