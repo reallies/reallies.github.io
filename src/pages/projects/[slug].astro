@@ -55,13 +55,12 @@ const workSchema = {
       <div id="links"><MediaBlock links={d.links} note={d.linksNote} name={d.name} title="링크" /></div>
     </section>
     {toc.length > 2 && (
-      <aside class="toc" aria-label="목차">
-        <p class="toc-h mono">목차</p>
+      <nav class="toc" aria-label="목차">
         <ol>
-          {toc.map((h) => <li><a href={`#${h.slug}`} data-toc={h.slug}>{h.text}</a></li>)}
-          {(d.links?.length > 0 || d.linksNote) && <li><a href="#links" data-toc="links">링크</a></li>}
+          {toc.map((h) => <li><a href={`#${h.slug}`} data-toc={h.slug}><span class="tl">{h.text}</span><i class="tk" aria-hidden="true"></i></a></li>)}
+          {(d.links?.length > 0 || d.linksNote) && <li><a href="#links" data-toc="links"><span class="tl">링크</span><i class="tk" aria-hidden="true"></i></a></li>}
         </ol>
-      </aside>
+      </nav>
     )}
     </div>
   </div>

@@ -247,21 +247,25 @@
   .case-head .meta { font-size: 13px; color: var(--muted); margin-top: 6px; }
   .case-head .caveat { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
   .prose { max-width: 68ch; }
-  /* 프로젝트 페이지 — 첫 화면과 같은 980px 틀. 본문은 왼쪽, 목차는 오른쪽 칸(2026-10-12 👤 「메인과 너비가 달라 어색」 · 그전 10-11은 760px 가운데) */
-  .wrap.read .prose { max-width: none; }
-  .read-grid { display: grid; grid-template-columns: minmax(0, 1fr) 188px; gap: 56px; align-items: start; }
-  .read-grid > section { min-width: 0; }
-  .toc { position: sticky; top: 92px; padding-top: 48px; }
-  .toc-h { font-size: 11px; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 10px; }
-  .toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--hairline); }
-  .toc a { display: block; padding: 6px 0 6px 14px; margin-left: -1px; border-left: 2px solid transparent; font-size: 13px; line-height: 1.45; color: var(--muted); text-decoration: none; transition: color .15s, border-color .15s; }
-  .toc a:hover { color: var(--ink); }
-  .toc a.on { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  /* 프로젝트 페이지 — 첫 화면과 같은 980px 틀 · 글은 사례 페이지와 같은 820px(2026-10-12 2단계 · 목차 칸이 본문을 밀던 격자 제거) */
+  .wrap.read .prose { max-width: 820px; }
+  .read-grid { display: block; }
+  /* 목차 — 오른쪽 여백 세로 가운데에 짧은 줄 · 지금 절만 길고 진하게 · 마우스를 올리면 제목이 펼쳐진다(노션식) · 1280px 미만 숨김 */
+  .toc { position: fixed; z-index: 20; right: 14px; top: 50%; transform: translateY(-50%); }
+  .toc ol { list-style: none; margin: 0; padding: 10px 12px 10px 18px; display: flex; flex-direction: column; align-items: flex-end; border: 1px solid transparent; border-radius: 8px; transition: background-color .2s, border-color .2s, box-shadow .2s; }
+  .toc a { display: flex; align-items: center; justify-content: flex-end; gap: 14px; padding: 5px 0; font-size: 13px; line-height: 1.4; color: var(--muted); text-decoration: none; }
+  .toc .tl { display: none; white-space: nowrap; }
+  .toc .tk { flex: none; width: 12px; height: 2px; border-radius: 1px; background: color-mix(in srgb, var(--muted) 55%, transparent); transition: width .2s cubic-bezier(0.16, 1, 0.3, 1), background-color .2s; }
+  .toc a:hover .tk { background: var(--ink); }
+  .toc a.on .tk { width: 22px; background: var(--accent); }
+  .toc:hover ol, .toc:focus-within ol { background: var(--surface); border-color: var(--hairline); box-shadow: 0 12px 32px color-mix(in srgb, var(--paper) 70%, black); }
+  .toc:hover .tl, .toc:focus-within .tl { display: block; animation: tocIn .18s ease-out; }
+  .toc a:hover .tl { color: var(--ink); }
+  .toc a.on .tl { color: var(--accent); font-weight: 600; }
+  @keyframes tocIn { from { opacity: 0; } to { opacity: 1; } }
   .prose h2, #links { scroll-margin-top: 84px; }
-  @media (max-width: 960px) {
-    .read-grid { grid-template-columns: 1fr; gap: 0; }
-    .toc { display: none; }
-  }
+  @media (max-width: 1279px) { .toc { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .toc .tl { animation: none; } .toc .tk { transition: none; } }
   @media print { .toc { display: none; } .read-grid { display: block; } }
   .prose h1 { display: none; }
   .prose h2 { font-size: 19px; font-weight: 650; letter-spacing: -0.02em; margin: 40px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--hairline); }
