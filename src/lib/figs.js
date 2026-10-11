@@ -5,6 +5,8 @@
  * 클래스는 사례 페이지 그림(cases/[stage].astro)과 같다 — 모양을 한 벌로 둔다.
  */
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+/* 「a · b · c」가 줄바꿈되면 다음 줄이 「· b」로 시작한다 — 가운뎃점은 앞 낱말에 붙인다 */
+const nb = (s) => esc(s).replaceAll(' · ', '\u00a0· ');
 const cls = (base, flags) => [base, ...Object.entries(flags).filter(([, v]) => v).map(([k]) => k)].join(' ');
 
 function gallery(items, base) {
@@ -27,10 +29,12 @@ function bars(groups) {
 }
 
 const scope = (xs) => `<div class="cscope">${xs.map((x) =>
-  `<div class="${cls('sc', { out: x.out, cut: x.cut })}"><b>${esc(x.b)}</b>${x.s.map((t) => `<span>${esc(t)}</span>`).join('')}</div>`).join('')}</div>`;
+  `<div class="${cls('sc', { out: x.out, cut: x.cut })}"><b>${esc(x.b)}</b>${x.s.map((t) => `<span>${nb(t)}</span>`).join('')}</div>`).join('')}</div>`;
 
-const tl = (xs) => `<ol class="ctl">${xs.map((t) =>
-  `<li class="${cls('', { end: t.end })}"><b>${esc(t.b)}</b>${t.s.map((x) => `<span>${esc(x)}</span>`).join('')}</li>`).join('')}</ol>`;
+/* 타임라인 — 칸마다 점이 글 가운데 위에 · 선은 첫 점~마지막 점(양 끝은 반 칸씩 안으로) */
+const tlCols = (n) => `repeat(${n}, minmax(0, 1fr))`;
+const tl = (xs) => `<ol class="ctl" style="grid-template-columns:${tlCols(xs.length)};--n:${xs.length}">${xs.map((t) =>
+  `<li class="${cls('', { end: t.end })}"><b>${esc(t.b)}</b>${t.d ? `<i class="ctd">${esc(t.d)}</i>` : ''}${(t.s ?? []).map((x) => `<span>${nb(x)}</span>`).join('')}</li>`).join('')}</ol>`;
 
 /* 흐름 — 상자를 화살표로 잇는다. zone이 같은 상자는 한 테두리로 묶고 이름을 단다. e = 화살표 위 글자 */
 function flow(items) {
@@ -40,16 +44,16 @@ function flow(items) {
     if (!zones.length || zones.at(-1).z !== z) zones.push({ z, items: [] });
     zones.at(-1).items.push(it);
   }
-  let first = true;
-  const box = (it) => {
-    const arrow = first ? '' : `<span class="farr" aria-hidden="true">${it.e ? `<em>${esc(it.e)}</em>` : ''}→</span>`;
-    first = false;
-    return `${arrow}<div class="${cls('fbox', { hi: it.hi })}"><b>${esc(it.b)}</b>${(it.s ?? []).map((x) => `<span>${esc(x)}</span>`).join('')}</div>`;
-  };
-  return `<div class="cflow">${zones.map((g) => g.z
-    ? `<div class="fzone"><p class="fzl mono">${esc(g.z)}</p><div class="frow">${g.items.map(box).join('')}</div></div>`
-    : g.items.map(box).join('')).join('')}</div>`;
+  const arr = (it) => `<span class="farr" aria-hidden="true">${it.e ? `<em>${esc(it.e)}</em>` : ''}<i>→</i></span>`;
+  const box = (it) => `<div class="${cls('fbox', { hi: it.hi })}"><b>${esc(it.b)}</b>${(it.s ?? []).map((x) => `<span>${esc(x)}</span>`).join('')}</div>`;
+  // 화살표는 상자 사이에 — 영역이 바뀌는 화살표는 두 영역 테두리 사이에 둔다(다음 영역이 화살표로 시작하지 않게)
+  const row = (xs) => xs.map((it, k) => (k ? arr(it) : '') + box(it)).join('');
+  return `<div class="cflow">${zones.map((g, k) => (k ? arr(g.items[0]) : '') + (g.z
+    ? `<div class="fzone" style="flex-grow:${g.items.length}"><p class="fzl">${esc(g.z)}</p><div class="frow">${row(g.items)}</div></div>`
+    : row(g.items))).join('')}</div>`;
 }
+
+export { tlCols };
 
 export function figHtml(fig, base = '') {
   const parts = [];

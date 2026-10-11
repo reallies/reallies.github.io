@@ -26,7 +26,7 @@ tags: ["PM","AI","팀프로젝트","기업실무"]
 
 
 
-<figure class="cfig pfig"><div class="cflow"><div class="fbox"><b>기획(텍스트)</b></div><span class="farr" aria-hidden="true">→</span><div class="fbox hi"><b>GeNova</b><span>3×3 그리드 스토리보드 1장</span><span>통합 영문 프롬프트</span></div><span class="farr" aria-hidden="true">→</span><div class="fbox"><b>영상 AI</b></div><span class="farr" aria-hidden="true">→</span><div class="fbox"><b>편집·음악·자막</b></div></div></figure>
+<figure class="cfig pfig"><div class="cflow"><div class="fbox"><b>기획(텍스트)</b></div><span class="farr" aria-hidden="true"><i>→</i></span><div class="fbox hi"><b>GeNova</b><span>3×3 그리드 스토리보드 1장</span><span>통합 영문 프롬프트</span></div><span class="farr" aria-hidden="true"><i>→</i></span><div class="fbox"><b>영상 AI</b></div><span class="farr" aria-hidden="true"><i>→</i></span><div class="fbox"><b>편집·음악·자막</b></div></div></figure>
 
 ## 조사·기획
 
@@ -44,7 +44,7 @@ tags: ["PM","AI","팀프로젝트","기업실무"]
 - **못 고친 문제는 원인을 남겼다**: 컷 간 일관성과 병렬 생성 문제는 기간 안에 해결하지 못했다. 원인을 코드 수준으로 확인해 로드맵과 예상 질문 답변에 정리했다.
 
 
-<figure class="cfig pfig"><div class="cscope"><div class="sc"><b>처음 구조</b><span>이미지 9장을 합치는 구조</span></div><div class="sc out"><b>바꾼 구조</b><span>3×3 그리드 이미지 1장을 만드는 구조</span></div><div class="sc cut"><b>발표 전 제외</b><span>컷을 하나씩 생성하는 방식 · 로그인 · 라이브 시연</span></div></div><ol class="ctl"><li class=""><b>06.23</b><span>킥오프</span></li><li class=""><b>발표 직전 주</b><span>9장 합성에서</span><span>3×3 그리드 1장으로</span><span>일정 재계획</span></li><li class=""><b>같은 주 QA</b><span>참고 이미지 미반영</span><span>원인 확인 · 개발자 수정</span></li><li class=" end"><b>07.29</b><span>MVP 배포</span><span>사내 발표</span></li><li class=""><b>08.03</b><span>제출물 6종 인계</span><span>참여 종료</span></li></ol></figure>
+<figure class="cfig pfig"><div class="cscope"><div class="sc"><b>처음 구조</b><span>이미지 9장을 합치는 구조</span></div><div class="sc out"><b>바꾼 구조</b><span>3×3 그리드 이미지 1장을 만드는 구조</span></div><div class="sc cut"><b>발표 전 제외</b><span>컷을 하나씩 생성하는 방식 · 로그인 · 라이브 시연</span></div></div><ol class="ctl" style="grid-template-columns:repeat(5, minmax(0, 1fr));--n:5"><li class=""><b>킥오프</b><i class="ctd">06.23</i></li><li class=""><b>일정 재계획</b><i class="ctd">발표 직전 주</i><span>9장 합성에서</span><span>3×3 그리드 1장으로</span></li><li class=""><b>QA</b><i class="ctd">같은 주</i><span>참고 이미지 미반영</span><span>원인 확인 · 개발자 수정</span></li><li class=" end"><b>MVP 배포</b><i class="ctd">07.29</i><span>사내 발표</span></li><li class=""><b>인계</b><i class="ctd">08.03</i><span>제출물 6종</span><span>참여 종료</span></li></ol></figure>
 
 ## 문서 거버넌스
 

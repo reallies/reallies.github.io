@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import stages from '../../data/stages.json';
 import { getCollection } from 'astro:content';
 import MediaBlock from '../../components/MediaBlock.astro';
+import { tlCols } from '../../lib/figs.js';
 
 /* 단계별 대표 사례 — 경로는 단계 이름으로 낸다(프로젝트 이름이 아니다 · 04 §3-B).
    문제·해결·결과 문장은 볼트 지원서 원고 그대로(sync) · 그림 값은 웹_단계.md 사실 줄 */
@@ -70,15 +71,15 @@ const pd = row ? (await getCollection('projects')).find((p) => p.data.slug === r
             {fig.scope.map((x) => (
               <div class:list={['sc', { out: x.out, cut: x.cut }]}>
                 <b>{x.b}</b>
-                {x.s.map((t) => <span>{t}</span>)}
+                {x.s.map((t) => <span>{t.replaceAll(' · ', '\u00a0· ')}</span>)}
               </div>
             ))}
           </div>
         )}
         {fig.tl && (
-          <ol class="ctl">
+          <ol class="ctl" style={`grid-template-columns:${tlCols(fig.tl.length)};--n:${fig.tl.length}`}>
             {fig.tl.map((t) => (
-              <li class:list={{ end: t.end }}><b>{t.b}</b>{t.s.map((x) => <span>{x}</span>)}</li>
+              <li class:list={{ end: t.end }}><b>{t.b}</b>{t.d && <i class="ctd">{t.d}</i>}{(t.s ?? []).map((x) => <span>{x.replaceAll(' · ', '\u00a0· ')}</span>)}</li>
             ))}
           </ol>
         )}
