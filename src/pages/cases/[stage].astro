@@ -4,6 +4,7 @@ import stages from '../../data/stages.json';
 import { getCollection } from 'astro:content';
 import MediaBlock from '../../components/MediaBlock.astro';
 import { tlCols, gallery } from '../../lib/figs.js';
+import { nb } from '../../lib/nb.js';
 
 /* 단계별 대표 사례 — 경로는 단계 이름으로 낸다(프로젝트 이름이 아니다 · 04 §3-B).
    문제·해결·결과 문장은 볼트 지원서 원고 그대로(sync) · 그림 값은 웹_단계.md 사실 줄 */
@@ -27,7 +28,7 @@ const pd = row ? (await getCollection('projects')).find((p) => p.data.slug === r
       <a class="back" href={`${base}/#overview`}>← 전체 프로젝트</a>
 
       <header class="case-head">
-        <p class="stage mono">STEP {no(c.stage)} · {c.stageName}</p>
+        <p class="stage"><span class="mono">STEP {no(c.stage)}</span> · {c.stageName}</p>
         <h1>{c.title}</h1>
         <p class="chips">{c.meta.split(' · ').map((m) => <span>{m}</span>)}</p>
       </header>
@@ -73,7 +74,7 @@ const pd = row ? (await getCollection('projects')).find((p) => p.data.slug === r
         {c.steps.map((s, k) => (
           <section class="cstep">
             <h2><span class="mono">{no(k + 1)}</span>{s.label}</h2>
-            <div>{s.paras.map((p) => <p>{p}</p>)}</div>
+            <div>{s.paras.map((p) => <p set:html={nb(p)} />)}</div>
           </section>
         ))}
       </div>

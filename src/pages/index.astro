@@ -4,6 +4,7 @@ import profile from '../data/profile.json';
 import stages from '../data/stages.json';
 import { getCollection } from 'astro:content';
 import MediaChips from '../components/MediaChips.astro';
+import { nb } from '../lib/nb.js';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 /* 대표 칸 = 단계마다 사례 1건 — 표에서 바로 사례로 넘어간다 */
@@ -36,7 +37,7 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
 
       <dl class="facts">
         {profile.facts.map((f) => (
-          <div><dt class="mono">{f.k}</dt><dd>{f.v}</dd></div>
+          <div><dt class="mono">{f.k}</dt><dd set:html={nb(f.v)} /></div>
         ))}
       </dl>
     </header>
@@ -71,7 +72,7 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
               const lead = leadOf(r.pj, i + 1);
               return t ? (
                 <div class:list={['scell', { lead }]} role="cell" data-col={i + 1}>
-                  <span class="sname mono">{String(i + 1).padStart(2, '0')} {stages.stages[i].name}</span>
+                  <span class="sname"><span class="mono">{String(i + 1).padStart(2, '0')}</span> {stages.stages[i].name}</span>
                   <ol>{t.split(' → ').map((x) => <li>{x.split(' · ').map((y) => <span>{y}</span>)}</li>)}</ol>
                   {lead && <a class="slead" href={`${base}/cases/${lead.path}`}>사례 읽기 →</a>}
                 </div>
@@ -90,7 +91,7 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
         {stages.cases.map((c) => (
           <a class="ccard" href={`${base}/cases/${c.path}`}>
             {c.thumb && <img class="cthumb" src={`${base}/${c.thumb.src}`} width={c.thumb.w} height={c.thumb.h} alt={c.thumb.alt} loading="lazy" decoding="async" />}
-            <span class="cno mono">STEP {String(c.stage).padStart(2, '0')} · {c.stageName}</span>
+            <span class="cno"><span class="mono">STEP {String(c.stage).padStart(2, '0')}</span> · {c.stageName}</span>
             <h3>{c.title}</h3>
             <span class="cmeta">{c.meta.split(' · ').slice(0, 2).join(' · ')}</span>
             <span class="cgo">사례 읽기 →</span>

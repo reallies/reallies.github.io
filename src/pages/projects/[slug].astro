@@ -55,13 +55,14 @@ const workSchema = {
       <div id="links"><MediaBlock links={d.links} note={d.linksNote} name={d.name} title="링크" /></div>
     </section>
     {toc.length > 2 && (
-      <nav class="toc" aria-label="목차">
+      <nav class="toc" id="toc" aria-label="목차">
         <ol>
           {toc.map((h) => <li><a href={`#${h.slug}`} data-toc={h.slug}><span class="tl">{h.text}</span><i class="tk" aria-hidden="true"></i></a></li>)}
           {(d.links?.length > 0 || d.linksNote) && <li><a href="#links" data-toc="links"><span class="tl">링크</span><i class="tk" aria-hidden="true"></i></a></li>}
         </ol>
       </nav>
     )}
+    {toc.length > 2 && <button type="button" class="tocbtn" aria-expanded="false" aria-controls="toc">목차 <span class="mono" data-tocpos></span></button>}
     </div>
   </div>
   <script>
@@ -70,6 +71,15 @@ const workSchema = {
     const targets = links.map((a) => document.getElementById(a.dataset.toc!)).filter(Boolean) as HTMLElement[];
     if (targets.length) {
       let ticking = false;
+      // 좁은 화면 — 오른쪽 아래 「목차 3/7」 단추로 펼친다(외부 피드백 #6 · 4단계)
+      const toc = document.getElementById('toc')!;
+      const btn = document.querySelector<HTMLButtonElement>('.tocbtn');
+      const pos = document.querySelector<HTMLElement>('[data-tocpos]');
+      const setOpen = (o: boolean) => { toc.classList.toggle('open', o); btn?.setAttribute('aria-expanded', String(o)); };
+      btn?.addEventListener('click', () => setOpen(!toc.classList.contains('open')));
+      for (const a of links) a.addEventListener('click', () => setOpen(false));
+      addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
+      addEventListener('click', (e) => { if (toc.classList.contains('open') && !(e.target as HTMLElement).closest('.toc, .tocbtn')) setOpen(false); });
       let lockUntil = 0;
       // 누른 항목은 바로 표시 — 부드러운 스크롤 중간값으로 깜빡이지 않게 잠깐 고정
       for (const a of links) a.addEventListener('click', () => { lockUntil = Date.now() + 900; for (const b of links) b.classList.toggle('on', b === a); });
@@ -81,6 +91,8 @@ const workSchema = {
         for (const t of targets) if (t.getBoundingClientRect().top <= line) cur = t;
         if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) cur = targets[targets.length - 1];
         for (const a of links) a.classList.toggle('on', a.dataset.toc === cur.id);
+        if (pos) pos.textContent = `${targets.indexOf(cur) + 1}/${targets.length}`;
+        btn?.classList.toggle('show', window.scrollY > 320);
       };
       addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
       addEventListener('resize', update);
