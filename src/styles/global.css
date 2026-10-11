@@ -374,8 +374,11 @@
 
   @media (max-width: 800px) {
     .shead-row { display: none; }
-    .srow { grid-template-columns: 1fr; border-bottom: 1px solid var(--ink); padding-bottom: 6px; }
-    .spj { padding: 16px 0 8px; }
+    /* 모바일 — 프로젝트를 카드로 묶는다. 선 하나로만 나뉘면 앞 프로젝트의 단계와 다음 프로젝트 이름이 붙어 읽혔다(2026-10-11 👤) */
+    .sgrid { border-top: 0; }
+    .srow { grid-template-columns: 1fr; border: 1px solid var(--hairline); border-radius: 6px; background: var(--surface); padding: 0 14px 6px; margin-top: 14px; }
+    .spj { padding: 16px 0 10px; }
+    .spj b { font-size: 17px; }
     .scell { border-left: 0; border-top: 1px solid var(--hairline); padding: 10px 0; }
     .scell .sname { display: block; }
     .scell.lead { padding: 12px; box-shadow: inset 3px 0 0 var(--accent); }
