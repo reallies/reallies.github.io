@@ -18,6 +18,8 @@ const VAULT = process.env.VAULT_DIR
 const OUT_PROJECTS = path.join(ROOT, 'src/content/projects');
 const OUT_CAPS = path.join(ROOT, 'src/content/capabilities');
 const OUT_DATA = path.join(ROOT, 'src/data');
+// 볼트 루트 — 웹_단계.md 의 `원천`(지원서 원고) 경로가 여기 기준이다
+const VAULT_ROOT = process.env.VAULT_ROOT ?? path.resolve(VAULT, '../../..');
 
 const die = (msg) => { console.error(`\n✗ ${msg}\n`); process.exit(1); };
 
@@ -204,11 +206,61 @@ async function syncProfile() {
   return data;
 }
 
+/**
+ * 단계 × 프로젝트 표 + 단계별 대표 사례 (04 §3-B · 2026-10-11).
+ *
+ * 칸 문장은 볼트의 지원서 원고 본문 마커에서 글자 그대로 읽는다 — 외부 세션 작문 + 사용자 채택본.
+ * 웹_단계.md 에는 사실 줄·라벨만 있다. 원고를 한 벌로 두려고 복사본을 만들지 않는다.
+ */
+async function syncStages() {
+  const file = path.join(VAULT, '웹_단계.md');
+  if (!existsSync(file)) die(`웹_단계.md 가 없습니다: ${file}`);
+  const { default: yaml } = await import('js-yaml');
+  const cfg = yaml.load(split(await readFile(file, 'utf8')).fm);
+
+  const src = cfg.원천.map((r) => path.join(VAULT_ROOT, r)).find((f) => existsSync(f));
+  if (!src) die(`단계 원천 원고를 찾을 수 없습니다:\n  ${cfg.원천.join('\n  ')}`);
+  const raw = await readFile(src, 'utf8');
+  const slots = {};
+  for (const m of raw.matchAll(/<!-- 본문:시작 칸=(\S+)[^>]*-->\r?\n([\s\S]*?)\r?\n<!-- 본문:끝 -->/g)) slots[m[1]] = m[2].trim();
+  const need = (k) => slots[k] || die(`원고에 「${k}」 칸이 비어 있습니다: ${src}`);
+
+  const cell = {};
+  for (const ln of need('단계표').split('\n')) {
+    const parts = ln.split('|').map((x) => x.trim());
+    if (parts.length !== 3) continue;
+    const st = '①②③'.indexOf(parts[1]) + 1;
+    if (!st) die(`단계표 줄의 단계 기호를 읽지 못했습니다: ${ln}`);
+    cell[`${parts[0]}|${st}`] = parts[2];
+  }
+  const rows = cfg.rows.map((r) => ({ ...r, cells: [1, 2, 3].map((i) => cell[`${r.pj}|${i}`] ?? '') }));
+  const cases = cfg.cases.map((c) => ({
+    ...c,
+    stageName: cfg.stages.find((s) => s.no === c.stage).name,
+    path: cfg.stages.find((s) => s.no === c.stage).path,
+    steps: ['문제', '해결', '결과'].map((k) => ({ label: k, paras: need(`${c.prefix}_${k}`).split(/\n\s*\n/).map((x) => x.trim()).filter(Boolean) })),
+  }));
+  const data = { title: cfg.title, stages: cfg.stages, rows, cases, source: path.relative(VAULT_ROOT, src) };
+
+  // 공개 지면 금지 문자 — 마이리얼트립 build.py 금지 목록과 같다
+  const text = JSON.stringify(data);
+  const ban = { 'em dash': '—', 'en dash': '–', '등급 표기': /\[T[123]/, '근거 표기': '근거:', '내부 코드명 404': /(?<![\d.+-])404(?!\d)/ };
+  for (const [name, pat] of Object.entries(ban)) {
+    if (typeof pat === 'string' ? text.includes(pat) : pat.test(text)) die(`단계 화면에 공개 금지 표기(${name})가 있습니다`);
+  }
+
+  await mkdir(OUT_DATA, { recursive: true });
+  await writeFile(path.join(OUT_DATA, 'stages.json'), JSON.stringify(data, null, 2));
+  return data;
+}
+
 const profile = await syncProfile();
 const p = await syncProjects();
 const c = await syncCapabilities();
+const st = await syncStages();
 
-console.log(`✓ 볼트 동기화 완료  프로필 1 · 프로젝트 ${p} · 역량 ${c}`);
+console.log(`✓ 볼트 동기화 완료  프로필 1 · 프로젝트 ${p} · 역량 ${c} · 단계 사례 ${st.cases.length}`);
+console.log(`  단계 원천: ${st.source}`);
 console.log(`  출처: ${VAULT}`);
 if (p !== 5) console.warn(`  ⚠ 프로젝트가 ${p}건입니다. web_slug 필드를 확인하세요.`);
 if (c !== 6) console.warn(`  ⚠ 역량이 ${c}건입니다. 역량 카드 frontmatter를 확인하세요.`);

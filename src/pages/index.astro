@@ -1,20 +1,11 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import profile from '../data/profile.json';
+import stages from '../data/stages.json';
 
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
-
-/* 메타 한 줄(`기간 · 소속 · 인원 · 역할`)을 세 줄로 가른다 — 기간 / 소속 / 인원 · 역할.
-   좌단이 좁아(화면 190px · 인쇄 168px) 한 줄로 두면 구분점 뒤에서 아무 데나 접힌다. */
-const splitMeta = (meta) => {
-  const [term = '', org = '', ...rest] = (meta ?? '').split(' · ');
-  return { term, org, who: rest.join(' · ') };
-};
-const caps = (await getCollection('capabilities')).sort((a, b) => a.data.order - b.data.order);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-/* 첫 프로젝트는 화면 캡처와 함께 넓게 싣는다 — 만든 화면을 보여줄 수 있는 유일한 운영 서비스다 */
-const FEATURE = 'checkmate';
+/* 대표 칸 = 단계마다 사례 1건 — 표에서 바로 사례로 넘어간다 */
+const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === no);
 ---
 <Base>
   <div class="wrap">
@@ -40,6 +31,55 @@ const FEATURE = 'checkmate';
       </dl>
     </header>
 
+    {/* 단계 × 프로젝트 표 — "어느 단계를 어디서 했나"(04 §3-B · 2026-10-11 D형).
+        칸 문장은 볼트 지원서 원고의 「단계표」 칸 그대로(sync). 「→」 = 내가 다음에 한 일 → 한 단계 한 줄로 끊는다 */}
+    <section id="overview" class="reveal">
+      <div class="shead"><h2>{stages.title}</h2></div>
+      <div class="sgrid" role="table" aria-label="프로젝트별 단계 표">
+        <div class="srow shead-row" role="row">
+          <div role="columnheader"><span class="sr">프로젝트</span></div>
+          {stages.stages.map((s) => (
+            <div class="sth" role="columnheader"><span class="mono">{String(s.no).padStart(2, '0')}</span>{s.name}</div>
+          ))}
+        </div>
+        {stages.rows.map((r) => (
+          <div class="srow" role="row">
+            <a class="spj" role="rowheader" href={`${base}/projects/${r.slug}`}>
+              <b>{r.pj}{r.live && <span class="live mono">운영 중</span>}</b>
+              <span class="what">{r.what}</span>
+              <span class="when mono">{r.when}</span>
+            </a>
+            {r.cells.map((t, i) => {
+              const lead = leadOf(r.pj, i + 1);
+              return t ? (
+                <div class:list={['scell', { lead }]} role="cell">
+                  <span class="sname mono">{String(i + 1).padStart(2, '0')} {stages.stages[i].name}</span>
+                  <ol>{t.split(' → ').map((x) => <li>{x.split(' · ').map((y) => <span>{y}</span>)}</li>)}</ol>
+                  {lead && <a class="slead" href={`${base}/cases/${lead.path}`}>대표 사례 보기 →</a>}
+                </div>
+              ) : (
+                <div class="scell none" role="cell" aria-label="해당 없음"></div>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section id="cases" class="reveal">
+      <div class="shead"><h2>단계별 대표 사례</h2></div>
+      <div class="cases">
+        {stages.cases.map((c) => (
+          <a class="ccard" href={`${base}/cases/${c.path}`}>
+            <span class="cno mono">STEP {String(c.stage).padStart(2, '0')} · {c.stageName}</span>
+            <h3>{c.title}</h3>
+            <span class="cmeta">{c.meta.split(' · ').slice(0, 2).join(' · ')}</span>
+            <span class="cgo">사례 보기 →</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
     <section class="reveal">
       <div class="shead"><h2>이력</h2></div>
       <div class="hist">
@@ -48,61 +88,6 @@ const FEATURE = 'checkmate';
             <div class="when mono">{h.when}</div>
             <div class="what">{h.what}{h.live && <span class="live mono">운영 중</span>}</div>
             <div class="role">{h.role}</div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-    <section id="projects" class="reveal">
-      <div class="shead"><h2>프로젝트</h2></div>
-      <div class="proj">
-        {projects.map((p) => (
-          <a class:list={['prow', { feature: p.data.slug === FEATURE }]} href={`${base}/projects/${p.data.slug}`}>
-            <div>
-              <div class="pname">{p.data.name}
-                {p.data.live && <span class="live mono">운영 중</span>}
-              </div>
-              <div class="pmeta mono">
-                <span class="pterm">{splitMeta(p.data.meta).term}</span>
-                <span class="porg">{splitMeta(p.data.meta).org}</span>
-                <span class="pwho">{splitMeta(p.data.meta).who}</span>
-              </div>
-            </div>
-            <div>
-              <div class="pkind">{p.data.kind}</div>
-              <div class="pdesc">{p.data.summary}</div>
-              <div class="presult">
-                <span class="arrow">결과</span>
-                <span class="mono">{p.data.result}</span>
-                {p.data.spark && (
-                  <svg width="80" height="22" viewBox="0 0 80 22" aria-hidden="true">
-                    <polyline points="4,17 40,9 76,4" fill="none" stroke="var(--signal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-                    <circle cx="76" cy="4" r="2.8" fill="var(--signal)" />
-                  </svg>
-                )}
-                {p.data.resultNote && <span class="arrow">{p.data.resultNote}</span>}
-              </div>
-              {p.data.caveat && <div class="pcaveat">{p.data.caveat}</div>}
-            </div>
-            {p.data.slug === FEATURE && (
-              <figure class="pshot">
-                <img src={`${base}/img/checkmate-dashboard.webp`} width="1300" height="725" loading="lazy" decoding="async"
-                     alt="CheckMate 관리자 대시보드 개요 탭 화면" />
-              </figure>
-            )}
-          </a>
-        ))}
-      </div>
-    </section>
-
-    <section class="reveal">
-      <div class="shead"><h2>역량</h2></div>
-      <div class="caps">
-        {caps.map((c) => (
-          <div class="cap">
-            <h3>{c.data.name}</h3>
-            <p>{c.data.tags.join(' · ')}</p>
-            {c.data.source && <div class="src mono"><b>관련</b> {c.data.source}</div>}
           </div>
         ))}
       </div>

@@ -1,0 +1,87 @@
+---
+import Base from '../../layouts/Base.astro';
+import stages from '../../data/stages.json';
+
+/* 단계별 대표 사례 — 경로는 단계 이름으로 낸다(프로젝트 이름이 아니다 · 04 §3-B).
+   문제·해결·결과 문장은 볼트 지원서 원고 그대로(sync) · 그림 값은 웹_단계.md 사실 줄 */
+export function getStaticPaths() {
+  return stages.cases.map((c) => ({ params: { stage: c.path }, props: { c } }));
+}
+
+const { c } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const row = stages.rows.find((r) => r.pj === c.pj);
+const i = stages.cases.indexOf(c);
+const prev = stages.cases[i - 1];
+const next = stages.cases[i + 1];
+const no = (n) => String(n).padStart(2, '0');
+const fig = c.fig;
+---
+<Base title={`${c.stageName} · ${c.title}`} description={`${c.meta} · ${c.steps[0].paras[0]}`}>
+  <div class="wrap">
+    <section style="padding-top:48px">
+      <a class="back" href={`${base}/#overview`}>← 단계 표</a>
+
+      <header class="case-head">
+        <p class="stage mono">STEP {no(c.stage)} · {c.stageName}</p>
+        <h1>{c.title}</h1>
+        <p class="chips">{c.meta.split(' · ').map((m) => <span>{m}</span>)}</p>
+      </header>
+
+      <figure class="cfig">
+        {fig.img && (
+          <img class="cshot" src={`${base}/${fig.img.src}`} width={fig.img.w} height={fig.img.h} alt={fig.img.alt} loading="lazy" decoding="async" />
+        )}
+        {fig.bars && (
+          <div class="cbars">
+            {fig.bars.map((g) => (
+              <div class="bgroup">
+                <p class="btitle">{g.t}</p>
+                {g.r.map((b) => (
+                  <div class:list={['brow', { hi: b.hi }]}>
+                    <span class="bl">{b.l}</span>
+                    <span class="bar"><i style={`width:${b.v}%`}></i></span>
+                    <span class="bv mono">{b.v.toFixed(1)}%</span>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        )}
+        {fig.scope && (
+          <div class="cscope">
+            {fig.scope.map((x) => (
+              <div class:list={['sc', { out: x.out, cut: x.cut }]}>
+                <b>{x.b}</b>
+                {x.s.map((t) => <span>{t}</span>)}
+              </div>
+            ))}
+          </div>
+        )}
+        {fig.tl && (
+          <ol class="ctl">
+            {fig.tl.map((t) => (
+              <li class:list={{ end: t.end }}><b>{t.b}</b>{t.s.map((x) => <span>{x}</span>)}</li>
+            ))}
+          </ol>
+        )}
+      </figure>
+
+      <div class="csteps">
+        {c.steps.map((s, k) => (
+          <section class="cstep">
+            <h2><span class="mono">{no(k + 1)}</span>{s.label}</h2>
+            <div>{s.paras.map((p) => <p>{p}</p>)}</div>
+          </section>
+        ))}
+      </div>
+
+      <nav class="cnav">
+        {row && <a href={`${base}/projects/${row.slug}`}>{c.pj} 프로젝트 전체 보기</a>}
+        <span class="sp"></span>
+        {prev && <a href={`${base}/cases/${prev.path}`}>← STEP {no(prev.stage)} {prev.stageName}</a>}
+        {next && <a href={`${base}/cases/${next.path}`}>STEP {no(next.stage)} {next.stageName} →</a>}
+      </nav>
+    </section>
+  </div>
+</Base>
