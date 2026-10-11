@@ -122,7 +122,7 @@
   /* ---------- 이력 ---------- */
   .hist { border-top: 1px solid var(--ink); }
   .hrow {
-    display: grid; grid-template-columns: 150px 1fr 150px;
+    display: grid; grid-template-columns: 150px 1fr 230px;
     gap: 20px; padding: 15px 0;
     border-bottom: 1px solid var(--hairline); align-items: baseline;
   }
@@ -247,6 +247,9 @@
   .case-head .meta { font-size: 13px; color: var(--muted); margin-top: 6px; }
   .case-head .caveat { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
   .prose { max-width: 68ch; }
+  /* 프로젝트 페이지 — 머리말까지 본문 폭에 맞춰 가운데로. 980px 틀 안에 68ch 본문만 두면 왼쪽으로 쏠렸다(2026-10-11) */
+  .wrap.read { max-width: 760px; }
+  .wrap.read .prose { max-width: none; }
   .prose h1 { display: none; }
   .prose h2 { font-size: 19px; font-weight: 650; letter-spacing: -0.02em; margin: 40px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--hairline); }
   .prose h3 { font-size: 15.5px; font-weight: 650; margin: 26px 0 8px; }
