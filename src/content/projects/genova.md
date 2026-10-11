@@ -10,7 +10,7 @@ result: "5주 만에 MVP 배포 · 제출물 6종 41p 인계"
 resultNote: ""
 caveat: "PM 2인 중 1인"
 name: "GeNova"
-links: []
+links: [{"label":"시연영상","url":"https://youtu.be/6WcfOkXJVM0"}]
 linksNote: "사내 프로젝트 · 산출물은 요청 시 공유"
 tags: ["PM","AI","팀프로젝트","기업실무"]
 ---
