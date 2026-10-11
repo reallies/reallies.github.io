@@ -61,6 +61,9 @@ LLM 호출을 비동기 큐로 처리하려던 계획은 동기 처리로 우선
 - **여행/동행 협업 도메인** — 도시·항공편·동행·권한 관리
 - 12개 모듈 · ~30개 Prisma 모델 · Swagger 문서화
 
+
+<figure class="cfig pfig"><div class="gal"><div class="gtrack" tabindex="0" aria-label="화면 — 옆으로 넘겨 보기"><figure class="gitem"><img src="/img/checkmate-home-desktop.jpg" width="1280" height="800" alt="첫 화면" loading="eager" decoding="async"><figcaption>첫 화면</figcaption></figure><figure class="gitem tall"><img src="/img/checkmate-home-mobile.jpg" width="390" height="844" alt="모바일 첫 화면" loading="lazy" decoding="async"><figcaption>모바일 첫 화면</figcaption></figure><figure class="gitem"><img src="/img/checkmate-dashboard.webp" width="1300" height="725" alt="관리자 대시보드" loading="lazy" decoding="async"><figcaption>관리자 대시보드</figcaption></figure></div><div class="gnav"><button type="button" data-dir="-1" aria-label="이전 화면">←</button><span class="gcount mono"><b>1</b> / 3</span><button type="button" data-dir="1" aria-label="다음 화면">→</button></div></div><figcaption class="fcap">운영 중인 서비스 화면</figcaption></figure>
+
 ## 결과
 
 **진입 전환율 — 방문 대비 체크리스트 탐색**
@@ -76,6 +79,9 @@ LLM 호출을 비동기 큐로 처리하려던 계획은 동기 처리로 우선
 - **저장 = 리텐션 선행지표 검증** — 저장 경험자 재방문율 35.9% vs 미경험자 15.6%, **2.3배**. 다음 개선 순서를 이 데이터로 정했다
 - **누적** 방문 3,861 · 탐색 1,167 · 가입 108 · 여행 194 · 저장 137 · **제휴 첫 실수익 발생** · **현재 운영 중**(7/7 재배포)
 - **부트캠프 프로젝트 최우수상** — "깊이 있는 분석과 우수한 실행력", **7인 팀(4조) 공동 수상**
+
+
+<figure class="cfig pfig"><div class="cbars"><div class="bgroup"><p class="btitle">진입 전환율</p><div class="brow"><span class="bl">1차 배포</span><span class="bar"><i style="width:20.2%"></i></span><span class="bv mono">20.2%</span></div><div class="brow"><span class="bl">진입 수정·홍보 병행</span><span class="bar"><i style="width:34.0%"></i></span><span class="bv mono">34.0%</span></div><div class="brow hi"><span class="bl">프로젝트 종료 후</span><span class="bar"><i style="width:42.0%"></i></span><span class="bv mono">42.0%</span></div></div><div class="bgroup"><p class="btitle">탐색 세션</p><div class="brow"><span class="bl">1차 배포</span><span class="bar"><i style="width:13.8%"></i></span><span class="bv mono">53</span></div><div class="brow hi"><span class="bl">진입 수정·홍보 병행</span><span class="bar"><i style="width:100.0%"></i></span><span class="bv mono">383</span></div><div class="brow"><span class="bl">프로젝트 종료 후</span><span class="bar"><i style="width:61.6%"></i></span><span class="bv mono">236</span></div></div><div class="bgroup"><p class="btitle">유입별 탐색률</p><div class="brow hi"><span class="bl">검색</span><span class="bar"><i style="width:66.7%"></i></span><span class="bv mono">66.7%</span></div><div class="brow"><span class="bl">커뮤니티</span><span class="bar"><i style="width:47.2%"></i></span><span class="bv mono">47.2%</span></div><div class="brow"><span class="bl">직접유입</span><span class="bar"><i style="width:29.0%"></i></span><span class="bv mono">29.0%</span></div></div></div></figure>
 
 ## 역할 구분
 

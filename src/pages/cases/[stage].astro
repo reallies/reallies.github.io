@@ -103,19 +103,4 @@ const pd = row ? (await getCollection('projects')).find((p) => p.data.slug === r
       </nav>
     </section>
   </div>
-  <script>
-    /* 화면 갤러리 — 가로로 밀거나 버튼으로 넘긴다(scroll-snap) · 현재 번호 표시 */
-    for (const gal of document.querySelectorAll<HTMLElement>('.gal')) {
-      const track = gal.querySelector<HTMLElement>('.gtrack')!;
-      const items = [...track.children] as HTMLElement[];
-      const count = gal.querySelector('.gcount b')!;
-      const x = (el: HTMLElement) => el.offsetLeft - items[0].offsetLeft;
-      const cur = () => items.reduce((best, el, i) => Math.abs(x(el) - track.scrollLeft) < Math.abs(x(items[best]) - track.scrollLeft) ? i : best, 0);
-      track.addEventListener('scroll', () => { count.textContent = String(cur() + 1); }, { passive: true });
-      gal.querySelectorAll<HTMLButtonElement>('.gnav button').forEach((b) => b.addEventListener('click', () => {
-        const n = Math.min(items.length - 1, Math.max(0, cur() + Number(b.dataset.dir)));
-        track.scrollTo({ left: x(items[n]), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-      }));
-    }
-  </script>
 </Base>

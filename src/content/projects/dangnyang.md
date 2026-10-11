@@ -36,6 +36,9 @@ tags: ["웹사이트 개발","데이터","데이터 분석","Frontend","PM","팀
 
 조사에서 잡은 기회 공백은 명확했다. 공공 데이터는 부정확하고 부분적이며, 민간 서비스는 조건 필터링을 지원하지 않았다. 그래서 체중·견종 같은 내 반려동물 조건으로 실제 입장 가능한 시설을 찾는 방향을 검토했다.
 
+
+<figure class="cfig pfig"><div class="cscope"><div class="sc"><b>공공 데이터</b><span>사람이 입력한 자료 · 일부 오류 명시</span><span>관광지·숙박·음식점 범주만</span></div><div class="sc"><b>민간 서비스</b><span>반려동물 조건으로 거르지 못함</span><span>운영 정책은 수시로 바뀜</span></div><div class="sc out"><b>기회 공백 → 방향</b><span>정확하면서 조건으로 거르는 정보가 없음</span><span>체중·견종 조건으로 실제 입장 가능한 시설 탐색</span></div></div><ol class="ctl"><li class=""><b>테마</b><span>반려동물</span><span>팀 브레인스토밍</span></li><li class=""><b>자료조사</b><span>보도 사례 · 입장 조건</span><span>공공 데이터 확인</span></li><li class=""><b>방향 제안</b><span>조건으로 찾는 탐색</span><span>페르소나 3명</span></li><li class=" end"><b>03.08</b><span>팀 합의</span><span>MVP 범위 포함</span></li><li class=""><b>지표</b><span>상세 진입률</span><span>검색 → 상세</span></li></ol></figure>
+
 ## 내린 결정
 
 3월 8일 팀 회의에서 **조건 기반 탐색 구조를 MVP 범위에 넣는 것**으로 합의했다. 조사에서 좁힌 방향은 이 팀 합의로 이어졌다.
@@ -57,6 +60,9 @@ tags: ["웹사이트 개발","데이터","데이터 분석","Frontend","PM","팀
 - 이벤트 수집률 ≥95%
 
 이 값들은 실제 달성 수치가 아니라 설계 단계에서 정한 **목표값**이다.
+
+
+<figure class="cfig pfig"><p class="ftitle">5단 퍼널</p><div class="cflow"><div class="fbox"><b>검색</b></div><span class="farr" aria-hidden="true"><em>≥25%</em>→</span><div class="fbox"><b>상세</b></div><span class="farr" aria-hidden="true"><em>≥50%</em>→</span><div class="fbox"><b>조건확인</b></div><span class="farr" aria-hidden="true"><em>≥30%</em>→</span><div class="fbox hi"><b>방문의향</b></div><span class="farr" aria-hidden="true">→</span><div class="fbox"><b>재방문</b></div></div><figcaption class="fcap">화살표 위 값 = 설계 단계에서 정한 목표값(실측 아님)</figcaption></figure>
 
 ## 직접 만든 것
 
@@ -80,6 +86,9 @@ React·Vite·TypeScript 모노레포에서 화면 구현을 맡았다. 구조는
 | 데이터 분석 | **Python · Streamlit · pandas · Plotly · MySQL 8(SQL 분석 쿼리)** |
 | Frontend | **React · Vite · TypeScript** (모노레포) |
 | 데이터 모델 | event_logs 중심 이벤트 스키마 |
+
+
+<figure class="cfig pfig"><div class="gal"><div class="gtrack" tabindex="0" aria-label="화면 — 옆으로 넘겨 보기"><figure class="gitem"><img src="/img/dangnyang-6.jpg" width="1280" height="720" alt="검색 · 상세 필터와 지도" loading="eager" decoding="async"><figcaption>검색 · 상세 필터와 지도</figcaption></figure><figure class="gitem"><img src="/img/dangnyang-14.jpg" width="1280" height="720" alt="시설 상세" loading="lazy" decoding="async"><figcaption>시설 상세</figcaption></figure></div><div class="gnav"><button type="button" data-dir="-1" aria-label="이전 화면">←</button><span class="gcount mono"><b>1</b> / 2</span><button type="button" data-dir="1" aria-label="다음 화면">→</button></div></div><figcaption class="fcap">시연영상 화면</figcaption></figure>
 
 ## 결과
 

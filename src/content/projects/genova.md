@@ -24,11 +24,9 @@ tags: ["PM","AI","팀프로젝트","기업실무"]
 
 캐릭터·배경 일관성이 생성 모델의 한계로 무너지는 것이 현장의 가장 큰 불편이었다.
 
-```text
-기획(텍스트) → [ GeNova ] → 영상 AI → 편집·음악·자막
-                   ↓
-     3×3 그리드 스토리보드 1장 + 통합 영문 프롬프트
-```
+
+
+<figure class="cfig pfig"><div class="cflow"><div class="fbox"><b>기획(텍스트)</b></div><span class="farr" aria-hidden="true">→</span><div class="fbox hi"><b>GeNova</b><span>3×3 그리드 스토리보드 1장</span><span>통합 영문 프롬프트</span></div><span class="farr" aria-hidden="true">→</span><div class="fbox"><b>영상 AI</b></div><span class="farr" aria-hidden="true">→</span><div class="fbox"><b>편집·음악·자막</b></div></div></figure>
 
 ## 조사·기획
 
@@ -44,6 +42,9 @@ tags: ["PM","AI","팀프로젝트","기업실무"]
 - **발표 6일 전 산출 구조 변경을 반영했다**: 현업 PD가 이미지 9장을 병렬 생성해 합성하던 방식을 바꿔 달라고 요청했다. 비용 문제로 3×3 그리드 이미지 1장을 한 번에 생성하는 구조로 바꾸는 요청이었다.
 - **수정 범위부터 산정했다**: 요청을 바로 코드에 반영하지 않고 바뀌는 영역과 우선순위를 정했다. 계획하던 이미지 품질 개선 테스트는 포기했다. 개발자 3명에게 각자 맡은 파트를 기준으로 바뀌는 점을 나눠 확인했다. QA → 수정 사항 QA → 전체 QA → 시연 순서로 반복하며 발견한 버그를 전달했다.
 - **못 고친 문제는 원인을 남겼다**: 컷 간 일관성과 병렬 생성 문제는 기간 안에 해결하지 못했다. 원인을 코드 수준으로 확인해 로드맵과 예상 질문 답변에 정리했다.
+
+
+<figure class="cfig pfig"><div class="cscope"><div class="sc"><b>처음 구조</b><span>이미지 9장을 합치는 구조</span></div><div class="sc out"><b>바꾼 구조</b><span>3×3 그리드 이미지 1장을 만드는 구조</span></div><div class="sc cut"><b>발표 전 제외</b><span>컷을 하나씩 생성하는 방식 · 로그인 · 라이브 시연</span></div></div><ol class="ctl"><li class=""><b>06.23</b><span>킥오프</span></li><li class=""><b>발표 직전 주</b><span>9장 합성에서</span><span>3×3 그리드 1장으로</span><span>일정 재계획</span></li><li class=""><b>같은 주 QA</b><span>참고 이미지 미반영</span><span>원인 확인 · 개발자 수정</span></li><li class=" end"><b>07.29</b><span>MVP 배포</span><span>사내 발표</span></li><li class=""><b>08.03</b><span>제출물 6종 인계</span><span>참여 종료</span></li></ol></figure>
 
 ## 문서 거버넌스
 
@@ -66,6 +67,9 @@ tags: ["PM","AI","팀프로젝트","기업실무"]
 | AI | Claude · GPT Image · Gemini |
 | DB | Supabase |
 | 배포 | AWS EC2 · Vercel |
+
+
+<figure class="cfig pfig"><div class="gal"><div class="gtrack" tabindex="0" aria-label="화면 — 옆으로 넘겨 보기"><figure class="gitem"><img src="/img/genova-5.jpg" width="1280" height="720" alt="3×3 그리드 스토리보드와 통합 영문 프롬프트" loading="eager" decoding="async"><figcaption>3×3 그리드 스토리보드와 통합 영문 프롬프트</figcaption></figure><figure class="gitem"><img src="/img/genova-3.jpg" width="1280" height="720" alt="고급설정 · 이미지 생성 모델과 그림체 선택" loading="lazy" decoding="async"><figcaption>고급설정 · 이미지 생성 모델과 그림체 선택</figcaption></figure><figure class="gitem"><img src="/img/genova-12.jpg" width="1280" height="720" alt="캔버스" loading="lazy" decoding="async"><figcaption>캔버스</figcaption></figure></div><div class="gnav"><button type="button" data-dir="-1" aria-label="이전 화면">←</button><span class="gcount mono"><b>1</b> / 3</span><button type="button" data-dir="1" aria-label="다음 화면">→</button></div></div><figcaption class="fcap">시연영상 화면</figcaption></figure>
 
 ## 결과
 

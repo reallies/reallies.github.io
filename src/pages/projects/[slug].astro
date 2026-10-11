@@ -9,7 +9,9 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { Content, headings } = await render(entry);
+// 오른쪽 목차 — 본문 h2만. 카드 머리 h1은 숨긴다(.prose h1)
+const toc = headings.filter((h) => h.depth === 2);
 const d = entry.data;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const siteUrl = new URL(`${base}/`, Astro.site).href;
@@ -30,6 +32,7 @@ const workSchema = {
 ---
 <Base title={d.name} description={d.summary || d.kind} jsonld={[workSchema]}>
   <div class="wrap read">
+    <div class="read-grid">
     <section style="padding-top:48px">
       <a class="back" href={`${base}/#overview`}>← 단계 표</a>
 
@@ -49,7 +52,40 @@ const workSchema = {
         <Content />
       </div>
 
-      <MediaBlock links={d.links} note={d.linksNote} name={d.name} title="링크" />
+      <div id="links"><MediaBlock links={d.links} note={d.linksNote} name={d.name} title="링크" /></div>
     </section>
+    {toc.length > 2 && (
+      <aside class="toc" aria-label="목차">
+        <p class="toc-h mono">목차</p>
+        <ol>
+          {toc.map((h) => <li><a href={`#${h.slug}`} data-toc={h.slug}>{h.text}</a></li>)}
+          {(d.links?.length > 0 || d.linksNote) && <li><a href="#links" data-toc="links">링크</a></li>}
+        </ol>
+      </aside>
+    )}
+    </div>
   </div>
+  <script>
+    // 지금 읽는 절을 목차에 표시 — 화면 위 1/3 지점을 지난 마지막 제목
+    const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc a[data-toc]')];
+    const targets = links.map((a) => document.getElementById(a.dataset.toc!)).filter(Boolean) as HTMLElement[];
+    if (targets.length) {
+      let ticking = false;
+      let lockUntil = 0;
+      // 누른 항목은 바로 표시 — 부드러운 스크롤 중간값으로 깜빡이지 않게 잠깐 고정
+      for (const a of links) a.addEventListener('click', () => { lockUntil = Date.now() + 900; for (const b of links) b.classList.toggle('on', b === a); });
+      const update = () => {
+        ticking = false;
+        if (Date.now() < lockUntil) return;
+        const line = window.innerHeight * 0.33;
+        let cur = targets[0];
+        for (const t of targets) if (t.getBoundingClientRect().top <= line) cur = t;
+        if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) cur = targets[targets.length - 1];
+        for (const a of links) a.classList.toggle('on', a.dataset.toc === cur.id);
+      };
+      addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+      addEventListener('resize', update);
+      update();
+    }
+  </script>
 </Base>

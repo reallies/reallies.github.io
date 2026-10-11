@@ -247,9 +247,22 @@
   .case-head .meta { font-size: 13px; color: var(--muted); margin-top: 6px; }
   .case-head .caveat { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
   .prose { max-width: 68ch; }
-  /* 프로젝트 페이지 — 머리말까지 본문 폭에 맞춰 가운데로. 980px 틀 안에 68ch 본문만 두면 왼쪽으로 쏠렸다(2026-10-11) */
-  .wrap.read { max-width: 760px; }
+  /* 프로젝트 페이지 — 첫 화면과 같은 980px 틀. 본문은 왼쪽, 목차는 오른쪽 칸(2026-10-12 👤 「메인과 너비가 달라 어색」 · 그전 10-11은 760px 가운데) */
   .wrap.read .prose { max-width: none; }
+  .read-grid { display: grid; grid-template-columns: minmax(0, 1fr) 188px; gap: 56px; align-items: start; }
+  .read-grid > section { min-width: 0; }
+  .toc { position: sticky; top: 92px; padding-top: 48px; }
+  .toc-h { font-size: 11px; letter-spacing: 0.08em; color: var(--muted); margin: 0 0 10px; }
+  .toc ol { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--hairline); }
+  .toc a { display: block; padding: 6px 0 6px 14px; margin-left: -1px; border-left: 2px solid transparent; font-size: 13px; line-height: 1.45; color: var(--muted); text-decoration: none; transition: color .15s, border-color .15s; }
+  .toc a:hover { color: var(--ink); }
+  .toc a.on { color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+  .prose h2, #links { scroll-margin-top: 84px; }
+  @media (max-width: 960px) {
+    .read-grid { grid-template-columns: 1fr; gap: 0; }
+    .toc { display: none; }
+  }
+  @media print { .toc { display: none; } .read-grid { display: block; } }
   .prose h1 { display: none; }
   .prose h2 { font-size: 19px; font-weight: 650; letter-spacing: -0.02em; margin: 40px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--hairline); }
   .prose h3 { font-size: 15.5px; font-weight: 650; margin: 26px 0 8px; }
@@ -566,3 +579,31 @@
 
   /* 결과 수치는 본문 서체로 — 고정폭 서체에 한글이 섞이면 글자 사이가 벌어져 읽기 어렵다. 숫자 폭만 고정한다 */
   .presult .mono { font-family: inherit; font-variant-numeric: tabular-nums; font-weight: 700; letter-spacing: -0.01em; }
+
+/* 목차를 누르면 그 절로 부드럽게 — 움직임 줄이기 설정이면 바로 이동 */
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+/* ---------- 프로젝트 본문 그림(웹_그림.md · 2026-10-12) — 사례 그림과 같은 모양 · 본문 글자 규칙(.prose)을 되돌린다 ---------- */
+.prose .pfig { margin: 22px 0 8px; }
+.prose .pfig p, .prose .pfig span, .prose .pfig li { font-size: inherit; line-height: inherit; margin: 0; }
+.prose .pfig ol { padding-left: 0; }
+.prose .pfig .sc span { font-size: 13.5px; line-height: 1.5; }
+.prose .pfig .ctl li { font-size: 12.5px; line-height: 1.45; padding: 12px 10px 0 0; }
+.prose .pfig .btitle { font-size: 13px; font-weight: 650; margin-bottom: 4px; }
+.prose .pfig .cbars { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.prose .pfig .brow { grid-template-columns: 110px 1fr 56px; }
+.pfig .ftitle { font-size: 12px; letter-spacing: 0.06em; color: var(--muted); font-weight: 650; }
+.pfig .fcap { font-size: 12.5px; color: var(--muted); }
+.cflow { display: flex; align-items: stretch; flex-wrap: wrap; gap: 8px; }
+.fzone { border: 1px dashed var(--hairline); border-radius: 6px; padding: 8px 10px 10px; display: flex; flex-direction: column; gap: 6px; }
+.fzone .fzl { font-size: 11px; letter-spacing: 0.06em; color: var(--muted); }
+.frow { display: flex; align-items: stretch; gap: 8px; flex-wrap: wrap; }
+.fbox { border: 1px solid var(--hairline); border-radius: 4px; background: var(--surface); padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; min-width: 88px; }
+.prose .fbox b { font-size: 13.5px; font-weight: 650; }
+.prose .fbox span { font-size: 12px; color: var(--muted); line-height: 1.45; }
+.fbox.hi { border-color: var(--accent); box-shadow: inset 0 3px 0 var(--accent); }
+.fbox.hi b { color: var(--accent); }
+.farr { align-self: center; display: flex; flex-direction: column; align-items: center; color: var(--muted); font-size: 14px; line-height: 1; }
+.prose .farr em { font-style: normal; font-size: 11px; color: var(--accent); font-weight: 650; margin-bottom: 3px; font-variant-numeric: tabular-nums; }
+@media (max-width: 800px) { .prose .pfig .ctl li { padding: 0 0 14px 18px; } }
+@media print { .pfig .gal { display: none; } }

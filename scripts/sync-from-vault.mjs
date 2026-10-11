@@ -10,6 +10,7 @@ import { mkdir, readdir, readFile, writeFile, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { figHtml } from '../src/lib/figs.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const VAULT = process.env.VAULT_DIR
@@ -114,7 +115,7 @@ async function reset(dir) {
   await mkdir(dir, { recursive: true });
 }
 
-async function syncProjects() {
+async function syncProjects(figs = {}) {
   const dir = path.join(VAULT, '프로젝트');
   const files = (await readdir(dir)).filter((f) => f.endsWith('.md'));
   await reset(OUT_PROJECTS);
@@ -149,12 +150,49 @@ async function syncProjects() {
       Object.entries(fm)
         .map(([k, v]) => `${k}: ${Array.isArray(v) ? JSON.stringify(v) : typeof v === 'string' ? JSON.stringify(v) : v}`)
         .join('\n') +
-      '\n---\n' + dropHeroMeta(publicize(parts.body));
+      '\n---\n' + placeFigs(dropHeroMeta(publicize(parts.body)), figs[slug] ?? [], slug);
 
     await writeFile(path.join(OUT_PROJECTS, `${slug}.md`), out);
     n++;
   }
   return n;
+}
+
+/**
+ * 본문 그림(웹_그림.md · 2026-10-12) — `## {after}` 절의 끝(다음 `## ` 앞)에 그림 HTML을 꽂는다.
+ * drop_code면 그 절의 첫 코드 상자를 뺀다(같은 내용의 글자 그림을 그림으로 대신). 제목을 못 찾으면 멈춘다
+ */
+function placeFigs(body, list, slug) {
+  let lines = body.split('\n');
+  for (const f of list) {
+    const h = lines.findIndex((l) => l.trim() === `## ${f.after}`);
+    if (h < 0) die(`웹_그림.md: ${slug} 본문에 「## ${f.after}」 절이 없습니다`);
+    let end = lines.findIndex((l, i) => i > h && /^## /.test(l));
+    if (end < 0) end = lines.length;
+    if (f.drop_code) {
+      const a = lines.findIndex((l, i) => i > h && i < end && /^```/.test(l));
+      const b = a < 0 ? -1 : lines.findIndex((l, i) => i > a && /^```\s*$/.test(l));
+      if (a < 0 || b < 0 || b >= end) die(`웹_그림.md: ${slug} 「${f.after}」 절에 코드 상자가 없습니다`);
+      lines.splice(a, b - a + 1);
+      end -= b - a + 1;
+    }
+    lines.splice(end, 0, '', figHtml(f), '');
+  }
+  return lines.join('\n');
+}
+
+async function syncFigs(stages) {
+  const file = path.join(VAULT, '웹_그림.md');
+  if (!existsSync(file)) return {};
+  const { default: yaml } = await import('js-yaml');
+  const figs = yaml.load(split(await readFile(file, 'utf8')).fm).figs ?? {};
+  for (const list of Object.values(figs)) for (const f of list) {
+    if (!f.from_case) continue;
+    const c = stages.cases.find((x) => x.path === f.from_case) ?? die(`웹_그림.md: 사례 「${f.from_case}」가 없습니다`);
+    if (c.fig.scope) f.scope = c.fig.scope;
+    if (c.fig.tl) f.tl = c.fig.tl;
+  }
+  return figs;
 }
 
 async function syncCapabilities() {
@@ -255,11 +293,12 @@ async function syncStages() {
 }
 
 const profile = await syncProfile();
-const p = await syncProjects();
-const c = await syncCapabilities();
 const st = await syncStages();
+const figs = await syncFigs(st);
+const p = await syncProjects(figs);
+const c = await syncCapabilities();
 
-console.log(`✓ 볼트 동기화 완료  프로필 1 · 프로젝트 ${p} · 역량 ${c} · 단계 사례 ${st.cases.length}`);
+console.log(`✓ 볼트 동기화 완료  프로필 1 · 프로젝트 ${p} · 역량 ${c} · 단계 사례 ${st.cases.length} · 본문 그림 ${Object.values(figs).flat().length}`);
 console.log(`  단계 원천: ${st.source}`);
 console.log(`  출처: ${VAULT}`);
 if (p !== 5) console.warn(`  ⚠ 프로젝트가 ${p}건입니다. web_slug 필드를 확인하세요.`);
