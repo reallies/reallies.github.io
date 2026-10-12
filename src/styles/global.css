@@ -148,6 +148,10 @@
     margin-top: 10px; font-size: 14px; font-weight: 620; color: var(--signal);
   }
   .presult .arrow { color: var(--muted); font-weight: 400; }
+  /* 결과 = 수치 줄 · 운영 상태 줄을 나눈다(10-12 외부 피드백 3차) */
+  .presult .note { flex-basis: 100%; }
+  /* 의도한 줄바꿈 자리 — 한 줄 소개 쉼표 뒤 · 사례 제목 「때」 뒤에서만 끊긴다 */
+  .seg { display: inline-block; }
   .prow { transition: background .2s, padding .25s cubic-bezier(0.16, 1, 0.3, 1); border-radius: 2px; }
   .prow:hover { background: var(--surface); padding-left: 12px; padding-right: 12px; }
   .prow:hover .pname { color: var(--accent); }

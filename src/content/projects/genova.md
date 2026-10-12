@@ -3,14 +3,14 @@ slug: "genova"
 order: 2
 live: false
 spark: false
-meta: "2026.06–07 · 샤이닝라이언 인턴십 · 6인 · PM"
+meta: "2026.06 ~ 07 · 샤이닝라이언 인턴십 · 6인 · PM"
 kind: "방송 기획안을 스토리보드로 바꾸는 사내 AI 도구"
 summary: "PM으로 범위와 일정을 관리했습니다. 킥오프의 '올인원 플랫폼' 요구를 5주 안에 만들 수 있는 크기로 잘라내고, PRD를 버전 체인으로 관리해 결정 이력을 남겼습니다."
 result: "5주 만에 MVP 배포 · 제출물 6종 41p 인계"
 resultNote: ""
 caveat: "PM 2인 중 1인"
 name: "GeNova"
-links: [{"label":"시연영상","url":"https://youtu.be/6WcfOkXJVM0"}]
+links: [{"label":"시연 영상","url":"https://youtu.be/6WcfOkXJVM0"}]
 linksNote: "사내 프로젝트 · 산출물은 요청 시 공유"
 tags: ["PM","AI","팀프로젝트","기업실무"]
 ---
@@ -34,12 +34,18 @@ tags: ["PM","AI","팀프로젝트","기업실무"]
 
 ## 내린 결정
 
-- **범위를 잘랐다**: 여러 기능을 하나로 묶으면 코드 규모가 커지고 기간 내 완주가 어렵다고 판단했다. 스토리보드와 캔버스를 독립 제품으로 다시 나눠 범위에서 제외했다. 디자인 시스템은 전 팀 공통으로 통일해 이후 통합 가능성은 남겼다.
-- **복잡한 안보다 최소안을 선택했다**: 캔버스 배치안 투표에서는 가장 복잡한 안이 최다 득표였다. 기간 내 구현 가능성을 근거로 최소안을 제안했고, 나머지는 로드맵으로 넘겼다.
-- **무효가 될 실험을 막았다**: 참고 이미지를 넣었을 때와 넣지 않았을 때를 비교하기 전 코드를 확인했다. 프론트와 백엔드의 필드명이 달라 이미지가 서버에 도달하지 않는 상태였다. 필드명을 맞춘 뒤 비교 실험을 다시 설계했다.
-- **발표 6일 전 산출 구조 변경을 반영했다**: 현업 PD가 이미지 9장을 병렬 생성해 합성하던 방식을 바꿔 달라고 요청했다. 비용 문제로 3×3 그리드 이미지 1장을 한 번에 생성하는 구조로 바꾸는 요청이었다.
-- **수정 범위부터 산정했다**: 요청을 바로 코드에 반영하지 않고 바뀌는 영역과 우선순위를 정했다. 계획하던 이미지 품질 개선 테스트는 포기했다. 개발자 3명에게 각자 맡은 파트를 기준으로 바뀌는 점을 나눠 확인했다. QA → 수정 사항 QA → 전체 QA → 시연 순서로 반복하며 발견한 버그를 전달했다.
-- **못 고친 문제는 원인을 남겼다**: 컷 간 일관성과 병렬 생성 문제는 기간 안에 해결하지 못했다. 원인을 코드 수준으로 확인해 로드맵과 예상 질문 답변에 정리했다.
+- **범위를 잘랐다**\
+  여러 기능을 하나로 묶으면 코드 규모가 커지고 기간 내 완주가 어렵다고 판단했다. 스토리보드와 캔버스를 독립 제품으로 다시 나눠 범위에서 제외했다. 디자인 시스템은 전 팀 공통으로 통일해 이후 통합 가능성은 남겼다.
+- **복잡한 안보다 최소안을 선택했다**\
+  캔버스 배치안 투표에서는 가장 복잡한 안이 최다 득표였다. 기간 내 구현 가능성을 근거로 최소안을 제안했고, 나머지는 로드맵으로 넘겼다.
+- **무효가 될 실험을 막았다**\
+  참고 이미지를 넣었을 때와 넣지 않았을 때를 비교하기 전 코드를 확인했다. 프론트와 백엔드의 필드명이 달라 이미지가 서버에 도달하지 않는 상태였다. 필드명을 맞춘 뒤 비교 실험을 다시 설계했다.
+- **발표 6일 전 산출 구조 변경을 반영했다**\
+  현업 PD가 이미지 9장을 병렬 생성해 합성하던 방식을 바꿔 달라고 요청했다. 비용 문제로 3×3 그리드 이미지 1장을 한 번에 생성하는 구조로 바꾸는 요청이었다.
+- **수정 범위부터 산정했다**\
+  요청을 바로 코드에 반영하지 않고 바뀌는 영역과 우선순위를 정했다. 계획하던 이미지 품질 개선 테스트는 포기했다. 개발자 3명에게 각자 맡은 파트를 기준으로 바뀌는 점을 나눠 확인했다. QA → 수정 사항 QA → 전체 QA → 시연 순서로 반복하며 발견한 버그를 전달했다.
+- **못 고친 문제는 원인을 남겼다**\
+  컷 간 일관성과 병렬 생성 문제는 기간 안에 해결하지 못했다. 원인을 코드 수준으로 확인해 로드맵과 예상 질문 답변에 정리했다.
 
 
 <figure class="cfig pfig"><div class="cscope"><div class="sc"><b>처음 구조</b><span>이미지 9장을 합치는 구조</span></div><div class="sc out"><b>바꾼 구조</b><span>3×3 그리드 이미지 1장을 만드는 구조</span></div><div class="sc cut"><b>발표 전 제외</b><span>컷을 하나씩 생성하는 방식 · 로그인 · 라이브 시연</span></div></div><ol class="ctl" style="grid-template-columns:repeat(5, minmax(0, 1fr));--n:5"><li class=""><b>킥오프</b><i class="ctd">06.23</i></li><li class=""><b>일정 재계획</b><i class="ctd">발표 직전 주</i><span>9장 합성에서</span><span>3×3 그리드 1장으로</span></li><li class=""><b>QA</b><i class="ctd">같은 주</i><span>참고 이미지 미반영</span><span>원인 확인 · 개발자 수정</span></li><li class=" end"><b>MVP 배포</b><i class="ctd">07.29</i><span>사내 발표</span></li><li class=""><b>인계</b><i class="ctd">08.03</i><span>제출물 6종</span><span>참여 종료</span></li></ol></figure>
@@ -67,7 +73,7 @@ tags: ["PM","AI","팀프로젝트","기업실무"]
 | 배포 | AWS EC2 · Vercel |
 
 
-<figure class="cfig pfig"><p class="gsrc">시연영상 화면</p><div class="gal"><div class="gtrack" tabindex="0" aria-label="화면 — 옆으로 넘겨 보기"><figure class="gitem"><img src="/img/genova-5.jpg" width="1600" height="827" alt="3×3 그리드 스토리보드와 통합 영문 프롬프트" loading="eager" decoding="async"><figcaption>3×3 그리드 스토리보드와 통합 영문 프롬프트</figcaption></figure><figure class="gitem"><img src="/img/genova-12.jpg" width="1600" height="827" alt="캔버스" loading="lazy" decoding="async"><figcaption>캔버스</figcaption></figure></div><div class="gnav"><button type="button" data-dir="-1" aria-label="이전 화면">←</button><span class="gcount mono"><b>1</b> / 2</span><button type="button" data-dir="1" aria-label="다음 화면">→</button></div></div></figure>
+<figure class="cfig pfig"><p class="gsrc">시연 영상 화면</p><div class="gal"><div class="gtrack" tabindex="0" aria-label="화면 — 옆으로 넘겨 보기"><figure class="gitem"><img src="/img/genova-5.jpg" width="1600" height="827" alt="3×3 그리드 스토리보드와 통합 영문 프롬프트" loading="eager" decoding="async"><figcaption>3×3 그리드 스토리보드와 통합 영문 프롬프트</figcaption></figure><figure class="gitem"><img src="/img/genova-12.jpg" width="1600" height="827" alt="캔버스" loading="lazy" decoding="async"><figcaption>캔버스</figcaption></figure></div><div class="gnav"><button type="button" data-dir="-1" aria-label="이전 화면">←</button><span class="gcount mono"><b>1</b> / 2</span><button type="button" data-dir="1" aria-label="다음 화면">→</button></div></div></figure>
 
 ## 결과
 

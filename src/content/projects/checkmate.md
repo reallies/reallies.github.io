@@ -3,8 +3,8 @@ slug: "checkmate"
 order: 1
 live: true
 spark: false
-meta: "2026.04– 운영 중 · 멋쟁이사자처럼 부트캠프 · 7인 · 팀장"
-kind: "AI 여행 준비 체크리스트 서비스"
+meta: "2026.04 ~ 운영 중 · 멋쟁이사자처럼 부트캠프 · 7인 · 팀장"
+kind: "AI 여행 준비물 체크리스트 서비스"
 summary: "진입 전환율이 20.2%에 그치자 퍼널로 원인을 규명했습니다. 광고 채널을 일주일씩 번갈아 집행해 비교한 뒤 유입 전략을 다시 잡았고, 백엔드는 AI 코딩 도구로 구현해 직접 검증했습니다."
 result: "방문 세션 중 탐색 비율 20.2%(5월 초·중순) · 42.0%(홍보가 없던 7월)"
 resultNote: "팀 해산 후에도 운영 중"
@@ -73,13 +73,13 @@ LLM 호출을 비동기 큐로 처리하려던 계획은 동기 처리로 우선
 | 프로젝트 종료 후 | 7.1–8.3 | 562 | 236 | 42.0% |
 
 - **7월 42.0%는 성격이 다르다** — 홍보를 멈춘 구간이라 전환율은 올랐지만 **탐색 세션은 383에서 236으로 줄었다**
-- **보류했던 「제품이 어렵다」는 여기서 기각** — 탐색률이 검색 66.7% > 커뮤니티 47.2% > 직접유입 29.0%로 갈렸다. 같은 제품인데 채널에 따라 2배 넘게 차이 났다. 유입의 문제였다
+- **보류했던 「제품이 어렵다」는 여기서 기각** — 탐색률이 검색 66.7% > 커뮤니티 47.2% > 직접 유입 29.0%로 갈렸다. 같은 제품인데 채널에 따라 2배 넘게 차이 났다. 유입의 문제였다
 - **저장 = 리텐션 선행지표 검증** — 저장 경험자 재방문율 35.9% vs 미경험자 15.6%, **2.3배**. 다음 개선 순서를 이 데이터로 정했다
 - **누적** 방문 3,861 · 탐색 1,167 · 가입 108 · 여행 194 · 저장 137 · **제휴 첫 실수익 발생** · **현재 운영 중**(7/7 재배포)
 - **부트캠프 프로젝트 최우수상** — "깊이 있는 분석과 우수한 실행력", **7인 팀(4조) 공동 수상**
 
 
-<figure class="cfig pfig"><div class="cbars"><div class="bgroup"><p class="btitle">진입 전환율</p><div class="brow"><span class="bl">1차 배포</span><span class="bar"><i style="width:20.2%"></i></span><span class="bv mono">20.2%</span></div><div class="brow"><span class="bl">진입 수정·홍보 병행</span><span class="bar"><i style="width:34.0%"></i></span><span class="bv mono">34.0%</span></div><div class="brow hi"><span class="bl">프로젝트 종료 후</span><span class="bar"><i style="width:42.0%"></i></span><span class="bv mono">42.0%</span></div></div><div class="bgroup"><p class="btitle">탐색 세션</p><div class="brow"><span class="bl">1차 배포</span><span class="bar"><i style="width:13.8%"></i></span><span class="bv mono">53</span></div><div class="brow hi"><span class="bl">진입 수정·홍보 병행</span><span class="bar"><i style="width:100.0%"></i></span><span class="bv mono">383</span></div><div class="brow"><span class="bl">프로젝트 종료 후</span><span class="bar"><i style="width:61.6%"></i></span><span class="bv mono">236</span></div></div><div class="bgroup"><p class="btitle">유입별 탐색률</p><div class="brow hi"><span class="bl">검색</span><span class="bar"><i style="width:66.7%"></i></span><span class="bv mono">66.7%</span></div><div class="brow"><span class="bl">커뮤니티</span><span class="bar"><i style="width:47.2%"></i></span><span class="bv mono">47.2%</span></div><div class="brow"><span class="bl">직접유입</span><span class="bar"><i style="width:29.0%"></i></span><span class="bv mono">29.0%</span></div></div></div></figure>
+<figure class="cfig pfig"><div class="cbars"><div class="bgroup"><p class="btitle">진입 전환율</p><div class="brow"><span class="bl">1차 배포</span><span class="bar"><i style="width:20.2%"></i></span><span class="bv mono">20.2%</span></div><div class="brow"><span class="bl">진입 수정·홍보 병행</span><span class="bar"><i style="width:34.0%"></i></span><span class="bv mono">34.0%</span></div><div class="brow hi"><span class="bl">프로젝트 종료 후</span><span class="bar"><i style="width:42.0%"></i></span><span class="bv mono">42.0%</span></div></div><div class="bgroup"><p class="btitle">탐색 세션</p><div class="brow"><span class="bl">1차 배포</span><span class="bar"><i style="width:13.8%"></i></span><span class="bv mono">53</span></div><div class="brow hi"><span class="bl">진입 수정·홍보 병행</span><span class="bar"><i style="width:100.0%"></i></span><span class="bv mono">383</span></div><div class="brow"><span class="bl">프로젝트 종료 후</span><span class="bar"><i style="width:61.6%"></i></span><span class="bv mono">236</span></div></div><div class="bgroup"><p class="btitle">유입별 탐색률</p><div class="brow hi"><span class="bl">검색</span><span class="bar"><i style="width:66.7%"></i></span><span class="bv mono">66.7%</span></div><div class="brow"><span class="bl">커뮤니티</span><span class="bar"><i style="width:47.2%"></i></span><span class="bv mono">47.2%</span></div><div class="brow"><span class="bl">직접 유입</span><span class="bar"><i style="width:29.0%"></i></span><span class="bv mono">29.0%</span></div></div></div></figure>
 
 ## 역할 구분
 

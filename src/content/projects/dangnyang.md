@@ -4,13 +4,13 @@ order: 3
 live: false
 spark: false
 meta: "2026.03 · 멋쟁이사자처럼 부트캠프 · 7인 · 서브리드 · 주 개발(풀스택)"
-kind: "반려동물 동반시설 검색 서비스"
+kind: "반려동물 동반 시설 탐색 서비스"
 summary: "서브리드 · 주 개발(풀스택)로 사용자 행동을 5단 퍼널로 정의하고, Streamlit 분석 대시보드와 React·Vite·TypeScript 화면 구현을 맡았습니다."
 result: "어디서 이탈하는지 보이는 측정 체계 구축"
 resultNote: ""
 caveat: "측정 체계 구현 · 운영 실측치 아님"
 name: "댕냥여지도"
-links: [{"label":"시연영상","url":"https://youtu.be/vLeeBJN0WdA"},{"label":"데이터 분석 대시보드","url":"https://youtu.be/A5QiMEJ4ZE8"}]
+links: [{"label":"시연 영상","url":"https://youtu.be/vLeeBJN0WdA"},{"label":"데이터 분석 대시보드","url":"https://youtu.be/A5QiMEJ4ZE8"}]
 linksNote: "대시보드 영상의 수치는 샘플 데이터입니다. 레포는 비공개이며 코드는 요청 시 공유합니다."
 tags: ["웹사이트 개발","데이터","데이터 분석","Frontend","PM","팀프로젝트"]
 ---
@@ -18,7 +18,7 @@ tags: ["웹사이트 개발","데이터","데이터 분석","Frontend","PM","팀
 
 ## 문제
 
-반려동물 동반 시설을 찾을 때 ① 검색→상세 진입에서 이탈이 크고(전환 병목), ② 동반 조건이 상단에 드러나지 않아 같은 시설을 반복 조회하게 된다. "어디서, 왜 이탈하는가"를 데이터로 보이게 만드는 것이 과제였다.
+제품 정의서에서는 ① 검색→상세 진입 병목, ② 동반 조건이 상단에 드러나지 않아 같은 시설을 반복 조회하는 문제를 가설로 세웠다. "어디서, 왜 이탈하는가"를 데이터로 보이게 만드는 것이 과제였다.
 
 팀 브레인스토밍에서 먼저 **반려동물**이라는 테마를 정했다. 이후 조사는 그 테마 안에서 어떤 문제를 풀고 어떤 탐색 구조를 만들지 좁히는 데 사용했다.
 
@@ -43,15 +43,15 @@ tags: ["웹사이트 개발","데이터","데이터 분석","Frontend","PM","팀
 
 측정에서는 사용자 행동을 5단 퍼널로 정의했다.
 
-`검색 → 상세 → 조건확인 → 방문의향 → 재방문`
+`검색 → 상세 → 조건 확인 → 방문의향 → 재방문`
 
 단계별 전환율 외에 루프 완주율과 재사용 지수를 수식으로 설계했다. 루프 완주율은 검색한 사람 중 방문의향 행동까지 간 비율로 정의했다. 재사용 지수는 사용자당 평균 루프 반복 횟수로 두었다.
 
 검증 기준으로 아래 목표값도 정했다.
 
 - 검색→상세 ≥25%
-- 상세→조건확인 ≥50%
-- 조건확인→방문의향 ≥30%
+- 상세→조건 확인 ≥50%
+- 조건 확인→방문의향 ≥30%
 - 재탐색률 ≤40%
 - 루프 완주율 ≥0.5
 - 재사용 지수 ≥0.3
@@ -60,7 +60,7 @@ tags: ["웹사이트 개발","데이터","데이터 분석","Frontend","PM","팀
 이 값들은 실제 달성 수치가 아니라 설계 단계에서 정한 **목표값**이다.
 
 
-<figure class="cfig pfig"><p class="ftitle">5단 퍼널</p><div class="cflow"><div class="fbox"><b>검색</b></div><span class="farr" aria-hidden="true"><em>≥25%</em><i>→</i></span><div class="fbox"><b>상세</b></div><span class="farr" aria-hidden="true"><em>≥50%</em><i>→</i></span><div class="fbox"><b>조건확인</b></div><span class="farr" aria-hidden="true"><em>≥30%</em><i>→</i></span><div class="fbox hi"><b>방문의향</b></div><span class="farr" aria-hidden="true"><i>→</i></span><div class="fbox"><b>재방문</b></div></div><figcaption class="fcap">화살표의 값 = 설계 단계에서 정한 목표값(실측 아님)</figcaption></figure>
+<figure class="cfig pfig"><p class="ftitle">5단 퍼널</p><div class="cflow"><div class="fbox"><b>검색</b></div><span class="farr" aria-hidden="true"><em>≥25%</em><i>→</i></span><div class="fbox"><b>상세</b></div><span class="farr" aria-hidden="true"><em>≥50%</em><i>→</i></span><div class="fbox"><b>조건 확인</b></div><span class="farr" aria-hidden="true"><em>≥30%</em><i>→</i></span><div class="fbox hi"><b>방문의향</b></div><span class="farr" aria-hidden="true"><i>→</i></span><div class="fbox"><b>재방문</b></div></div><figcaption class="fcap">화살표의 값 = 설계 단계에서 정한 목표값(실측 아님)</figcaption></figure>
 
 ## 직접 만든 것
 
@@ -86,7 +86,7 @@ React·Vite·TypeScript 모노레포에서 화면 구현을 맡았다. 구조는
 | 데이터 모델 | event_logs 중심 이벤트 스키마 |
 
 
-<figure class="cfig pfig"><p class="gsrc">시연영상 화면</p><div class="gal"><div class="gtrack" tabindex="0" aria-label="화면 — 옆으로 넘겨 보기"><figure class="gitem"><img src="/img/dangnyang-6.jpg" width="1280" height="720" alt="검색 · 상세 필터와 지도" loading="eager" decoding="async"><figcaption>검색 · 상세 필터와 지도</figcaption></figure><figure class="gitem"><img src="/img/dangnyang-14.jpg" width="1280" height="720" alt="시설 상세" loading="lazy" decoding="async"><figcaption>시설 상세</figcaption></figure></div><div class="gnav"><button type="button" data-dir="-1" aria-label="이전 화면">←</button><span class="gcount mono"><b>1</b> / 2</span><button type="button" data-dir="1" aria-label="다음 화면">→</button></div></div></figure>
+<figure class="cfig pfig"><p class="gsrc">시연 영상 화면</p><div class="gal"><div class="gtrack" tabindex="0" aria-label="화면 — 옆으로 넘겨 보기"><figure class="gitem"><img src="/img/dangnyang-6.jpg" width="1280" height="720" alt="검색 · 상세 필터와 지도" loading="eager" decoding="async"><figcaption>검색 · 상세 필터와 지도</figcaption></figure><figure class="gitem"><img src="/img/dangnyang-14.jpg" width="1280" height="720" alt="시설 상세" loading="lazy" decoding="async"><figcaption>시설 상세</figcaption></figure></div><div class="gnav"><button type="button" data-dir="-1" aria-label="이전 화면">←</button><span class="gcount mono"><b>1</b> / 2</span><button type="button" data-dir="1" aria-label="다음 화면">→</button></div></div></figure>
 
 ## 결과
 

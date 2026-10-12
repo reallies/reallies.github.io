@@ -153,12 +153,17 @@ async function syncProjects(figs = {}) {
       Object.entries(fm)
         .map(([k, v]) => `${k}: ${Array.isArray(v) ? JSON.stringify(v) : typeof v === 'string' ? JSON.stringify(v) : v}`)
         .join('\n') +
-      '\n---\n' + placeFigs(dropHeroMeta(publicize(parts.body)), figs[slug] ?? [], slug);
+      '\n---\n' + placeFigs(headLines(dropHeroMeta(publicize(parts.body))), figs[slug] ?? [], slug);
 
     await writeFile(path.join(OUT_PROJECTS, `${slug}.md`), out);
     n++;
   }
   return n;
+}
+
+/** 「내린 결정」 절의 `- **머리**: 설명` → 굵은 머리를 한 줄로 세우고 설명은 다음 줄(10-12 외부 피드백 3차 · 글자는 그대로, 쌍점만 뺀다) */
+function headLines(body) {
+  return body.replace(/(^## 내린 결정\n[\s\S]*?)(?=^## |(?![\s\S]))/m, (sec) => sec.replace(/^(- \*\*[^*\n]+\*\*):\s*/gm, '$1\\\n  '));
 }
 
 /**
@@ -253,6 +258,17 @@ async function syncProfile() {
  * 칸 문장은 볼트의 지원서 원고 본문 마커에서 글자 그대로 읽는다 — 외부 세션 작문 + 사용자 채택본.
  * 웹_단계.md 에는 사실 줄·라벨만 있다. 원고를 한 벌로 두려고 복사본을 만들지 않는다.
  */
+// 문단 나눔 — 원고 글자는 그대로 두고 웹_단계.md `split`에 적은 문장 머리 앞에서만 나눈다
+function splitAt(paras, heads, where) {
+  for (const h of heads) {
+    const i = paras.findIndex((p) => p.includes(` ${h}`));
+    if (i < 0) die(`${where}: 나눌 문장 머리 「${h}」를 원고에서 찾지 못했습니다`);
+    const at = paras[i].indexOf(` ${h}`);
+    paras.splice(i, 1, paras[i].slice(0, at).trim(), paras[i].slice(at).trim());
+  }
+  return paras;
+}
+
 async function syncStages() {
   const file = path.join(VAULT, '웹_단계.md');
   if (!existsSync(file)) die(`웹_단계.md 가 없습니다: ${file}`);
@@ -279,7 +295,7 @@ async function syncStages() {
     ...c,
     stageName: cfg.stages.find((s) => s.no === c.stage).name,
     path: cfg.stages.find((s) => s.no === c.stage).path,
-    steps: ['문제', '해결', '결과'].map((k) => ({ label: k, paras: need(`${c.prefix}_${k}`).split(/\n\s*\n/).map((x) => x.trim()).filter(Boolean) })),
+    steps: ['문제', '해결', '결과'].map((k) => ({ label: k, paras: splitAt(need(`${c.prefix}_${k}`).split(/\n\s*\n/).map((x) => x.trim()).filter(Boolean), c.split?.[k] ?? [], `${c.prefix}_${k}`) })),
   }));
   const data = { title: cfg.title, stages: cfg.stages, rows, cases, source: path.relative(VAULT_ROOT, src) };
 

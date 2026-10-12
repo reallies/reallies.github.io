@@ -29,7 +29,7 @@ const pd = row ? (await getCollection('projects')).find((p) => p.data.slug === r
 
       <header class="case-head">
         <p class="stage"><span class="mono">STEP {no(c.stage)}</span> · {c.stageName}</p>
-        <h1>{c.title}</h1>
+        <h1>{c.title.split(/(?<=때) /).map((x, i) => <>{i > 0 && ' '}<span class="seg">{x}</span></>)}</h1>
         <p class="chips">{c.meta.split(' · ').map((m) => <span>{m}</span>)}</p>
       </header>
 
