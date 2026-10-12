@@ -716,3 +716,37 @@
 }
 @media (max-width: 800px) { .prose .pfig .ctl li { padding: 0 0 14px 20px; } .prose .pfig .ctl li:last-child { padding-bottom: 0; } }
 @media print { .pfig .gal { display: none; } }
+
+/* 사례 쪽 웹 QR — 인쇄본에만(👤 10-13 · scripts/pdf.mjs 가 사례 3쪽을 PDF에 넣는다) */
+.qr-print { display: none; }
+@media print {
+  .qr-print { display: flex; align-items: center; gap: 10px; float: right; margin: 0 0 8px 16px; }
+  .qr-print svg { width: 64px; height: 64px; }
+  .qr-print p { margin: 0; font-size: 7.5pt; line-height: 1.4; color: #333; }
+  .qr-print .mono { font-size: 7pt; }
+  .cnav { display: none !important; }
+}
+/* 사례 쪽 인쇄 — 사례 하나 = A4 한 쪽(👤 10-13). A4 폭이 800px 규칙에 걸려 그림이 세로로 쌓이므로 그림만 가로 배치로 되돌린다(단계 표는 그대로) */
+@media print {
+  .cscope { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); }
+  .ctl { grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); grid-template-columns: none !important; padding: 5px 0 0; }
+  .ctl::before { display: block; }
+  .ctl li, .ctl li:first-child, .ctl li:last-child { padding: 12px 0 0; align-items: center; text-align: center; white-space: nowrap; }
+  .ctl li::before, .ctl li:first-child::before, .ctl li:last-child::before { top: -5px; left: 50%; transform: translateX(-50%); }
+  .ctl li:not(:last-child)::after { display: none; }
+  .case-head { padding-bottom: 12px; margin-bottom: 16px; }
+  .case-head h1 { font-size: 19pt; }
+  .case-head .stage { margin-bottom: 6px; }
+  .case-head .chips span { font-size: 8.5pt; padding: 2px 8px; }
+  .cfig { margin-bottom: 14px; break-inside: avoid; }
+  .cfig .gal { height: 62mm; overflow: hidden; }   /* 운영 사례 화면 캡처 — 결과 문단이 다음 쪽으로 밀리지 않게 */
+  .cfig .gal img { height: 62mm; width: auto; max-width: 100%; object-fit: cover; object-position: top; }
+  .sc { padding: 8px 10px; }
+  .sc b { font-size: 8pt; } .sc span { font-size: 8.5pt; line-height: 1.4; }
+  .ctl li, .ctl li b { font-size: 8.5pt; } .ctl .ctd { font-size: 8pt; }
+  .cbars .btitle, .cbars .bl, .cbars .bv { font-size: 8.5pt; }
+  .cstep { padding: 10px 0; grid-template-columns: 70px 1fr; gap: 12px; break-inside: avoid; }
+  .cstep h2 { font-size: 10.5pt; }
+  .cstep p { font-size: 9.5pt; line-height: 1.6; }
+  .cstep p + p { margin-top: 5px; }
+}

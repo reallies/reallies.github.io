@@ -5,6 +5,7 @@ import { getCollection } from 'astro:content';
 import MediaBlock from '../../components/MediaBlock.astro';
 import { tlCols, gallery } from '../../lib/figs.js';
 import { nb } from '../../lib/nb.js';
+import QRCode from 'qrcode';
 
 /* 단계별 대표 사례 — 경로는 단계 이름으로 낸다(프로젝트 이름이 아니다 · 04 §3-B).
    문제·해결·결과 문장은 볼트 지원서 원고 그대로(sync) · 그림 값은 웹_단계.md 사실 줄 */
@@ -20,12 +21,20 @@ const prev = stages.cases[i - 1];
 const next = stages.cases[i + 1];
 const no = (n) => String(n).padStart(2, '0');
 const fig = c.fig;
+// 인쇄본(PDF) 전용 — 종이로 읽는 사람이 그림·화면을 웹에서 보게 한다(👤 10-13)
+const webUrl = new URL(`${base}/cases/${c.path}`, Astro.site).href;
+const qr = await QRCode.toString(webUrl, { type: 'svg', margin: 0, errorCorrectionLevel: 'M' });
 const pd = row ? (await getCollection('projects')).find((p) => p.data.slug === row.slug)?.data : undefined;
 ---
 <Base title={`${c.stageName} · ${c.title}`} description={`${c.meta} · ${c.steps[0].paras[0]}`}>
   <div class="wrap">
     <section style="padding-top:48px">
       <a class="back" href={`${base}/#overview`}>← 전체 프로젝트</a>
+
+      <aside class="qr-print" aria-hidden="true">
+        <Fragment set:html={qr} />
+        <p>웹에서 그림·화면 보기<br /><span class="mono">{webUrl.replace(/^https?:\/\//, '')}</span></p>
+      </aside>
 
       <header class="case-head">
         <p class="stage"><span class="mono">STEP {no(c.stage)}</span> · {c.stageName}</p>
