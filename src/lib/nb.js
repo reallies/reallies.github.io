@@ -8,8 +8,13 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, 
 
 /* Astro 템플릿용 — 문자열 → HTML 문자열(set:html) */
 export function nb(s = '') {
-  return esc(dots(String(s)))
-    .replace(/[^\s]+/g, (w) => (NB_TOKEN.test(w) ? `<span class="nb">${w}</span>` : w));
+  /* **강조**(👤 10-13 칸당 핵심 구절 하나) — 어절 경계에서만 열고 닫는다. 표지를 어절 밖으로 빼야 nb span과 엇갈리지 않는다 */
+  return esc(dots(String(s)).replace(/\*\*(.+?)\*\*/g, '\u0001$1\u0002'))
+    .replace(/[^\s]+/g, (w) => {
+      const open = w.startsWith('\u0001'), close = w.endsWith('\u0002');
+      const core = w.slice(open ? 1 : 0, close ? -1 : undefined);
+      return (open ? '<strong>' : '') + (NB_TOKEN.test(core) ? `<span class="nb">${core}</span>` : core) + (close ? '</strong>' : '');
+    });
 }
 
 /* 마크다운 본문용 rehype 플러그인 — 텍스트 노드만 손댄다(code·pre 안은 그대로) · 표는 가로 스크롤 상자로 감싼다 */

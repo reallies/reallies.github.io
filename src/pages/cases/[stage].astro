@@ -26,7 +26,7 @@ const webUrl = new URL(`${base}/cases/${c.path}`, Astro.site).href;
 const qr = await QRCode.toString(webUrl, { type: 'svg', margin: 0, errorCorrectionLevel: 'M' });
 const pd = row ? (await getCollection('projects')).find((p) => p.data.slug === row.slug)?.data : undefined;
 ---
-<Base title={`${c.stageName} · ${c.title}`} description={`${c.meta} · ${c.steps[0].paras[0]}`}>
+<Base title={`${c.stageName} · ${c.title}`} description={`${c.meta} · ${c.steps[0].paras[0].replaceAll('**', '')}`}>
   <div class="wrap">
     <section style="padding-top:48px">
       <a class="back" href={`${base}/#overview`}>← 전체 프로젝트</a>

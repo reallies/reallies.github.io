@@ -261,9 +261,11 @@ async function syncProfile() {
 // 문단 나눔 — 원고 글자는 그대로 두고 웹_단계.md `split`에 적은 문장 머리 앞에서만 나눈다
 function splitAt(paras, heads, where) {
   for (const h of heads) {
-    const i = paras.findIndex((p) => p.includes(` ${h}`));
+    // 문장 머리가 **강조** 표지로 열릴 수 있다(10-13 수정11) — 표지째 다음 문단으로 넘긴다
+    const pos = (p) => { const a = p.indexOf(` ${h}`); return a >= 0 ? a : p.indexOf(` **${h}`); };
+    const i = paras.findIndex((p) => pos(p) >= 0);
     if (i < 0) die(`${where}: 나눌 문장 머리 「${h}」를 원고에서 찾지 못했습니다`);
-    const at = paras[i].indexOf(` ${h}`);
+    const at = pos(paras[i]);
     paras.splice(i, 1, paras[i].slice(0, at).trim(), paras[i].slice(at).trim());
   }
   return paras;
