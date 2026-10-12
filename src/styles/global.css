@@ -350,11 +350,7 @@
   .scell li span { display: block; }
   .scell li::before { content: ""; position: absolute; left: 2px; top: 0.62em; width: 5px; height: 5px; border-radius: 50%; border: 1.5px solid var(--muted); }
   .scell li:last-child::before { background: var(--muted); }
-  /* 「전체」 보기는 칸마다 끝 두 줄(한 일의 마지막 두 걸음)만 — 단계를 고르면 전부(외부 피드백 #3 · 화면만, 인쇄본은 전부) */
-  @media screen {
-    .sgrid[data-stage="0"] .scell li:not(:nth-last-child(-n+2)) { display: none; }
-    .sgrid[data-stage="0"] .scell li:nth-last-child(2)::after { display: none; }
-  }
+  /* 「전체」도 칸의 줄을 전부 보인다 — 끝 두 줄만 보이니 탭을 누를 때마다 칸 내용이 달라 보였다(👤 10-12 · 외부 피드백 #3의 「한두 줄」은 철회) */
   .scell li + li::after { content: ""; position: absolute; left: 5.5px; top: calc(-5px - 0.2em); height: calc(0.62em + 5px); border-left: 1px solid var(--hairline); }
   .scell.lead { background: color-mix(in srgb, var(--accent) 7%, var(--surface)); box-shadow: inset 0 3px 0 var(--accent); }
   .scell.lead li::before { border-color: var(--accent); }
