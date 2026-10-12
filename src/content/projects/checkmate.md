@@ -5,7 +5,7 @@ live: true
 spark: false
 meta: "2026.04 ~ 운영 중 · 멋쟁이사자처럼 부트캠프 · 7인 · 팀장"
 kind: "AI 여행 준비물 체크리스트 서비스"
-summary: "진입 전환율이 20.2%에 그치자 퍼널로 원인을 규명했습니다. 광고 채널을 일주일씩 번갈아 집행해 비교한 뒤 유입 전략을 다시 잡았고, 백엔드는 AI 코딩 도구로 구현해 직접 검증했습니다."
+summary: "탐색 비율이 20.2%에 그치자 퍼널로 원인을 규명했습니다. 광고 채널을 일주일씩 번갈아 집행해 비교한 뒤 유입 전략을 다시 잡았고, 백엔드는 AI 코딩 도구로 구현해 직접 검증했습니다."
 result: "방문 세션 중 탐색 비율 20.2%(5월 초·중순) · 42.0%(홍보가 없던 7월)"
 resultNote: "팀 해산 후에도 운영 중"
 caveat: "부트캠프 최우수상 · 7인 팀 공동 수상 · 초기 소규모 트래픽"
@@ -64,9 +64,9 @@ LLM 호출을 비동기 큐로 처리하려던 계획은 동기 처리로 우선
 
 ## 결과
 
-**진입 전환율 — 방문 대비 체크리스트 탐색**
+**탐색 비율 — 방문 대비 체크리스트 탐색**
 
-| 구간 | 기간 | 세션 | 탐색 세션 | 진입 전환율 |
+| 구간 | 기간 | 세션 | 탐색 세션 | 탐색 비율 |
 | --- | --- | --- | --- | --- |
 | 1차 배포 | 5.5–5.19 | 272 | 53 | 20.2% |
 | 진입 수정·홍보 병행 | 5.20–6.4 | 1,140 | 383 | 34.0% |
@@ -82,14 +82,14 @@ LLM 호출을 비동기 큐로 처리하려던 계획은 동기 처리로 우선
 - **부트캠프 프로젝트 최우수상** — "깊이 있는 분석과 우수한 실행력", **7인 팀(4조) 공동 수상**
 
 
-<figure class="cfig pfig"><div class="cbars"><div class="bgroup"><p class="btitle">진입 전환율</p><div class="brow"><span class="bl">1차 배포</span><span class="bar"><i style="width:20.2%"></i></span><span class="bv mono">20.2%</span></div><div class="brow"><span class="bl">진입 수정·홍보 병행</span><span class="bar"><i style="width:34.0%"></i></span><span class="bv mono">34.0%</span></div><div class="brow hi"><span class="bl">프로젝트 종료 후</span><span class="bar"><i style="width:42.0%"></i></span><span class="bv mono">42.0%</span></div></div><div class="bgroup"><p class="btitle">탐색 세션</p><div class="brow"><span class="bl">1차 배포</span><span class="bar"><i style="width:13.8%"></i></span><span class="bv mono">53</span></div><div class="brow hi"><span class="bl">진입 수정·홍보 병행</span><span class="bar"><i style="width:100.0%"></i></span><span class="bv mono">383</span></div><div class="brow"><span class="bl">프로젝트 종료 후</span><span class="bar"><i style="width:61.6%"></i></span><span class="bv mono">236</span></div></div><div class="bgroup"><p class="btitle">유입별 탐색률</p><div class="brow hi"><span class="bl">검색</span><span class="bar"><i style="width:66.7%"></i></span><span class="bv mono">66.7%</span></div><div class="brow"><span class="bl">커뮤니티</span><span class="bar"><i style="width:47.2%"></i></span><span class="bv mono">47.2%</span></div><div class="brow"><span class="bl">직접 유입</span><span class="bar"><i style="width:29.0%"></i></span><span class="bv mono">29.0%</span></div></div></div></figure>
+<figure class="cfig pfig"><div class="cbars"><div class="bgroup"><p class="btitle">탐색 비율</p><div class="brow"><span class="bl">1차 배포</span><span class="bar"><i style="width:20.2%"></i></span><span class="bv mono">20.2%</span></div><div class="brow"><span class="bl">진입 수정·홍보 병행</span><span class="bar"><i style="width:34.0%"></i></span><span class="bv mono">34.0%</span></div><div class="brow hi"><span class="bl">프로젝트 종료 후</span><span class="bar"><i style="width:42.0%"></i></span><span class="bv mono">42.0%</span></div></div><div class="bgroup"><p class="btitle">탐색 세션</p><div class="brow"><span class="bl">1차 배포</span><span class="bar"><i style="width:13.8%"></i></span><span class="bv mono">53</span></div><div class="brow hi"><span class="bl">진입 수정·홍보 병행</span><span class="bar"><i style="width:100.0%"></i></span><span class="bv mono">383</span></div><div class="brow"><span class="bl">프로젝트 종료 후</span><span class="bar"><i style="width:61.6%"></i></span><span class="bv mono">236</span></div></div><div class="bgroup"><p class="btitle">유입별 탐색률</p><div class="brow hi"><span class="bl">검색</span><span class="bar"><i style="width:66.7%"></i></span><span class="bv mono">66.7%</span></div><div class="brow"><span class="bl">커뮤니티</span><span class="bar"><i style="width:47.2%"></i></span><span class="bv mono">47.2%</span></div><div class="brow"><span class="bl">직접 유입</span><span class="bar"><i style="width:29.0%"></i></span><span class="bv mono">29.0%</span></div></div></div></figure>
 
 ## 역할 구분
 
 | 영역 | 내가 결정하고 실행한 것 | 팀 |
 | --- | --- | --- |
 | 방향·일정 | **회의록 48건**을 그날 안에 정리하고 다음 액션 아이템과 일정 수립 | 제품 방향은 팀 합의로 결정 |
-| 지표 | 진입 전환율 정의 · 이벤트 로깅 스키마 설계 · 채널별 비교 판단 | — |
+| 지표 | 탐색 비율 정의 · 이벤트 로깅 스키마 설계 · 채널별 비교 판단 | — |
 | 유입 채널 | 일주일 단위 집행 비교 후 **카페 집중 결정, 인스타 중단 제안** | 콘텐츠·홍보 실행 |
 | 화면 | 요구사항을 시안으로 옮겨 논의 시작 · 진입 경로 개선안 | 프론트 개발 1인 · 디자인 |
 | 구현 | **백엔드 단독** — 전 모듈·LLM·지표·인증·배포 | 프론트 공동 |
