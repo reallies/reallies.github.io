@@ -5,11 +5,15 @@ import stages from '../data/stages.json';
 import { getCollection } from 'astro:content';
 import MediaChips from '../components/MediaChips.astro';
 import { nb } from '../lib/nb.js';
+import QRCode from 'qrcode';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 /* 대표 칸 = 단계마다 사례 1건 — 표에서 바로 사례로 넘어간다 */
 const projs = await getCollection('projects');
 const proj = (slug) => projs.find((p) => p.data.slug === slug)?.data;
+// 인쇄본(PDF) 1쪽 머리 — 웹 전체로 가는 QR(👤 10-13 · GPT 피드백 #3)
+const siteUrl = new URL(`${base}/`, Astro.site).href;
+const siteQr = await QRCode.toString(siteUrl, { type: 'svg', margin: 4, errorCorrectionLevel: 'M' });
 const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === no);
 ---
 <Base heroPdf>
@@ -31,8 +35,12 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
         <p class="contact-print">
           <a href="#" data-mail data-mail-text></a>
           <span>·</span>
-          <span>{profile.github.replace('https://', '')}</span>
+          <a href={profile.github}>{profile.github.replace('https://', '')}</a>
         </p>
+        <aside class="qr-print qr-home" aria-hidden="true">
+          <Fragment set:html={siteQr} />
+          <p>웹 포트폴리오<br /><span class="mono">{siteUrl.replace(/^https?:\/\//, '').replace(/\/$/, '')}</span></p>
+        </aside>
       </div>
 
       <dl class="facts">
@@ -46,13 +54,14 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
     <section id="cases" class="reveal">
       <div class="shead"><h2>단계별 대표 사례</h2></div>
       <div class="cases">
-        {stages.cases.map((c) => (
+        {stages.cases.map((c, i) => (
           <a class="ccard" href={`${base}/cases/${c.path}`}>
             {c.thumb && <img class="cthumb" src={`${base}/${c.thumb.src}`} width={c.thumb.w} height={c.thumb.h} alt={c.thumb.alt} loading="lazy" decoding="async" />}
             <span class="cno"><span class="mono">STEP {String(c.stage).padStart(2, '0')}</span> · {c.stageName}</span>
             <h3>{c.title.split(/(?<=때) /).map((x, i) => <>{i > 0 && ' '}<span class="seg">{x}</span></>)}</h3>
             <span class="cmeta">{c.meta.split(' · ').slice(0, 2).join(' · ')}</span>
             <span class="cgo">사례 읽기 →</span>
+            <span class="cpage">이 PDF {i + 2}쪽 · 웹 ↗</span>
           </a>
         ))}
       </div>

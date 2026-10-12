@@ -750,3 +750,18 @@
   .cstep p { font-size: 9.5pt; line-height: 1.6; }
   .cstep p + p { margin-top: 5px; }
 }
+
+/* 인쇄본 1쪽 — GPT 피드백(👤 10-13): 단계 표 점·세로선·부분 상단선 제거 → 단순 4열 표 + 「대표 사례」 글자 배지 · 웹 QR · 카드 쪽 안내 */
+.cpage { display: none; }
+@media print {
+  .hero-main { position: relative; }
+  .qr-home { position: absolute; top: 0; right: 0; float: none; margin: 0; }
+  .qr-home svg { width: 70px; height: 70px; }
+  .srow { border: 0; border-bottom: 1px solid #bbb; border-radius: 0; margin-top: 0; padding: 0; background: none; }
+  .scell li { padding-left: 9px; }
+  .scell li::before { content: "·"; position: absolute; left: 1px; top: 0; width: auto; height: auto; border: 0; border-radius: 0; background: none !important; }
+  .scell li + li::after { display: none; }
+  .scell.lead { background: #f1f1f1; box-shadow: none; }
+  .scell.lead::before { content: "대표 사례"; align-self: flex-start; font-size: 7pt; font-weight: 700; border: 1px solid #000; border-radius: 2px; padding: 0 4px; line-height: 1.5; }
+  .cpage { display: block; font-size: 7.5pt; color: #333; margin-top: auto; }
+}
