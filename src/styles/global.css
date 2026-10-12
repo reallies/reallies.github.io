@@ -251,6 +251,8 @@
   .prose { max-width: 68ch; }
   /* 프로젝트 페이지 — 첫 화면과 같은 980px 틀 · 글은 사례 페이지와 같은 820px(2026-10-12 2단계 · 목차 칸이 본문을 밀던 격자 제거) */
   .wrap.read .prose { max-width: 820px; }
+  /* 읽기 열(돌아가기·머리·본문·링크) 전체를 화면 가운데로 — 980 틀 왼쪽에 붙어 오른쪽 104px가 비고 목차만 오른쪽 끝에 있어 한쪽으로 쏠려 보였다(👤 10-12) */
+  .wrap.read .read-grid > section { max-width: 820px; margin-inline: auto; }
   .read-grid { display: block; }
   /* 목차 — 오른쪽 여백 세로 가운데에 짧은 줄 · 지금 절만 길고 진하게 · 마우스를 올리면 제목이 펼쳐진다(노션식) · 1280px 미만 숨김 */
   .toc { position: fixed; z-index: 20; right: 14px; top: 50%; transform: translateY(-50%); }
