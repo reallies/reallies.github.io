@@ -414,6 +414,14 @@
   .ctl li b { font-variant-numeric: tabular-nums; font-size: 12.5px; color: var(--ink); margin-bottom: 3px; font-weight: 650; }
   .ctl li.end::before { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent); }
   .ctl li.end b { color: var(--accent); }
+  /* 그림 그리기(Base.astro · 10-12) — 선이 왼쪽에서 그어지고 점·글이 차례로 / 막대가 왼쪽에서 차오른다. 화면에 들어올 때 한 번 */
+  .js-draw .ctl::before { transform: scaleX(0); transform-origin: left; transition: transform .9s cubic-bezier(0.16, 1, 0.3, 1) .1s; }
+  .js-draw .ctl > li { opacity: 0; transition: opacity .45s ease calc(var(--i, 0) * 140ms); }
+  .js-draw .ctl.in::before { transform: none; }
+  .js-draw .ctl.in > li { opacity: 1; }
+  .js-draw .cbars .bar i { transform: scaleX(0); transform-origin: left; transition: transform .8s cubic-bezier(0.16, 1, 0.3, 1) calc(.1s + var(--i, 0) * 90ms); }
+  .js-draw .cbars.in .bar i { transform: none; }
+  @media print { .js-draw .ctl::before, .js-draw .cbars .bar i { transform: none !important; } .js-draw .ctl > li { opacity: 1 !important; } }
   .csteps { border-top: 1px solid var(--ink); }   /* 위 그림·구분선과 오른쪽 끝을 맞춘다(0단계 #20) */
   .cstep { padding: 22px 0; border-bottom: 1px solid var(--hairline); display: grid; grid-template-columns: 110px 1fr; gap: 20px; }
   .cstep h2 { margin: 0; font-size: 16px; font-weight: 680; display: flex; gap: 8px; align-items: baseline; }
@@ -463,6 +471,13 @@
   .sfilter button:hover { border-color: var(--ink); color: var(--ink); }
   .sfilter button[aria-pressed="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
   .sfilter button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  /* 미끄러지는 알약(index.astro) — 스크립트가 켜면 단추는 투명해지고 뒤의 알약이 칠한다 */
+  .sfilter { position: relative; }
+  .sfpill { display: none; position: absolute; left: 0; top: 0; border-radius: 999px; background: var(--ink); pointer-events: none; }
+  .sfilter.js-pill .sfpill { display: block; }
+  .sfilter.js-pill.ready .sfpill { transition: transform .38s cubic-bezier(0.16, 1, 0.3, 1), width .38s cubic-bezier(0.16, 1, 0.3, 1); }
+  .sfilter.js-pill button { position: relative; z-index: 1; }
+  .sfilter.js-pill button[aria-pressed="true"] { background: transparent; }
   .scell, .sth { transition: opacity .25s, background-color .2s; }
   .sgrid[data-hover="1"] [data-col="1"]:not(.lead),
   .sgrid[data-hover="2"] [data-col="2"]:not(.lead),

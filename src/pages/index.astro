@@ -64,6 +64,7 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
       <div class="shead"><h2>{stages.title}</h2></div>
       {/* 단계 거르기 — 고른 단계 열만 남기고(넓은 화면은 나머지를 흐리게, 좁은 화면은 감춘다) · 표시만 바꾼다 */}
       <div class="sfilter" role="group" aria-label="단계로 거르기">
+        <span class="sfpill" aria-hidden="true"></span>
         <button type="button" data-stage="0" aria-pressed="true">전체</button>
         {stages.stages.map((s) => (
           <button type="button" data-stage={s.no} aria-pressed="false"><span class="mono">{String(s.no).padStart(2, '0')}</span>{s.name}</button>
@@ -140,9 +141,22 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
   <script>
     const grid = document.querySelector<HTMLElement>('.sgrid');
     const btns = [...document.querySelectorAll<HTMLButtonElement>('.sfilter button')];
+    /* 고른 단추 뒤 검은 알약이 미끄러져 간다(10-12 움직임) — 스크립트가 없으면 단추 자체가 칠해진다 */
+    const filter = document.querySelector<HTMLElement>('.sfilter')!;
+    const pill = filter.querySelector<HTMLElement>('.sfpill')!;
+    const place = () => {
+      const on = btns.find((x) => x.getAttribute('aria-pressed') === 'true')!;
+      pill.style.width = `${on.offsetWidth}px`; pill.style.height = `${on.offsetHeight}px`;
+      pill.style.transform = `translate(${on.offsetLeft}px, ${on.offsetTop}px)`;
+    };
+    place(); filter.classList.add('js-pill');
+    requestAnimationFrame(() => requestAnimationFrame(() => filter.classList.add('ready')));   // 첫 자리는 움직이지 않고 놓는다
+    addEventListener('resize', place);
+    document.fonts?.ready.then(place);
     btns.forEach((b) => b.addEventListener('click', () => {
       grid!.dataset.stage = b.dataset.stage;
       btns.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      place();
     }));
     /* 열 강조 — 마우스·키보드 초점이 머문 단계 열 전체를 옅게 칠한다(넓은 화면) */
     const setCol = (c?: string) => { if (c) grid!.dataset.hover = c; else delete grid!.dataset.hover; };

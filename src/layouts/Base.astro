@@ -138,8 +138,19 @@ const schemas = [personSchema, siteSchema, ...jsonld];
         }, { rootMargin: '0px 0px -8% 0px' });
         els.forEach((el) => { if (el.getBoundingClientRect().top < innerHeight) el.classList.add('in'); else io.observe(el); });
       }
-      addEventListener('pageshow', (e) => { if (e.persisted) showAll(); });
-      addEventListener('beforeprint', showAll);
+      /* 그림 그리기(10-12 움직임) — 타임라인은 선이 그어지며 점이 차례로, 막대는 왼쪽에서 차오른다. 화면에 들어올 때 한 번 · 조건은 섹션 등장과 같다 */
+      const draws = [...document.querySelectorAll<HTMLElement>('.ctl, .cbars')];
+      const drawAll = () => draws.forEach((el) => el.classList.add('in'));
+      if (draws.length && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        draws.forEach((el) => [...el.querySelectorAll<HTMLElement>(':scope > li, .brow')].forEach((c, i) => c.style.setProperty('--i', String(i))));
+        document.documentElement.classList.add('js-draw');
+        const dio = new IntersectionObserver((ents) => {
+          for (const en of ents) if (en.isIntersecting) { en.target.classList.add('in'); dio.unobserve(en.target); }
+        }, { threshold: 0.35 });
+        draws.forEach((el) => dio.observe(el));
+      }
+      addEventListener('pageshow', (e) => { if (e.persisted) { showAll(); drawAll(); } });
+      addEventListener('beforeprint', () => { showAll(); drawAll(); });
 
       /* 화면 갤러리 — 가로로 밀거나 버튼으로 넘긴다(scroll-snap) · 현재 번호 표시 */
       for (const gal of document.querySelectorAll<HTMLElement>('.gal')) {
