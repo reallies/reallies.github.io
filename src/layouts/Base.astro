@@ -146,7 +146,7 @@ const schemas = [personSchema, siteSchema, ...jsonld];
         document.documentElement.classList.add('js-draw');
         const dio = new IntersectionObserver((ents) => {
           for (const en of ents) if (en.isIntersecting) { en.target.classList.add('in'); dio.unobserve(en.target); }
-        }, { threshold: 0.35 });
+        }, { threshold: 0.5 });
         draws.forEach((el) => dio.observe(el));
       }
       addEventListener('pageshow', (e) => { if (e.persisted) { showAll(); drawAll(); } });
