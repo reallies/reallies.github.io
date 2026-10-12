@@ -25,9 +25,8 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
         <h1>{profile.name}<span class="latin mono">{profile.name_latin}</span></h1>
         <p class="thesis">{profile.thesis.split(/(?<=,) /).map((x, i) => <>{i > 0 && ' '}<span class="seg">{x}</span></>)}</p>
 
-        {/* 첫 행동 — 주 = 대표 사례(짧게 읽기) · 보조 = PDF(외부 피드백 #8 · 10-12). 인쇄본에서는 숨긴다 */}
+        {/* 첫 행동 = PDF. 「대표 사례 보기」는 사례 칸이 바로 아래라 뺐다(👤 10-13). 인쇄본에서는 숨긴다 */}
         <div class="hero-cta">
-          <a class="btn primary" href="#cases">대표 사례 보기</a>
           <a class="btn" href={`${base}/hyunseok-oh-portfolio.pdf`} download="오현석_포트폴리오.pdf">포트폴리오 PDF</a>
         </div>
 
