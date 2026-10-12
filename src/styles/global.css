@@ -188,7 +188,7 @@
 
   /* ---------- 자격·학력 ---------- */
   .creds { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; border-top: 1px solid var(--ink); padding-top: 22px; }
-  .cgroup h3 { font-size: 11px; letter-spacing: 0.12em; color: var(--muted); margin: 0 0 12px; font-weight: 600; }
+  .cgroup h3 { font-size: 12px; letter-spacing: 0; color: var(--muted); margin: 0 0 12px; font-weight: 600; }
   .cgroup ul { list-style: none; margin: 0; padding: 0; }
   .cgroup li { font-size: 14.5px; padding: 8px 0; border-bottom: 1px solid var(--hairline); display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
   .cgroup li b { font-weight: 620; }
@@ -350,6 +350,11 @@
   .scell li span { display: block; }
   .scell li::before { content: ""; position: absolute; left: 2px; top: 0.62em; width: 5px; height: 5px; border-radius: 50%; border: 1.5px solid var(--muted); }
   .scell li:last-child::before { background: var(--muted); }
+  /* 「전체」 보기는 칸마다 끝 두 줄(한 일의 마지막 두 걸음)만 — 단계를 고르면 전부(외부 피드백 #3 · 화면만, 인쇄본은 전부) */
+  @media screen {
+    .sgrid[data-stage="0"] .scell li:not(:nth-last-child(-n+2)) { display: none; }
+    .sgrid[data-stage="0"] .scell li:nth-last-child(2)::after { display: none; }
+  }
   .scell li + li::after { content: ""; position: absolute; left: 5.5px; top: calc(-5px - 0.2em); height: calc(0.62em + 5px); border-left: 1px solid var(--hairline); }
   .scell.lead { background: color-mix(in srgb, var(--accent) 7%, var(--surface)); box-shadow: inset 0 3px 0 var(--accent); }
   .scell.lead li::before { border-color: var(--accent); }
@@ -599,6 +604,15 @@
     .live { border-color: #000; color: #000; }
     a { color: inherit; text-decoration: none; }
     .srow, .ccard { break-inside: avoid; }
+    /* 인쇄본 순서는 그대로 — 히어로 → 단계 표 → 대표 사례 → 이력 → 자격(화면만 사례 먼저 · 04 §3-B 10-12 보정) */
+    .wrap.home { display: flex; flex-direction: column; }
+    .wrap.home > .hero { order: 0; }
+    .wrap.home > #overview { order: 1; }
+    .wrap.home > #cases { order: 2; }
+    .wrap.home > section:not(#overview):not(#cases) { order: 3; }
+    /* 소제목만 쪽 끝에 남지 않게 — 짧은 절은 통째로 넘긴다(👤 10-12 「이력」 제목만 1쪽 끝) */
+    .shead { break-after: avoid; page-break-after: avoid; }
+    .wrap.home > section:not(#overview) { break-inside: avoid; page-break-inside: avoid; }
     .sgrid { font-size: 8.5pt; }
     .srow { grid-template-columns: 112px repeat(3, minmax(0, 1fr)); }
     .spj { padding: 6px 8px 6px 0; }

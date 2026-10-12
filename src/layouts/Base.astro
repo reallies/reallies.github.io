@@ -3,8 +3,8 @@ import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
 import '../styles/global.css';
 import profile from '../data/profile.json';
 
-interface Props { title?: string; description?: string; jsonld?: unknown[] }
-const { title, description, jsonld = [] } = Astro.props;
+interface Props { title?: string; description?: string; jsonld?: unknown[]; heroPdf?: boolean }
+const { title, description, jsonld = [], heroPdf = false } = Astro.props;
 
 const pageTitle = title ? `${title} | ${profile.name}` : `${profile.name} | ${profile.thesis}`;
 const desc = description ?? profile.thesis;
@@ -84,7 +84,8 @@ const schemas = [personSchema, siteSchema, ...jsonld];
         <a class="who mono" href={`${base}/`} style="text-decoration:none">{profile.name_latin}</a>
         <nav class="cta">
           <a class="btn" href={`${base}/#overview`}>프로젝트</a>
-          <a class="btn" href={`${base}/hyunseok-oh-portfolio.pdf`} download="오현석_포트폴리오.pdf"><span class="wide">포트폴리오 </span>PDF</a>
+          {/* 첫 화면은 히어로 버튼이 PDF를 맡아 머리 메뉴에서는 뺀다(👤 10-12) */}
+          {!heroPdf && <a class="btn" href={`${base}/hyunseok-oh-portfolio.pdf`} download="오현석_포트폴리오.pdf"><span class="wide">포트폴리오 </span>PDF</a>}
           <a class="btn primary" href="#" data-mail>이메일</a>
         </nav>
       </div>

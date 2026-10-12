@@ -101,6 +101,8 @@ function dropHeroMeta(body) {
     // 카드 머리 h1은 버린다 — 페이지 머리(case-head h1)가 이미 제목이다. CSS로 숨기면 HTML에 h1이 둘 남는다(외부 피드백 #5 · 10-12)
     if (!seenH1) { if (/^#\s/.test(line)) { seenH1 = true; continue; } out.push(line); continue; }
     if (/^##\s/.test(line)) { done = true; out.push(line); continue; }   // 첫 섹션부터는 손대지 않는다
+    // 머리 인용(> **한 줄 요약**)도 뺀다 — 페이지 머리 kind·결과와 같은 말이다(외부 피드백 #5 · 👤 10-12 「빼줘」)
+    if (/^>\s*\*\*/.test(line)) continue;
     if (/^>\s*`/.test(line)) {
       while (out.length && out[out.length - 1].trim() === '>') out.pop();  // 문단 가르려고 넣은 빈 인용줄
       done = true;

@@ -12,8 +12,8 @@ const projs = await getCollection('projects');
 const proj = (slug) => projs.find((p) => p.data.slug === slug)?.data;
 const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === no);
 ---
-<Base>
-  <div class="wrap">
+<Base heroPdf>
+  <div class="wrap home">
 
     <header class="hero">
       <div class="hero-main">
@@ -41,6 +41,22 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
         ))}
       </dl>
     </header>
+
+    {/* 대표 사례가 먼저, 단계 표는 그 아래 탐색용(외부 피드백 #1 · 04 §3-B 2026-10-12 보정). 인쇄본(PDF)은 CSS order로 표 → 사례 그대로 */}
+    <section id="cases" class="reveal">
+      <div class="shead"><h2>단계별 대표 사례</h2></div>
+      <div class="cases">
+        {stages.cases.map((c) => (
+          <a class="ccard" href={`${base}/cases/${c.path}`}>
+            {c.thumb && <img class="cthumb" src={`${base}/${c.thumb.src}`} width={c.thumb.w} height={c.thumb.h} alt={c.thumb.alt} loading="lazy" decoding="async" />}
+            <span class="cno"><span class="mono">STEP {String(c.stage).padStart(2, '0')}</span> · {c.stageName}</span>
+            <h3>{c.title}</h3>
+            <span class="cmeta">{c.meta.split(' · ').slice(0, 2).join(' · ')}</span>
+            <span class="cgo">사례 읽기 →</span>
+          </a>
+        ))}
+      </div>
+    </section>
 
     {/* 단계 × 프로젝트 표 — "어느 단계를 어디서 했나"(04 §3-B · 2026-10-11 D형).
         칸 문장은 볼트 지원서 원고의 「단계표」 칸 그대로(sync). 「→」 = 내가 다음에 한 일 → 한 단계 한 줄로 끊는다 */}
@@ -85,21 +101,6 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
       </div>
     </section>
 
-    <section id="cases" class="reveal">
-      <div class="shead"><h2>단계별 대표 사례</h2></div>
-      <div class="cases">
-        {stages.cases.map((c) => (
-          <a class="ccard" href={`${base}/cases/${c.path}`}>
-            {c.thumb && <img class="cthumb" src={`${base}/${c.thumb.src}`} width={c.thumb.w} height={c.thumb.h} alt={c.thumb.alt} loading="lazy" decoding="async" />}
-            <span class="cno"><span class="mono">STEP {String(c.stage).padStart(2, '0')}</span> · {c.stageName}</span>
-            <h3>{c.title}</h3>
-            <span class="cmeta">{c.meta.split(' · ').slice(0, 2).join(' · ')}</span>
-            <span class="cgo">사례 읽기 →</span>
-          </a>
-        ))}
-      </div>
-    </section>
-
     <section class="reveal">
       <div class="shead"><h2>이력</h2></div>
       <div class="hist">
@@ -117,7 +118,7 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
       <div class="shead"><h2>자격 · 학력</h2></div>
       <div class="creds">
         <div class="cgroup">
-          <h3 class="mono">자격 · 어학</h3>
+          <h3>자격 · 어학</h3>
           <ul>
             {profile.certs.map((c) => (
               <li><div><b>{c.name}</b><span class="sub">{c.sub}</span></div><span class="date mono">{c.date}</span></li>
@@ -125,7 +126,7 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
           </ul>
         </div>
         <div class="cgroup">
-          <h3 class="mono">학력 · 교육</h3>
+          <h3>학력 · 교육</h3>
           <ul>
             {profile.education.map((e) => (
               <li><div><b>{e.name}</b><span class="sub">{e.sub}</span></div><span class="date mono">{e.date}</span></li>
