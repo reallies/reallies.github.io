@@ -64,7 +64,7 @@
   header.hero {
     padding: 88px 0 8px;
     display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-    gap: 56px; align-items: start; /* 사실 목록 위끝 = 이름 위끝(#23 · 10-12) — 버튼이 붙은 뒤 아래 맞춤은 위가 어긋났다 */
+    gap: 56px; align-items: stretch; /* 사실 목록 = 이름 위끝 ~ 버튼 아래끝(#23 · 10-12) — 위만 맞추니 아래가 비어 오른쪽이 떠 보였다(👤) */
   }
   h1 {
     font-size: clamp(44px, 7vw, 72px);
@@ -81,9 +81,9 @@
     background: var(--accent); margin-bottom: 18px;
   }
 
-  .facts { margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+  .facts { margin: 0; padding: 0; border-top: 1px solid var(--ink); display: flex; flex-direction: column; }
   .facts > div {
-    display: grid; grid-template-columns: 76px 1fr; gap: 12px;
+    display: grid; grid-template-columns: 76px 1fr; gap: 12px; flex: 1; align-content: center;
     padding: 11px 0; border-bottom: 1px solid var(--hairline); align-items: baseline;
   }
   .facts dt { color: var(--muted); font-size: 12px; letter-spacing: 0.04em; }
