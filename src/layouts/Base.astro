@@ -2,6 +2,8 @@
 import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
 import '../styles/global.css';
 import profile from '../data/profile.json';
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 
 interface Props { title?: string; description?: string; jsonld?: unknown[]; heroPdf?: boolean }
 const { title, description, jsonld = [], heroPdf = false } = Astro.props;
@@ -10,7 +12,9 @@ const pageTitle = title ? `${title} | ${profile.name}` : `${profile.name} | ${pr
 const desc = description ?? profile.thesis;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ogImage = new URL(`${base}/og.png`, Astro.site).href;
+// ?v= 내용 해시 — 메신저가 미리보기를 주소로 캐시하므로 카드가 바뀌면 주소도 바뀌게 한다(scripts/og.mjs)
+const ogVer = createHash('sha1').update(readFileSync(new URL('../../public/og.png', import.meta.url))).digest('hex').slice(0, 8);
+const ogImage = new URL(`${base}/og.png?v=${ogVer}`, Astro.site).href;
 const siteUrl = new URL(`${base}/`, Astro.site).href;
 
 // 구조화 데이터 — 검색엔진 색인과 AI 검색(GEO) 인용에 쓰인다.
