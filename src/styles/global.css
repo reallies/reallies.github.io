@@ -545,6 +545,8 @@
   /* 트랙 높이는 지금 보이는 화면에 맞춘다(Base.astro 스크립트) — 큰 화면 기준이면 작은 화면 아래가 비었다(#11) */
   .gtrack { position: relative; display: flex; align-items: flex-start; gap: 14px; overflow-x: auto; transition: height .3s cubic-bezier(0.16, 1, 0.3, 1); scroll-snap-type: x mandatory; scrollbar-width: none; border-radius: 6px; }
   .gtrack::-webkit-scrollbar { display: none; }
+  /* 마우스·트랙패드 화면 = 손으로 가로 스크롤 안 됨(세로로 읽다가 옆으로 밀려 불편 · 👤 10-12) — 넘기기는 화살표 단추·←→ 키. 터치 화면은 밀기 그대로 */
+  @media (hover: hover) and (pointer: fine) { .gtrack { overflow-x: hidden; } }
   .gtrack:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .gitem { flex: 0 0 100%; margin: 0; scroll-snap-align: start; display: flex; flex-direction: column; gap: 8px; }
   .gitem img { width: 100%; height: auto; max-height: 560px; object-fit: contain; border: 1px solid var(--hairline); border-radius: 6px; background: var(--surface); display: block; }

@@ -165,10 +165,13 @@ const schemas = [personSchema, siteSchema, ...jsonld];
         addEventListener('resize', fit);
         track.querySelectorAll('img').forEach((im) => im.complete || im.addEventListener('load', fit, { once: true }));
         fit();
-        gal.querySelectorAll<HTMLButtonElement>('.gnav button').forEach((b) => b.addEventListener('click', () => {
-          const n = Math.min(items.length - 1, Math.max(0, cur() + Number(b.dataset.dir)));
+        const go = (dir: number) => {
+          const n = Math.min(items.length - 1, Math.max(0, cur() + dir));
           track.scrollTo({ left: x(items[n]), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-        }));
+        };
+        gal.querySelectorAll<HTMLButtonElement>('.gnav button').forEach((b) => b.addEventListener('click', () => go(Number(b.dataset.dir))));
+        // 넓은 화면은 손 스크롤을 막았으니(CSS) 초점이 있을 때 ←→ 키로 넘긴다
+        track.addEventListener('keydown', (e) => { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); go(e.key === 'ArrowLeft' ? -1 : 1); } });
       }
       </script>
   </body>
