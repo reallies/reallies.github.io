@@ -3,9 +3,9 @@ slug: "dangnyang"
 order: 3
 live: false
 spark: false
-meta: "2026.03 · 멋쟁이사자처럼 부트캠프 · 7인 · 서브리드 · 주 개발(풀스택)"
+meta: "2026.03 · 멋쟁이사자처럼 부트캠프 · 7인 · 서브리드 · AI 코딩으로 구현"
 kind: "반려동물 동반 시설 탐색 서비스"
-summary: "서브리드 · 주 개발(풀스택)로 사용자 행동을 5단 퍼널로 정의하고, Streamlit 분석 대시보드와 React·Vite·TypeScript 화면 구현을 맡았습니다."
+summary: "서브리드로 사용자 행동을 5단 퍼널로 정의하고, Streamlit 분석 대시보드와 React·Vite·TypeScript 화면 구현을 맡았습니다."
 result: "어디서 이탈하는지 보이는 측정 체계 구축"
 resultNote: ""
 caveat: "측정 체계 구현 · 운영 실측치 아님"
