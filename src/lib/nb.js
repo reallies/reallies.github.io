@@ -1,6 +1,9 @@
 /* 웹 줄바꿈 — 숫자·기호가 든 어절은 한 덩어리, 가운뎃점은 줄 첫머리에 오지 않게(4단계 #17·#18 · 10-12).
    PDF 빌드(마이리얼트립 build.py wrap())와 같은 규칙. 글자는 바꾸지 않는다 — 표시만(span · 붙임 공백) */
 
+/* 영문 이름 표기 — 원본(볼트)은 대문자 「HYUNSEOK OH」. 화면에는 「Hyunseok Oh」로(Hallmark 67 · 원본은 그대로) */
+export const nameCase = (s = '') => s.toLowerCase().replace(/(^|\s)\p{L}/gu, (c) => c.toUpperCase());
+
 export const NB_TOKEN = /[\d%×/~]/;
 /* 가운뎃점 앞은 붙인다 — 「 · 」는 붙임 공백, 「a·b」는 단어 결합자(줄 첫머리 「·LLM」 방지) */
 const dots = (s) => s.replaceAll(' · ', '\u00a0· ').replace(/(?<!\s)·/g, '\u2060·');

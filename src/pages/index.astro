@@ -4,7 +4,7 @@ import profile from '../data/profile.json';
 import stages from '../data/stages.json';
 import { getCollection } from 'astro:content';
 import MediaChips from '../components/MediaChips.astro';
-import { nb } from '../lib/nb.js';
+import { nb, nameCase } from '../lib/nb.js';
 import QRCode from 'qrcode';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -22,7 +22,8 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
     <header class="hero">
       <div class="hero-main">
         {/* 눈썹 라벨(profile.eyebrow)은 화면에 싣지 않는다 — 지역·직함 띠는 템플릿 인상을 준다. 데이터는 볼트 원본이라 남겨 둔다 */}
-        <h1>{profile.name}<span class="latin mono">{profile.name_latin}</span></h1>
+        <h1>{profile.name}</h1>
+        <p class="latin" lang="en">{nameCase(profile.name_latin)}</p>
         <p class="thesis">{profile.thesis.split(/(?<=,) /).map((x, i) => <>{i > 0 && ' '}<span class="seg">{x}</span></>)}</p>
 
         {/* 첫 행동 = PDF. 「대표 사례 보기」는 사례 칸이 바로 아래라 뺐다(👤 10-13). 인쇄본에서는 숨긴다 */}
@@ -44,7 +45,7 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
 
       <dl class="facts">
         {profile.facts.map((f) => (
-          <div><dt class="mono">{f.k}</dt><dd set:html={nb(f.v)} /></div>
+          <div><dt>{f.k}</dt><dd set:html={nb(f.v)} /></div>
         ))}
       </dl>
     </header>
@@ -56,11 +57,11 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
         {stages.cases.map((c, i) => (
           <a class="ccard" href={`${base}/cases/${c.path}`}>
             {c.thumb && <img class="cthumb" src={`${base}/${c.thumb.src}`} width={c.thumb.w} height={c.thumb.h} alt={c.thumb.alt} loading="lazy" decoding="async" />}
-            <span class="cno"><span class="mono">STEP {String(c.stage).padStart(2, '0')}</span> · {c.stageName}</span>
+            <span class="cno"><span class="mono">Step {String(c.stage).padStart(2, '0')}</span><span>{c.stageName}</span></span>
             <h3>{c.title.split(/(?<=때) /).map((x, i) => <>{i > 0 && ' '}<span class="seg">{x}</span></>)}</h3>
-            <span class="cmeta">{c.meta.split(' · ').slice(0, 2).join(' · ')}</span>
-            <span class="cgo">사례 읽기 →</span>
-            <span class="cpage">이 PDF {i + 2}쪽 · 웹 ↗</span>
+            <span class="cmeta">{c.meta.split(' · ').slice(0, 2).map((m) => <span>{m}</span>)}</span>
+            <span class="cgo">사례 읽기</span>
+            <span class="cpage parts"><span>이 PDF {i + 2}쪽</span><span>웹에서 보기</span></span>
           </a>
         ))}
       </div>
@@ -88,7 +89,7 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
         {stages.rows.map((r) => (
           <div class="srow" role="row" data-has={r.cells.map((t, i) => (t ? i + 1 : '')).join('')}>
             <div class="spj" role="rowheader">
-              <a href={`${base}/projects/${r.slug}`}><b>{r.pj}{r.live && <span class="live mono">운영 중</span>}</b></a>
+              <a href={`${base}/projects/${r.slug}`}><b>{r.pj}{r.live && <span class="live">운영 중</span>}</b></a>
               <span class="what">{r.what}</span>
               <span class="when mono">{r.when}</span>
               <MediaChips links={proj(r.slug)?.links} note={proj(r.slug)?.linksNote} name={r.pj} />
@@ -99,7 +100,7 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
                 <div class:list={['scell', { lead }]} role="cell" data-col={i + 1}>
                   <span class="sname"><span class="mono">{String(i + 1).padStart(2, '0')}</span> {stages.stages[i].name}</span>
                   <ol>{t.split(' → ').map((x) => <li>{x.split(' · ').map((y) => <span>{y}</span>)}</li>)}</ol>
-                  {lead && <a class="slead" href={`${base}/cases/${lead.path}`}>사례 읽기 →</a>}
+                  {lead && <a class="slead" href={`${base}/cases/${lead.path}`}>사례 읽기</a>}
                 </div>
               ) : (
                 <div class="scell none" role="cell" aria-label="해당 없음" data-col={i + 1}></div>
@@ -116,8 +117,8 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
         {profile.history.map((h) => (
           <div class="hrow">
             <div class="when mono">{h.when}</div>
-            <div class="what">{h.what}{h.live && <span class="live mono">운영 중</span>}</div>
-            <div class="role">{h.role}</div>
+            <div class="what">{h.what}{h.live && <span class="live">운영 중</span>}</div>
+            <div class="role parts">{h.role.split(' · ').map((x) => <span>{x}</span>)}</div>
           </div>
         ))}
       </div>
@@ -154,8 +155,8 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
     const pill = filter.querySelector<HTMLElement>('.sfpill')!;
     const place = () => {
       const on = btns.find((x) => x.getAttribute('aria-pressed') === 'true')!;
-      pill.style.width = `${on.offsetWidth}px`; pill.style.height = `${on.offsetHeight}px`;
-      pill.style.transform = `translate(${on.offsetLeft}px, ${on.offsetTop}px)`;
+      const r = filter.clientWidth - on.offsetLeft - on.offsetWidth, b = filter.clientHeight - on.offsetTop - on.offsetHeight;
+      pill.style.clipPath = `inset(${on.offsetTop}px ${r}px ${b}px ${on.offsetLeft}px round 999px)`;
     };
     place(); filter.classList.add('js-pill');
     requestAnimationFrame(() => requestAnimationFrame(() => filter.classList.add('ready')));   // 첫 자리는 움직이지 않고 놓는다

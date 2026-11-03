@@ -37,7 +37,7 @@ const pd = row ? (await getCollection('projects')).find((p) => p.data.slug === r
       </aside>
 
       <header class="case-head">
-        <p class="stage"><span class="mono">STEP {no(c.stage)}</span> · {c.stageName}</p>
+        <p class="stage"><span class="mono">Step {no(c.stage)}</span><span>{c.stageName}</span></p>
         <h1>{c.title.split(/(?<=때) /).map((x, i) => <>{i > 0 && ' '}<span class="seg">{x}</span></>)}</h1>
         <p class="chips">{c.meta.split(' · ').map((m) => <span>{m}</span>)}</p>
       </header>
@@ -91,10 +91,10 @@ const pd = row ? (await getCollection('projects')).find((p) => p.data.slug === r
       {pd && <MediaBlock links={pd.links} note={pd.linksNote} name={c.pj} title={`${c.pj} 실물 보기`} />}
 
       <nav class="cnav">
-        {row && <a href={`${base}/projects/${row.slug}`}>{c.pj} 프로젝트 전체 보기 →</a>}
+        {row && <a href={`${base}/projects/${row.slug}`}>{c.pj} 프로젝트 전체 보기</a>}
         <span class="sp"></span>
-        {prev && <a href={`${base}/cases/${prev.path}`}>← STEP {no(prev.stage)} {prev.stageName}</a>}
-        {next && <a href={`${base}/cases/${next.path}`}>STEP {no(next.stage)} {next.stageName} →</a>}
+        {prev && <a href={`${base}/cases/${prev.path}`}>이전 사례: Step {no(prev.stage)} {prev.stageName}</a>}
+        {next && <a href={`${base}/cases/${next.path}`}>다음 사례: Step {no(next.stage)} {next.stageName}</a>}
       </nav>
     </section>
   </div>

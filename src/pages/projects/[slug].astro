@@ -37,15 +37,15 @@ const workSchema = {
       <a class="back" href={`${base}/#overview`}>← 전체 프로젝트</a>
 
       <div class="case-head">
-        <h1>{d.name}{d.live && <span class="live mono">운영 중</span>}</h1>
+        <h1>{d.name}{d.live && <span class="live">운영 중</span>}</h1>
         <p class="kind">{d.kind}</p>
-        <p class="meta mono">{d.meta}</p>
+        <p class="meta parts">{d.meta.split(' · ').map((x) => <span>{x}</span>)}</p>
         <div class="presult">
           <span class="arrow">결과</span>
-          <span class="mono">{d.result}</span>
+          <span class="mono parts">{d.result.split(' · ').map((x) => <span>{x}</span>)}</span>
           {d.resultNote && <span class="arrow note">{d.resultNote}</span>}
         </div>
-        {d.caveat && <p class="caveat">{d.caveat}</p>}
+        {d.caveat && <p class="caveat parts">{d.caveat.split(' · ').map((x) => <span>{x}</span>)}</p>}
       </div>
 
       <div class="prose">

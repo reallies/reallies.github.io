@@ -8,3 +8,6 @@ dist/
 #   src/content/projects/
 #   src/content/capabilities/
 #   src/data/profile.json
+
+# Hallmark 검사 산출물(캡처·기록)
+.hallmark/
