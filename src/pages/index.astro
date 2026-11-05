@@ -4,6 +4,8 @@ import profile from '../data/profile.json';
 import stages from '../data/stages.json';
 import { getCollection } from 'astro:content';
 import MediaChips from '../components/MediaChips.astro';
+import AnalysisList from '../components/AnalysisList.astro';
+import { getAnalyses } from '../lib/analysis.js';
 import { nb, nameCase } from '../lib/nb.js';
 import QRCode from 'qrcode';
 
@@ -14,6 +16,9 @@ const proj = (slug) => projs.find((p) => p.data.slug === slug)?.data;
 // 인쇄본(PDF) 1쪽 머리 — 웹 전체로 가는 QR(👤 10-13 · GPT 피드백 #3)
 const siteUrl = new URL(`${base}/`, Astro.site).href;
 const siteQr = await QRCode.toString(siteUrl, { type: 'svg', margin: 4, errorCorrectionLevel: 'M' });
+/* 서비스 분석은 계속 늘어난다 — 홈은 최신 3건만, 나머지는 목록 페이지로. 인쇄본에서는 숨긴다 */
+const analyses = await getAnalyses();
+const HOME_ANALYSES = 3;
 const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === no);
 ---
 <Base heroPdf>
@@ -65,6 +70,14 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
           </a>
         ))}
       </div>
+    </section>
+
+    <section id="analysis" class="reveal">
+      <div class="shead shead-link">
+        <h2>서비스 분석</h2>
+        {analyses.length > HOME_ANALYSES && <a href={`${base}/analysis/`}>전체 {analyses.length}건 보기</a>}
+      </div>
+      <AnalysisList items={analyses.slice(0, HOME_ANALYSES)} />
     </section>
 
     {/* 단계 × 프로젝트 표 — "어느 단계를 어디서 했나"(04 §3-B · 2026-10-11 D형).

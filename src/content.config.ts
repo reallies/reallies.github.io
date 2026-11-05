@@ -23,7 +23,13 @@ const projects = defineCollection({
 
 const analysis = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/analysis' }),
-  schema: z.object({ title: z.string(), summary: z.string() }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    service: z.string(),                                // 목록에 쓰는 서비스명
+    problem: z.string(),                                // 고른 문제 한 줄
+    analyzed: z.string().regex(/^\d{4}\.\d{2}\.\d{2}$/),  // 분석일 — 최신순 정렬에도 쓴다
+  }),
 });
 
 const capabilities = defineCollection({

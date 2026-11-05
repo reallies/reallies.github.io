@@ -17,7 +17,7 @@
  */
 import { createServer } from 'node:http';
 import { spawn } from 'node:child_process';
-import { readFile, writeFile, rm, stat, copyFile } from 'node:fs/promises';
+import { readFile, readdir, writeFile, rm, stat, copyFile } from 'node:fs/promises';
 import { PDFDocument } from 'pdf-lib';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
@@ -88,7 +88,8 @@ for (const [i, url] of ['/', ...CASES].entries()) {
   await rm(out);
 }
 // 서비스 분석은 포트폴리오 PDF에 합치지 않고 따로 뽑는다(지원서 첨부용)
-for (const slug of ['hackers-toeic', 'watchapedia']) {
+const ANALYSES = (await readdir(path.join(ROOT, 'src/content/analysis'))).filter((f) => f.endsWith('.md')).map((f) => f.slice(0, -3));
+for (const slug of ANALYSES) {
   const analysisOut = path.join(ROOT, `public/${slug}-analysis.pdf`);
   const analysisCode = await print(`/analysis/${slug}`, analysisOut);
   if (analysisCode !== 0) { server.close(); die(`Chrome이 ${analysisCode} 로 끝났습니다 (분석 페이지 ${slug}).`); }

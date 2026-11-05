@@ -1,0 +1,34 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { getAnalyses } from '../../lib/analysis.js';
+
+/* 분석 파일 하나 = 페이지 하나. PDF는 scripts/pdf.mjs가 같은 이름으로 만든다 */
+export async function getStaticPaths() {
+  const analyses = await getAnalyses();
+  return analyses.map((a) => ({ params: { slug: a.slug }, props: { a } }));
+}
+const { a } = Astro.props;
+const { Content } = await render(a.entry);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base title={a.title} description={a.summary}>
+  <div class="wrap read analysis">
+    <section style="padding-top:48px">
+      <a class="back" href={`${base}/analysis/`}>서비스 분석</a>
+      <div class="case-head">
+        <h1>{a.title}</h1>
+        <p class="kind">{a.summary}</p>
+        <p class="meta"><a href={`${base}/${a.slug}-analysis.pdf`} download={`오현석_${a.service}_서비스분석.pdf`}>PDF 내려받기</a></p>
+      </div>
+    </section>
+    <section class="analysis-body">
+      <div class="prose">
+        <Content />
+      </div>
+    </section>
+  </div>
+  <style is:global>
+    @page { size: A4; }
+  </style>
+</Base>

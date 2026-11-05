@@ -861,3 +861,25 @@
   .analysis .prose img { break-inside: avoid; }
   .analysis .data-footnote-backref { display: none; }   /* 누를 수 없는 인쇄본에서는 돌아가기 기호가 군더더기 */
 }
+
+/* ---------- 서비스 분석 목록 — 홈과 /analysis가 같이 쓴다. 건수가 늘어도 빈 칸이 생기지 않게 카드 대신 줄로 쌓는다 ---------- */
+.shead-link { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+.shead-link a { font-size: 13px; font-weight: 650; color: var(--accent); text-underline-offset: 2px; }
+.shead-link a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.alist { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.alist li { border-bottom: 1px solid var(--hairline); }
+.arow { display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; gap: 20px; align-items: baseline; padding: 16px 0; color: var(--ink); text-decoration: none; }
+.arow:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.aname { font-size: 15.5px; font-weight: 680; letter-spacing: -0.01em; color: var(--accent); text-underline-offset: 3px; }
+.arow:hover .aname { text-decoration: underline; }
+.aproblem { font-size: 15.5px; font-weight: 620; letter-spacing: -0.01em; overflow-wrap: break-word; min-width: 0; }
+.ameta { display: flex; gap: 14px; font-size: 13px; color: var(--muted); white-space: nowrap; }
+@media (max-width: 720px) {
+  .arow { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .ameta { margin-top: 2px; }
+}
+.case-head:has(+ .alist) { margin-bottom: 0; }
+.case-head + .alist { border-top: 0; }
+@media print { #analysis { display: none; } }
+/* 아주 좁은 화면 — 메뉴 4개면 이름이 잘린다. PDF는 홈 첫 화면에도 있어 머리 메뉴에서 뺀다 */
+@media (max-width: 350px) { .cta .nav-pdf { display: none; } }

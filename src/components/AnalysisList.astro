@@ -1,0 +1,15 @@
+---
+const { items } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<ol class="alist">
+  {items.map((a) => (
+    <li>
+      <a class="arow" href={`${base}/analysis/${a.slug}/`}>
+        <span class="aname">{a.service}</span>
+        <span class="aproblem">{a.problem}</span>
+        <span class="ameta"><span class="mono">{a.analyzed}</span><span>근거 {a.evidence}건</span></span>
+      </a>
+    </li>
+  ))}
+</ol>

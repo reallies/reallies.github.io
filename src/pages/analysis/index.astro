@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import AnalysisList from '../../components/AnalysisList.astro';
+import { getAnalyses } from '../../lib/analysis.js';
+
+const analyses = await getAnalyses();
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const intro = 'AI 분석 파이프라인으로 화면과 자료를 모으고, 문제 하나를 골라 개선안과 검증 설계까지 정리했다.';
+---
+<Base title="서비스 분석" description={intro}>
+  <div class="wrap read">
+    <section style="padding-top:48px">
+      <a class="back" href={`${base}/`}>포트폴리오</a>
+      <div class="case-head">
+        <h1>서비스 분석</h1>
+        <p class="kind">{intro}</p>
+      </div>
+      <AnalysisList items={analyses} />
+    </section>
+  </div>
+</Base>
