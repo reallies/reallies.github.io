@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="470" height="1035" viewBox="20 95 470 1035"><rect width="1500" height="1160" fill="#f4f5f7"/>
+<text x="35" y="42" font-family="sans-serif" font-size="26" fill="#202a35">생활용품 마켓 / 도메인 원리 적용 와이어프레임</text>
+<text x="35" y="73" font-family="sans-serif" font-size="17" fill="#202a35">학습용 가상 서비스 · 모든 가격·정책·상품·일정은 설계 예시 · 정적 시안이며 구매 기능 없음</text>
+<rect x="30" y="105" width="450" height="1015" rx="8" fill="#fff" stroke="#c8cdd5"/>
+<text x="50" y="143" font-family="sans-serif" font-size="22" fill="#202a35">01  상품 찾기</text>
+<text x="50" y="173" font-family="sans-serif" font-size="14" fill="#526275">R1 / PT-01</text>
+<rect x="525" y="105" width="450" height="1015" rx="8" fill="#fff" stroke="#c8cdd5"/>
+<text x="545" y="143" font-family="sans-serif" font-size="22" fill="#202a35">02  거래·구매 방식 선택</text>
+<text x="545" y="173" font-family="sans-serif" font-size="14" fill="#526275">R2·R3·R4 / PT-02·03·04</text>
+<rect x="1020" y="105" width="450" height="1015" rx="8" fill="#fff" stroke="#c8cdd5"/>
+<text x="1040" y="143" font-family="sans-serif" font-size="22" fill="#202a35">03  반복 주문 관리</text>
+<text x="1040" y="173" font-family="sans-serif" font-size="14" fill="#526275">R4 / PT-04</text>
+<rect x="50" y="200" width="410" height="48" rx="8" fill="#fff" stroke="#c8cdd5"/>
+<text x="66" y="231" font-family="sans-serif" font-size="18" fill="#202a35">검색: 화장지</text>
+<text x="50" y="287" font-family="sans-serif" font-size="17" fill="#202a35">상품 조건</text>
+<rect x="50" y="303" width="410" height="43" rx="8" fill="#eaf0f6" stroke="#c8cdd5"/>
+<text x="62" y="330" font-family="sans-serif" font-size="16" fill="#202a35">3겹  ✓     24롤  ✓</text>
+<text x="50" y="379" font-family="sans-serif" font-size="17" fill="#202a35">도착 조건</text>
+<rect x="50" y="395" width="410" height="43" rx="8" fill="#eaf0f6" stroke="#c8cdd5"/>
+<text x="62" y="422" font-family="sans-serif" font-size="16" fill="#202a35">선택한 기한까지 도착  ✓</text>
+<rect x="50" y="465" width="410" height="235" rx="8" fill="#fff" stroke="#c8cdd5"/>
+<rect x="65" y="483" width="95" height="110" rx="8" fill="#edf0f4" stroke="#c8cdd5"/>
+<text x="81" y="545" font-family="sans-serif" font-size="12" fill="#202a35">상품 이미지</text>
+<text x="180" y="493" font-family="sans-serif" font-size="16" fill="#202a35">생활 화장지 / 3겹 24롤</text>
+<text x="180" y="520" font-family="sans-serif" font-size="16" fill="#202a35">12,000원</text>
+<text x="180" y="547" font-family="sans-serif" font-size="16" fill="#202a35">10m당 200원</text>
+<text x="180" y="574" font-family="sans-serif" font-size="16" fill="#202a35">선택한 기한 내 도착</text>
+<text x="66" y="628" font-family="sans-serif" font-size="14" fill="#202a35">판매: 생활상점  /  발송: 플랫폼</text>
+<text x="66" y="655" font-family="sans-serif" font-size="14" fill="#202a35">일반 배송비 3,000원 · 상세에서 조건 확인</text>
+<rect x="50" y="722" width="410" height="160" rx="8" fill="#fff" stroke="#c8cdd5"/>
+<text x="66" y="750" font-family="sans-serif" font-size="16" fill="#202a35">광고  /  별도 추천 결과</text>
+<text x="66" y="777" font-family="sans-serif" font-size="16" fill="#202a35">동일한 정보 필드로 비교</text>
+<text x="66" y="804" font-family="sans-serif" font-size="16" fill="#202a35">광고와 기본 정렬 결과의 성격을 구분</text>
+<text x="50" y="946" font-family="sans-serif" font-size="15" fill="#202a35">설계 선택</text>
+<text x="50" y="973" font-family="sans-serif" font-size="15" fill="#202a35">상품과 배송 필터를 분리한다.</text>
+<text x="50" y="1000" font-family="sans-serif" font-size="15" fill="#202a35">카드에는 비교에 필요한 조건만 남긴다.</text>
+<text x="50" y="1027" font-family="sans-serif" font-size="15" fill="#202a35">광고를 일반 순위처럼 표현하지 않는다.</text>
+<rect x="545" y="200" width="410" height="105" rx="8" fill="#fff" stroke="#c8cdd5"/>
+<text x="561" y="231" font-family="sans-serif" font-size="18" fill="#202a35">생활 화장지 / 3겹 24롤</text>
+<text x="561" y="258" font-family="sans-serif" font-size="18" fill="#202a35">12,000원 · 10m당 200원</text>
+<rect x="545" y="326" width="410" height="160" rx="8" fill="#fff" stroke="#c8cdd5"/>
+<text x="561" y="355" font-family="sans-serif" font-size="16" fill="#202a35">선택 중인 거래 제안</text>
+<text x="561" y="382" font-family="sans-serif" font-size="16" fill="#202a35">판매: 생활상점 / 발송: 플랫폼</text>
+<text x="561" y="409" font-family="sans-serif" font-size="16" fill="#202a35">도착: 선택한 기한 내</text>
+<text x="561" y="436" font-family="sans-serif" font-size="16" fill="#202a35">반품: 조건 안내 보기</text>
+<rect x="545" y="505" width="410" height="130" rx="8" fill="#fff" stroke="#c8cdd5"/>
+<text x="561" y="533" font-family="sans-serif" font-size="15" fill="#202a35">이번 주문 배송비 3,000원</text>
+<text x="561" y="560" font-family="sans-serif" font-size="15" fill="#202a35">회원 대상 면제 · 멤버십 월 5,000원</text>
+<text x="561" y="587" font-family="sans-serif" font-size="15" fill="#202a35">가입 없이 구매 가능 / 회원 조건 보기</text>
+<rect x="545" y="655" width="410" height="245" rx="8" fill="#fff" stroke="#c8cdd5"/>
+<text x="561" y="684" font-family="sans-serif" font-size="14" fill="#202a35">구매 방식</text>
+<text x="561" y="711" font-family="sans-serif" font-size="14" fill="#202a35">● 일회 구매 (초기값)   ○ 반복 주문</text>
+<text x="561" y="738" font-family="sans-serif" font-size="14" fill="#202a35">반복 선택 시: 수량·주기·다음 예정일 확인</text>
+<text x="561" y="765" font-family="sans-serif" font-size="14" fill="#202a35">가격 변경·품절 시 보류 후 재확인</text>
+<text x="561" y="792" font-family="sans-serif" font-size="14" fill="#202a35">변경 마감: 처리 시작 48시간 전</text>
+<text x="561" y="819" font-family="sans-serif" font-size="14" fill="#202a35">72시간 전 알림 · 관리에서 건너뛰기/중단</text>
+<rect x="545" y="920" width="410" height="58" rx="8" fill="#25374a" stroke="#c8cdd5"/>
+<text x="635" y="956" font-family="sans-serif" font-size="18" fill="#fff">이번 주문 15,000원 확인</text>
+<text x="545" y="1019" font-family="sans-serif" font-size="14" fill="#202a35">설계 선택: 상품가·배송비·회비를 분리.</text>
+<text x="545" y="1046" font-family="sans-serif" font-size="14" fill="#202a35">반복은 별도 선택이며 조건을 펼쳐 설명.</text>
+<text x="545" y="1073" font-family="sans-serif" font-size="14" fill="#202a35">결제 직전까지만 표현한 정적 시안.</text>
+<rect x="1040" y="200" width="410" height="48" rx="8" fill="#eaf0f6" stroke="#c8cdd5"/>
+<text x="1054" y="231" font-family="sans-serif" font-size="16" fill="#202a35">다시 구매    |    반복 주문 관리 (선택)</text>
+<rect x="1040" y="273" width="410" height="205" rx="8" fill="#fff" stroke="#c8cdd5"/>
+<text x="1056" y="303" font-family="sans-serif" font-size="14" fill="#202a35">생활 화장지 / 반복 주문 활성 · 마감 전</text>
+<text x="1056" y="330" font-family="sans-serif" font-size="14" fill="#202a35">다음 처리: 예시 D-day / 1개 / 4주마다</text>
+<text x="1056" y="357" font-family="sans-serif" font-size="14" fill="#202a35">예상 상품가 12,000원 + 배송비 3,000원</text>
+<text x="1056" y="384" font-family="sans-serif" font-size="14" fill="#202a35">확정 가격·일정은 사전 알림에서 확인</text>
+<text x="1056" y="411" font-family="sans-serif" font-size="14" fill="#202a35">변경 마감: D-day 48시간 전</text>
+<text x="1056" y="438" font-family="sans-serif" font-size="14" fill="#202a35">마감 후 이번 회차 잠금 · 중단은 다음부터</text>
+<rect x="1040" y="501" width="410" height="44" rx="8" fill="#fff" stroke="#c8cdd5"/>
+<text x="1056" y="530" font-family="sans-serif" font-size="16" fill="#202a35">주기·수량 변경</text>
+<rect x="1040" y="559" width="410" height="44" rx="8" fill="#fff" stroke="#c8cdd5"/>
+<text x="1056" y="588" font-family="sans-serif" font-size="16" fill="#202a35">이번 회차 건너뛰기</text>
+<rect x="1040" y="617" width="410" height="44" rx="8" fill="#fff" stroke="#c8cdd5"/>
+<text x="1056" y="646" font-family="sans-serif" font-size="16" fill="#202a35">반복 중단</text>
+<rect x="1040" y="690" width="410" height="135" rx="8" fill="#fff4dd" stroke="#c8cdd5"/>
+<text x="1056" y="720" font-family="sans-serif" font-size="15" fill="#202a35">가격 변경·품절 시의 별도 상태</text>
+<text x="1056" y="747" font-family="sans-serif" font-size="15" fill="#202a35">다음 주문 보류 / 자동 처리되지 않음</text>
+<text x="1056" y="774" font-family="sans-serif" font-size="15" fill="#202a35">새 조건을 확인한 뒤 다시 동의 / 중단 가능</text>
+<text x="1040" y="891" font-family="sans-serif" font-size="15" fill="#202a35">설계 선택</text>
+<text x="1040" y="918" font-family="sans-serif" font-size="15" fill="#202a35">과거 상품 찾기와 미래 주문 관리를 구분.</text>
+<text x="1040" y="945" font-family="sans-serif" font-size="15" fill="#202a35">일시 건너뛰기와 반복 중단을 나눈다.</text>
+<text x="1040" y="972" font-family="sans-serif" font-size="15" fill="#202a35">알림·보류 운영이 없으면 자동 주문 배제.</text>
+<text x="35" y="1150" font-family="sans-serif" font-size="14" fill="#202a35">근거: P1~P4 원리 원고와 PT-01~04 패턴 카드. 서비스 관찰 화면을 그대로 복제한 시안이 아닙니다.</text>
+</svg>

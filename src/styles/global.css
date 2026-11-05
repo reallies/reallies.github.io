@@ -945,3 +945,7 @@
 }
 /* 요약과 전체 기록은 한 줄 길이를 지키려고 틀을 좁혀 가운데에 둔다. 글, 표, 가로줄이 같은 폭을 쓴다 */
 @media screen { .wrap.read.analysis { max-width: 820px; } }
+
+/* 원리 분석의 도식: 텍스트로도 읽히는 개념 관계 */
+.principle-flow {padding:18px 22px;border:1px solid var(--hairline);border-left:3px solid var(--accent);margin:24px 0;overflow-wrap:anywhere}
+.analysis .prose p:has(img[src*="coupang-amazon/wireframe-"]) img {width:100%;max-width:470px;margin-inline:auto;height:auto}
