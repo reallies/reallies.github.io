@@ -1,0 +1,29 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+const entry = await getEntry('analysis', 'watchapedia');
+if (!entry) throw new Error('analysis/watchapedia 없음');
+const { Content } = await render(entry);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base title={entry.data.title} description={entry.data.summary}>
+  <div class="wrap read">
+    <section style="padding-top:48px">
+      <a class="back" href={`${base}/`}>← 포트폴리오</a>
+      <div class="case-head">
+        <h1>{entry.data.title}</h1>
+        <p class="kind">{entry.data.summary}</p>
+        <p class="meta"><a href={`${base}/watchapedia-analysis.pdf`} download="오현석_왓챠피디아_서비스분석.pdf">PDF 내려받기</a></p>
+      </div>
+      <div class="prose">
+        <Content />
+      </div>
+    </section>
+  </div>
+  <style is:global>
+    @page { size: A4; }
+    .prose .fn-sep { font-size: 0.75em; vertical-align: super; line-height: 0; }
+    @media print { .prose h3 { break-after: avoid; } .prose img { break-inside: avoid; } }
+  </style>
+</Base>
