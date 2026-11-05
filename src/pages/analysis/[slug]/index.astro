@@ -1,0 +1,95 @@
+---
+import Base from '../../../layouts/Base.astro';
+import { getAnalyses } from '../../../lib/analysis.js';
+
+/* 요약 페이지 — 처음 보는 사람 기준. 글은 분석 파일의 brief에서 온다. 근거와 각주는 전체 기록(/full)에 둔다 */
+export async function getStaticPaths() {
+  const analyses = await getAnalyses();
+  return analyses.map((a) => ({ params: { slug: a.slug }, props: { a } }));
+}
+const { a } = Astro.props;
+const b = a.brief;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base title={a.title} description={a.summary}>
+  <div class="wrap read analysis">
+    <section style="padding-top:48px">
+      <a class="back" href={`${base}/analysis/`}>서비스 분석</a>
+      <div class="case-head">
+        <h1>{a.title}</h1>
+        <p class="bactions">
+          <span>분석일 {a.analyzed}</span>
+          <a href={`${base}/${a.slug}-analysis.pdf`} download={`오현석_${a.service}_서비스분석.pdf`}>요약 PDF</a>
+          <a href={`${base}/analysis/${a.slug}/full/`}>전체 기록</a>
+        </p>
+      </div>
+      <dl class="brows lead">
+        {b.glance.map((r) => <div><dt>{r.k}</dt><dd>{r.v}</dd></div>)}
+      </dl>
+    </section>
+
+    <div class="brief">
+      <section>
+        <h2>어떤 서비스인가</h2>
+        <dl class="brows">
+          {b.context.map((r) => <div><dt>{r.k}</dt><dd>{r.v}</dd></div>)}
+        </dl>
+      </section>
+
+      <section>
+        <h2>무엇이 문제인가</h2>
+        <figure class="bshot">
+          <img src={`${base}/${b.shot.src}`} width={b.shot.w} height={b.shot.h} alt={b.shot.alt} loading="lazy" decoding="async" />
+          <figcaption>{b.shot.caption}</figcaption>
+        </figure>
+        <ul class="blist">{b.problem.map((x) => <li>{x}</li>)}</ul>
+      </section>
+
+      <section>
+        <h2>왜 이 문제인가</h2>
+        <table class="bcand">
+          <thead><tr><th scope="col">문제 후보</th><th scope="col">고를 때의 약점</th></tr></thead>
+          <tbody>
+            {b.candidates.map((c) => (
+              <tr class:list={{ picked: c.picked }}>
+                <td>{c.name}{c.picked && <span class="bpick">선택</span>}</td>
+                <td>{c.weak}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p class="bwhy">{b.why}</p>
+      </section>
+
+      <section>
+        <h2>어떻게 고칠까</h2>
+        <ol class="bfixes">
+          {b.fixes.map((f) => <li><h3>{f.title}</h3><p>{f.body}</p><p class="effort">구현 난이도 {f.effort}</p></li>)}
+        </ol>
+      </section>
+
+      <section>
+        <h2>어떻게 검증할까</h2>
+        <dl class="brows">
+          {b.test.map((r) => <div><dt>{r.k}</dt><dd>{r.v}</dd></div>)}
+        </dl>
+      </section>
+
+      <section class="bduo">
+        <div>
+          <h2>감수할 위험</h2>
+          <ul class="blist">{b.risks.map((x) => <li>{x}</li>)}</ul>
+        </div>
+        <div>
+          <h2>이 분석의 한계</h2>
+          <ul class="blist">{b.limits.map((x) => <li>{x}</li>)}</ul>
+        </div>
+      </section>
+
+      <p class="bfull">근거 {a.evidence}건과 진단 전체는 <a href={`${base}/analysis/${a.slug}/full/`}>전체 기록</a>에서 볼 수 있다.</p>
+    </div>
+  </div>
+  <style is:global>
+    @page { size: A4; }
+  </style>
+</Base>

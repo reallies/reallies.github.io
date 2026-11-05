@@ -1,9 +1,9 @@
 ---
 import { render } from 'astro:content';
-import Base from '../../layouts/Base.astro';
-import { getAnalyses } from '../../lib/analysis.js';
+import Base from '../../../layouts/Base.astro';
+import { getAnalyses } from '../../../lib/analysis.js';
 
-/* 분석 파일 하나 = 페이지 하나. PDF는 scripts/pdf.mjs가 같은 이름으로 만든다 */
+/* 전체 기록 — 분석 본문과 각주 전부. 요약은 상위 페이지에 있다 */
 export async function getStaticPaths() {
   const analyses = await getAnalyses();
   return analyses.map((a) => ({ params: { slug: a.slug }, props: { a } }));
@@ -12,14 +12,14 @@ const { a } = Astro.props;
 const { Content } = await render(a.entry);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
-<Base title={a.title} description={a.summary}>
+<Base title={`${a.title} 전체 기록`} description={a.summary}>
   <div class="wrap read analysis">
     <section style="padding-top:48px">
-      <a class="back" href={`${base}/analysis/`}>서비스 분석</a>
+      <a class="back" href={`${base}/analysis/${a.slug}/`}>{a.service} 요약</a>
       <div class="case-head">
-        <h1>{a.title}</h1>
+        <h1>{a.title} 전체 기록</h1>
         <p class="kind">{a.summary}</p>
-        <p class="meta"><a href={`${base}/${a.slug}-analysis.pdf`} download={`오현석_${a.service}_서비스분석.pdf`}>PDF 내려받기</a></p>
+        <p class="meta"><a href={`${base}/${a.slug}-analysis-full.pdf`} download={`오현석_${a.service}_서비스분석_전체기록.pdf`}>PDF 내려받기</a></p>
       </div>
     </section>
     <section class="analysis-body">

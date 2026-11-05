@@ -90,10 +90,13 @@ for (const [i, url] of ['/', ...CASES].entries()) {
 // 서비스 분석은 포트폴리오 PDF에 합치지 않고 따로 뽑는다(지원서 첨부용)
 const ANALYSES = (await readdir(path.join(ROOT, 'src/content/analysis'))).filter((f) => f.endsWith('.md')).map((f) => f.slice(0, -3));
 for (const slug of ANALYSES) {
-  const analysisOut = path.join(ROOT, `public/${slug}-analysis.pdf`);
-  const analysisCode = await print(`/analysis/${slug}`, analysisOut);
-  if (analysisCode !== 0) { server.close(); die(`Chrome이 ${analysisCode} 로 끝났습니다 (분석 페이지 ${slug}).`); }
-  if (TO_DIST) await copyFile(analysisOut, path.join(DIST, path.basename(analysisOut)));
+  // 요약본과 전체 기록을 각각 뽑는다
+  for (const [route, name] of [[`/analysis/${slug}`, `${slug}-analysis.pdf`], [`/analysis/${slug}/full`, `${slug}-analysis-full.pdf`]]) {
+    const analysisOut = path.join(ROOT, 'public', name);
+    const analysisCode = await print(route, analysisOut);
+    if (analysisCode !== 0) { server.close(); die(`Chrome이 ${analysisCode} 로 끝났습니다 (분석 페이지 ${route}).`); }
+    if (TO_DIST) await copyFile(analysisOut, path.join(DIST, name));
+  }
 }
 server.close();
 const [home, ...cases] = parts;

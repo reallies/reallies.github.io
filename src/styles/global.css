@@ -823,21 +823,20 @@
   .case-head { padding-right: 150px; }
 }
 
-/* ---------- 서비스 분석 문서 — 글은 읽는 폭으로, 표와 그림만 틀 전체 폭으로 ---------- */
+/* ---------- 서비스 분석 전체 기록 — 글과 표를 상단바와 같은 폭에 맞춘다 ---------- */
 .analysis .case-head { margin-bottom: 0; }
 .analysis-body { padding-top: 0; }
 .analysis .case-head .meta a, .analysis .prose a { color: var(--accent); text-underline-offset: 2px; }
-.analysis .prose > p, .analysis .prose > ul, .analysis .prose > ol, .analysis .prose > blockquote, .analysis .prose > h4 { max-width: 72ch; }
+.analysis .prose sup { line-height: 0; }   /* 각주 번호가 줄 간격을 벌리지 않게 */
 .analysis .prose sup a { text-decoration: none; padding: 0 1px; }
+.analysis .prose p, .analysis .prose li { text-wrap: pretty; }
 .analysis .prose h4 { font-size: 15.5px; font-weight: 650; margin: 28px 0 8px; }
 .analysis .prose hr { border: 0; border-top: 1px solid var(--hairline); margin: 28px 0; }
-.analysis .prose > p:has(> img) { max-width: none; }
 .analysis .prose img { display: block; border: 1px solid var(--hairline); border-radius: 4px; }
 .analysis .footnotes { margin-top: 48px; color: var(--muted); }
 .analysis .footnotes li { font-size: 13px; line-height: 1.6; overflow-wrap: anywhere; }
 .analysis .prose .fn-sep { font-size: 0.75em; vertical-align: super; line-height: 0; }
 .analysis .footnotes ol { padding-left: 2.2em; }   /* 두 자리 각주 번호가 잘리지 않게 */
-.analysis .footnotes p { max-width: 72ch; }
 .analysis .footnotes .nb { white-space: normal; }   /* 숫자가 든 긴 주소도 줄을 나눈다 */
 .analysis .footnotes a { overflow-wrap: anywhere; }
 .analysis .prose td:nth-child(2) { min-width: 130px; }
@@ -883,3 +882,66 @@
 @media print { #analysis { display: none; } }
 /* 아주 좁은 화면 — 메뉴 4개면 이름이 잘린다. PDF는 홈 첫 화면에도 있어 머리 메뉴에서 뺀다 */
 @media (max-width: 350px) { .cta .nav-pdf { display: none; } }
+
+/* ---------- 서비스 분석 요약 — 처음 보는 사람이 결론부터 읽는다. 모든 줄과 표를 틀 전체 폭에 맞춘다 ---------- */
+.brief { text-wrap: pretty; }
+.brief h2 { font-size: 20px; font-weight: 680; letter-spacing: -0.02em; margin: 0 0 16px; }
+.brief > section { padding-top: 0; margin-top: 56px; }
+.brief p, .brief li { font-size: 16px; line-height: 1.7; margin: 0; }
+.bactions { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+.bactions a { color: var(--accent); text-underline-offset: 2px; }
+.bactions a:focus-visible, .bfull a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.brows { margin: 0; border-top: 1px solid var(--ink); }
+.brows > div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--hairline); }
+.brows dt { font-size: 14px; color: var(--muted); }
+.brows dd { margin: 0; font-size: 16px; line-height: 1.6; }
+.brows.lead { border-top: 0; }
+.brows.lead > div { padding: 15px 0; }
+.brows.lead dd { font-size: 19px; line-height: 1.5; font-weight: 640; letter-spacing: -0.015em; }
+.bshot { margin: 0 0 16px; }
+.bshot img { display: block; width: 100%; height: auto; border: 1px solid var(--hairline); border-radius: 4px; }
+.bshot figcaption { font-size: 13px; color: var(--muted); margin-top: 8px; }
+.blist { margin: 0; padding-left: 1.2em; }
+.blist li + li { margin-top: 4px; }
+.bcand { width: 100%; border-collapse: collapse; border-top: 1px solid var(--ink); }
+.bcand th { font-size: 13px; font-weight: 600; color: var(--muted); text-align: left; padding: 10px 12px 10px 0; border-bottom: 1px solid var(--hairline); }
+.bcand td { font-size: 15px; line-height: 1.55; vertical-align: top; padding: 11px 12px 11px 0; border-bottom: 1px solid var(--hairline); width: 50%; }
+.bcand td:last-child { color: var(--muted); padding-right: 0; }
+.bcand .picked td:first-child { font-weight: 680; color: var(--accent); }
+.bpick { font-size: 12.5px; font-weight: 650; margin-left: 6px; white-space: nowrap; }
+.bwhy { margin-top: 16px !important; }
+.bfixes { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; border-top: 1px solid var(--ink); counter-reset: fix; }
+.bfixes li { counter-increment: fix; padding-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+.bfixes h3 { font-size: 16.5px; font-weight: 680; letter-spacing: -0.01em; margin: 0; }
+.bfixes h3::before { content: counter(fix) ". "; color: var(--accent); }
+.bfixes p { font-size: 15px; line-height: 1.6; }
+.bfixes .effort { font-size: 13px; color: var(--muted); margin-top: auto; }
+.bduo { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px; }
+.bduo h2 { padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--ink); }
+.bfull { padding-top: 24px; margin-top: 56px; border-top: 1px solid var(--hairline); }
+.bfull a { color: var(--accent); font-weight: 650; text-underline-offset: 2px; }
+@media (max-width: 720px) {
+  .brief > section { margin-top: 44px; }
+  .brows > div { grid-template-columns: 68px minmax(0, 1fr); gap: 10px; }
+  .brows.lead dd { font-size: 17px; }
+  .bfixes, .bduo { grid-template-columns: minmax(0, 1fr); }
+  .bfixes { gap: 10px; }
+  .bcand thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .bcand, .bcand tbody, .bcand tr, .bcand td { display: block; width: auto; }
+  .bcand tr { padding: 10px 0; border-bottom: 1px solid var(--hairline); }
+  .bcand td { border: 0; padding: 1px 0; }
+}
+@media print {
+  .bactions, .bfull { display: none; }
+  .brief > section { margin-top: 18px; }
+  .brief p, .brief li, .brows dd, .bcand td, .bfixes p { font-size: 10pt; line-height: 1.5; }
+  .brows.lead dd { font-size: 12pt; }
+  .brief h2 { font-size: 13pt; margin-bottom: 8px; }
+  .brief section, .brows > div, .bcand tr, .bfixes li, .bshot { break-inside: avoid; }
+  .brows > div { padding: 6px 0; }
+  .bcand td, .bcand th { padding: 5px 10px 5px 0; }
+  .bfixes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .bduo { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+}
+/* 요약과 전체 기록은 한 줄 길이를 지키려고 틀을 좁혀 가운데에 둔다. 글, 표, 가로줄이 같은 폭을 쓴다 */
+@media screen { .wrap.read.analysis { max-width: 820px; } }

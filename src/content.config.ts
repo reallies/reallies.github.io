@@ -21,6 +21,8 @@ const projects = defineCollection({
   }),
 });
 
+const row = z.object({ k: z.string(), v: z.string() });
+
 const analysis = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/analysis' }),
   schema: z.object({
@@ -29,6 +31,18 @@ const analysis = defineCollection({
     service: z.string(),                                // 목록에 쓰는 서비스명
     problem: z.string(),                                // 고른 문제 한 줄
     analyzed: z.string().regex(/^\d{4}\.\d{2}\.\d{2}$/),  // 분석일 — 최신순 정렬에도 쓴다
+    brief: z.object({                                   // 처음 보는 사람이 읽는 요약. 본문 전체는 /full 에 둔다
+      glance: z.array(row),
+      context: z.array(row),
+      shot: z.object({ src: z.string(), w: z.number(), h: z.number(), alt: z.string(), caption: z.string() }),
+      problem: z.array(z.string()),
+      candidates: z.array(z.object({ name: z.string(), weak: z.string(), picked: z.boolean().default(false) })),
+      why: z.string(),
+      fixes: z.array(z.object({ title: z.string(), body: z.string(), effort: z.string() })),
+      test: z.array(row),
+      risks: z.array(z.string()),
+      limits: z.array(z.string()),
+    }),
   }),
 });
 
