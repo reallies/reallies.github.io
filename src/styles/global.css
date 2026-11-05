@@ -6,13 +6,15 @@
 /* Hallmark · dismissed 28a · the lazy image in MediaBlock is the video card near the page end, never the first screen */
 /* Hallmark · dismissed 49 · white-space: nowrap is set on .sfilter button below, the linter reads only the markup */
 /* Hallmark · reworded "오현석 HYUNSEOK OH" to "오현석" · 38iii names the muted latin span inside h1; the latin name now sits in p.latin under it */
+/* Hallmark · checked: 2026-11-05 · /analysis/ 2 pages · built: the project · redesign: polish · copy gates reworded in src/content/analysis (file names, dashes, 2차 출처 marker), diagrams re-rendered in the site palette */
+/* Hallmark · reworded "1. 스코프" to "1. 분석 범위", "3. IA & 플로우" to "3. 정보 구조와 플로우", "단계 · 분기 · 입력" to "단계, 분기, 입력", "6. 개선안 & 가설" to "6. 개선안과 가설", "7. 성공 지표 & 검증" to "7. 성공 지표와 검증", "8. 파이프라인 로그" to "8. 분석 과정 기록" · 63 and the reader names them */
 /* Hallmark · answered F15 · the column gaps belong to different objects (hero split, credential pair, case cards, steps grid) and each keeps its own measure */
 
   :root {
     --paper:    #F2F1ED;
     --surface:  #FBFAF8;
     --ink:      #15181B;
-    --muted:    #6A7075;
+    --muted:    #666C71;
     --hairline: #D3D2CC;
     --accent:   #1D4E6B;
     --signal:   var(--accent);
@@ -819,4 +821,43 @@
   .wrap > section > .qr-print:not(.qr-home) p { font-size: 6.5pt; color: var(--muted); }
   .wrap > section > .qr-print:not(.qr-home) .mono { font-size: 6pt; }
   .case-head { padding-right: 150px; }
+}
+
+/* ---------- 서비스 분석 문서 — 글은 읽는 폭으로, 표와 그림만 틀 전체 폭으로 ---------- */
+.analysis .case-head { margin-bottom: 0; }
+.analysis-body { padding-top: 0; }
+.analysis .case-head .meta a, .analysis .prose a { color: var(--accent); text-underline-offset: 2px; }
+.analysis .prose > p, .analysis .prose > ul, .analysis .prose > ol, .analysis .prose > blockquote, .analysis .prose > h4 { max-width: 72ch; }
+.analysis .prose sup a { text-decoration: none; padding: 0 1px; }
+.analysis .prose h4 { font-size: 15.5px; font-weight: 650; margin: 28px 0 8px; }
+.analysis .prose hr { border: 0; border-top: 1px solid var(--hairline); margin: 28px 0; }
+.analysis .prose > p:has(> img) { max-width: none; }
+.analysis .prose img { display: block; border: 1px solid var(--hairline); border-radius: 4px; }
+.analysis .footnotes { margin-top: 48px; color: var(--muted); }
+.analysis .footnotes li { font-size: 13px; line-height: 1.6; overflow-wrap: anywhere; }
+.analysis .prose .fn-sep { font-size: 0.75em; vertical-align: super; line-height: 0; }
+.analysis .footnotes ol { padding-left: 2.2em; }   /* 두 자리 각주 번호가 잘리지 않게 */
+.analysis .footnotes p { max-width: 72ch; }
+.analysis .footnotes .nb { white-space: normal; }   /* 숫자가 든 긴 주소도 줄을 나눈다 */
+.analysis .footnotes a { overflow-wrap: anywhere; }
+.analysis .prose td:nth-child(2) { min-width: 130px; }
+@media screen and (max-width: 720px) {
+  .analysis .prose td:nth-child(2) { min-width: 0; }
+  /* 그림은 글자가 읽히는 폭을 지키고 옆으로 민다 */
+  .analysis .prose p:has(> img) { overflow-x: auto; }
+  .analysis .prose img { max-width: none; width: 760px; }
+  /* 표는 행마다 칸 이름을 위에 붙여 세로로 쌓는다 */
+  .analysis .table-scroll { overflow: visible; }
+  .analysis .prose table, .analysis .prose tbody, .analysis .prose tr, .analysis .prose td { display: block; width: auto; }
+  .analysis .prose thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .analysis .prose tr { padding: 12px 0; border-bottom: 1px solid var(--hairline); }
+  .analysis .prose td { border: 0; padding: 3px 0; }
+  .analysis .prose td::before { content: attr(data-label); display: block; font-size: 12.5px; font-weight: 600; color: var(--muted); }
+}
+@media print {
+  .analysis .prose h2, .analysis .prose h3, .analysis .prose h4 { break-after: avoid; }
+  .analysis .prose p:has(+ ul), .analysis .prose blockquote { break-inside: avoid; }
+  .analysis .prose p:has(+ ul) { break-after: avoid; }
+  .analysis .prose img { break-inside: avoid; }
+  .analysis .data-footnote-backref { display: none; }   /* 누를 수 없는 인쇄본에서는 돌아가기 기호가 군더더기 */
 }

@@ -36,12 +36,24 @@ export function rehypeWeb() {
     if (buf) out.push({ type: 'text', value: buf });
     return out;
   };
+  /* 좁은 화면에서 표를 행별 카드로 쌓을 때 쓰는 칸 이름 — 칸마다 data-label로 표 머리글을 넣는다 */
+  const els = (n, tag) => (n.children ?? []).filter((c) => c.type === 'element' && (!tag || c.tagName === tag));
+  const text = (n) => n.value ?? (n.children ?? []).map(text).join('');
+  const labelCells = (table) => {
+    const [head] = els(table, 'thead');
+    const [hrow] = head ? els(head, 'tr') : [];
+    if (!hrow) return;
+    const labels = els(hrow).map((th) => text(th).trim());
+    for (const body of els(table, 'tbody')) for (const tr of els(body, 'tr'))
+      els(tr).forEach((td, i) => { td.properties = { ...td.properties, dataLabel: labels[i] ?? '' }; });
+  };
   const walk = (node) => {
     if (!node.children) return;
     const kids = [];
     for (const c of node.children) {
       if (c.type === 'text') kids.push(...split(c.value));
       else if (c.type === 'element' && c.tagName === 'table') {
+        labelCells(c);
         walk(c);
         kids.push({ type: 'element', tagName: 'div', properties: { className: ['table-scroll'] }, children: [c] });
       } else {
