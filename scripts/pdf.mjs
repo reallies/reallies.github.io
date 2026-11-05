@@ -87,6 +87,11 @@ for (const [i, url] of ['/', ...CASES].entries()) {
   parts.push(await PDFDocument.load(await readFile(out)));
   await rm(out);
 }
+// 서비스 분석은 포트폴리오 PDF에 합치지 않고 따로 뽑는다(지원서 첨부용)
+const ANALYSIS_OUT = path.join(ROOT, 'public/hackers-toeic-analysis.pdf');
+const analysisCode = await print('/analysis/hackers-toeic', ANALYSIS_OUT);
+if (analysisCode !== 0) { server.close(); die(`Chrome이 ${analysisCode} 로 끝났습니다 (분석 페이지).`); }
+if (TO_DIST) await copyFile(ANALYSIS_OUT, path.join(DIST, path.basename(ANALYSIS_OUT)));
 server.close();
 const [home, ...cases] = parts;
 const doc = await PDFDocument.create();

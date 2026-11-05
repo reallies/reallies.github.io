@@ -21,6 +21,11 @@ const projects = defineCollection({
   }),
 });
 
+const analysis = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/analysis' }),
+  schema: z.object({ title: z.string(), summary: z.string() }),
+});
+
 const capabilities = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/capabilities' }),
   schema: z.object({
@@ -31,4 +36,4 @@ const capabilities = defineCollection({
   }),
 });
 
-export const collections = { projects, capabilities };
+export const collections = { analysis, projects, capabilities };

@@ -10,7 +10,7 @@ export default defineConfig({
   trailingSlash: 'ignore',
   build: { format: 'directory' },
   // 본문 줄바꿈(숫자 어절 한 덩어리 · 가운뎃점) · 표 가로 스크롤 상자 — src/lib/nb.js
-  markdown: { rehypePlugins: [rehypeWeb] },
+  markdown: { rehypePlugins: [rehypeWeb], remarkRehype: { footnoteLabel: '근거 각주', footnoteBackLabel: '본문으로 돌아가기' } },
   integrations: [
     // sitemap.xml + sitemap-index.xml 자동 생성.
     // 검색엔진과 AI 검색(GEO) 모두 색인 진입점으로 사용한다.
