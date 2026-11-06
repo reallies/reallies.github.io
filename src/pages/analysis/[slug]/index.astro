@@ -66,15 +66,15 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <p class="bwhy">{b.why}</p>
       </section>
 
-      <section>
+      {b.fixes.length > 0 && <section>
         <h2>{learning ? '새로운 설계에 어떻게 적용했나' : '어떻게 고칠까'}</h2>
         <ol class="bfixes">
           {b.fixes.map((f) => <li><h3>{f.title}</h3><p>{f.body}</p><p class="effort">{learning ? '적용 조건' : '구현 난이도'} {f.effort}</p></li>)}
         </ol>
-      </section>
+      </section>}
 
       {learning && a.slug === 'coupang-amazon' && <section><h2>원리를 적용한 주요 화면</h2><p>가상 커머스의 정적 시안이다. 가격과 운영 정책은 설계 가정이다.</p><details><summary>검색·상세·반복 주문 관리 화면 펼쳐 보기</summary>{[1,2,3].map((n) => <Fragment set:html={wfHtml(`analysis/coupang-amazon/wireframe-${n}.svg`, ['상품·도착 조건으로 후보를 좁히는 가상 검색 화면','상품가·배송비·회비와 구매 방식을 구분하는 가상 상세 화면','변경 마감과 건너뛰기·중단을 구분하는 가상 반복 주문 관리 화면'][n-1])} />)}</details></section>}
-      {a.application && <section><h2>원리를 적용한 주요 화면</h2><p>{a.application.note}</p><details><summary>가상 화면 3개 펼쳐 보기</summary>{a.application.shots.map((shot) => <figure class="bshot" style="margin-top:20px"><figcaption style="margin:0 0 -12px">{shot.alt}</figcaption><Fragment set:html={wfHtml(shot.src, shot.alt)} /></figure>)}</details></section>}
+      {a.application && <section><h2>원리를 적용한 주요 화면</h2><p>{a.application.note}</p><details open={a.application.shots.length === 1}><summary>적용 화면 {a.application.shots.length}개 펼쳐 보기</summary>{a.application.shots.map((shot) => <figure class="bshot" style="margin-top:20px"><figcaption style="margin:0 0 -12px">{shot.alt}</figcaption><Fragment set:html={wfHtml(shot.src, shot.alt)} /></figure>)}</details></section>}
       <section>
         <h2>어떻게 검증할까</h2>
         <dl class="brows">
