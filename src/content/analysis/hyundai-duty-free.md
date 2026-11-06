@@ -152,7 +152,7 @@
 
 에스트라의 쿠폰 받기 버튼은 회원 상태에서 쿠폰 목록 레이어를 열었다. 여기에는 웰니스관 전용3%, 최소구매$5 조건과 발급일부터0일이라는 표시, 다운로드 진입이 있었다.[^F4-04] 기간 표기의 의미나 실사용 가능 여부를 임의로 해석하지 않았다. 다운로드와 실제 쿠폰 적용은 수행하지 않았다.
 
-<figure><a href="/analysis/hyundai-duty-free/member-coupon.png"><img src="/analysis/hyundai-duty-free/member-coupon.png" width="880" height="1140" alt="회원 쿠폰 목록 레이어의 대상·최소구매·기간 표시와 다운로드 진입" loading="lazy" /></a><figcaption>실제 쿠폰 목록. 목록 확인까지만 했으며 쿠폰 발급·사용·중복 적용을 검증한 화면은 아니다.</figcaption></figure>
+<figure><a href="/analysis/hyundai-duty-free/member-coupon.png"><img src="/analysis/hyundai-duty-free/member-coupon.png" width="824" height="565" alt="회원 쿠폰 목록 레이어의 대상·최소구매·기간 표시와 다운로드 진입" loading="lazy" /></a><figcaption>실제 쿠폰 목록. 목록 확인까지만 했으며 쿠폰 발급·사용·중복 적용을 검증한 화면은 아니다.</figcaption></figure>
 
 **도메인 조건 → 정보 요구:** 쿠폰에는 대상·최소금액·유효기간과 중복 조건이 있다. ‘조회 가능한 쿠폰 → 발급된 쿠폰 → 상품에 사용 가능한 쿠폰 → 주문에 적용된 쿠폰’은 같은 상태가 아니다. IA에서 쿠폰 상세 조건과 적용 결과를 연결할 이유가 생긴다.
 
