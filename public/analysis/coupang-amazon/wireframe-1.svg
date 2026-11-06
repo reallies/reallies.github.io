@@ -3,13 +3,10 @@
 <text x="35" y="73" font-family="sans-serif" font-size="17" fill="#202a35">학습용 가상 서비스 · 모든 가격·정책·상품·일정은 설계 예시 · 정적 시안이며 구매 기능 없음</text>
 <rect x="30" y="105" width="450" height="1015" rx="8" fill="#fff" stroke="#c8cdd5"/>
 <text x="50" y="143" font-family="sans-serif" font-size="22" fill="#202a35">01  상품 찾기</text>
-<text x="50" y="173" font-family="sans-serif" font-size="14" fill="#526275">R1 / PT-01</text>
 <rect x="525" y="105" width="450" height="1015" rx="8" fill="#fff" stroke="#c8cdd5"/>
 <text x="545" y="143" font-family="sans-serif" font-size="22" fill="#202a35">02  거래·구매 방식 선택</text>
-<text x="545" y="173" font-family="sans-serif" font-size="14" fill="#526275">R2·R3·R4 / PT-02·03·04</text>
 <rect x="1020" y="105" width="450" height="1015" rx="8" fill="#fff" stroke="#c8cdd5"/>
 <text x="1040" y="143" font-family="sans-serif" font-size="22" fill="#202a35">03  반복 주문 관리</text>
-<text x="1040" y="173" font-family="sans-serif" font-size="14" fill="#526275">R4 / PT-04</text>
 <rect x="50" y="200" width="410" height="48" rx="8" fill="#fff" stroke="#c8cdd5"/>
 <text x="66" y="231" font-family="sans-serif" font-size="18" fill="#202a35">검색: 화장지</text>
 <text x="50" y="287" font-family="sans-serif" font-size="17" fill="#202a35">상품 조건</text>
@@ -82,5 +79,5 @@
 <text x="1040" y="918" font-family="sans-serif" font-size="15" fill="#202a35">과거 상품 찾기와 미래 주문 관리를 구분.</text>
 <text x="1040" y="945" font-family="sans-serif" font-size="15" fill="#202a35">일시 건너뛰기와 반복 중단을 나눈다.</text>
 <text x="1040" y="972" font-family="sans-serif" font-size="15" fill="#202a35">알림·보류 운영이 없으면 자동 주문 배제.</text>
-<text x="35" y="1150" font-family="sans-serif" font-size="14" fill="#202a35">근거: P1~P4 원리 원고와 PT-01~04 패턴 카드. 서비스 관찰 화면을 그대로 복제한 시안이 아닙니다.</text>
+<text x="35" y="1150" font-family="sans-serif" font-size="14" fill="#202a35">서비스 관찰 화면을 그대로 복제한 시안이 아닙니다.</text>
 </svg>

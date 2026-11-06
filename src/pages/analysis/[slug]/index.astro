@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import { getAnalyses } from '../../../lib/analysis.js';
+import { wfHtml } from '../../../lib/wf.js';
 
 /* 요약 페이지 — 처음 보는 사람 기준. 글은 분석 파일의 brief에서 온다. 근거와 각주는 전체 기록(/full)에 둔다 */
 export async function getStaticPaths() {
@@ -40,7 +41,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <section>
         <h2>{learning ? '화면에서 읽은 설계 원리' : '무엇이 문제인가'}</h2>
         <figure class="bshot">
-          <img src={`${base}/${b.shot.src}`} width={b.shot.w} height={b.shot.h} alt={b.shot.alt} loading="lazy" decoding="async" />
+          {b.shot.pairs
+            ? <div class="dgm" role="group" aria-label={b.shot.alt}>{b.shot.pairs.map((p) => <ol>{p.map((x) => <li>{x}</li>)}</ol>)}</div>
+            : <img src={`${base}/${b.shot.src}`} width={b.shot.w} height={b.shot.h} alt={b.shot.alt} loading="lazy" decoding="async" />}
           <figcaption>{b.shot.caption}</figcaption>
         </figure>
         <ul class="blist">{b.problem.map((x) => <li>{x}</li>)}</ul>
@@ -70,8 +73,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </ol>
       </section>
 
-      {learning && a.slug === 'coupang-amazon' && <section><h2>원리를 적용한 주요 화면</h2><p>가상 커머스의 정적 시안이다. 가격과 운영 정책은 설계 가정이다.</p><details><summary>검색·상세·반복 주문 관리 화면 펼쳐 보기</summary>{[1,2,3].map((n) => <figure class="bshot" style="margin-top:20px"><a href={`${base}/analysis/coupang-amazon/wireframe-${n}.svg`}><img src={`${base}/analysis/coupang-amazon/wireframe-${n}.svg`} width="470" height="1035" alt={['상품·도착 조건으로 후보를 좁히는 가상 검색 화면','상품가·배송비·회비와 구매 방식을 구분하는 가상 상세 화면','변경 마감과 건너뛰기·중단을 구분하는 가상 반복 주문 관리 화면'][n-1]} loading="lazy" style="max-width:470px;margin-inline:auto" /></a></figure>)}</details></section>}
-      {a.application && <section><h2>원리를 적용한 주요 화면</h2><p>{a.application.note}</p><details><summary>가상 화면 3개 펼쳐 보기</summary>{a.application.shots.map((shot) => <figure class="bshot" style="margin-top:20px"><a href={`${base}/${shot.src}`}><img src={`${base}/${shot.src}`} alt={shot.alt} loading="lazy" style="max-width:640px;margin-inline:auto" /></a><figcaption>{shot.alt}</figcaption></figure>)}</details></section>}
+      {learning && a.slug === 'coupang-amazon' && <section><h2>원리를 적용한 주요 화면</h2><p>가상 커머스의 정적 시안이다. 가격과 운영 정책은 설계 가정이다.</p><details><summary>검색·상세·반복 주문 관리 화면 펼쳐 보기</summary>{[1,2,3].map((n) => <Fragment set:html={wfHtml(`analysis/coupang-amazon/wireframe-${n}.svg`, ['상품·도착 조건으로 후보를 좁히는 가상 검색 화면','상품가·배송비·회비와 구매 방식을 구분하는 가상 상세 화면','변경 마감과 건너뛰기·중단을 구분하는 가상 반복 주문 관리 화면'][n-1])} />)}</details></section>}
+      {a.application && <section><h2>원리를 적용한 주요 화면</h2><p>{a.application.note}</p><details><summary>가상 화면 3개 펼쳐 보기</summary>{a.application.shots.map((shot) => <figure class="bshot" style="margin-top:20px"><figcaption style="margin:0 0 -12px">{shot.alt}</figcaption><Fragment set:html={wfHtml(shot.src, shot.alt)} /></figure>)}</details></section>}
       <section>
         <h2>어떻게 검증할까</h2>
         <dl class="brows">

@@ -1,3 +1,5 @@
+import { wfHtml } from './wf.js';
+
 /* 웹 줄바꿈 — 숫자·기호가 든 어절은 한 덩어리, 가운뎃점은 줄 첫머리에 오지 않게(4단계 #17·#18 · 10-12).
    PDF 빌드(마이리얼트립 build.py wrap())와 같은 규칙. 글자는 바꾸지 않는다 — 표시만(span · 붙임 공백) */
 
@@ -52,6 +54,9 @@ export function rehypeWeb() {
     const kids = [];
     for (const c of node.children) {
       if (c.type === 'text') kids.push(...split(c.value));
+      else if (c.type === 'element' && c.tagName === 'p' && els(c, 'img').length && els(c).every((e) => e.tagName === 'img' && /wireframe-\d\.svg$/.test(e.properties.src ?? ''))) {
+        for (const im of els(c)) kids.push({ type: 'raw', value: wfHtml(im.properties.src, im.properties.alt ?? '') });
+      }
       else if (c.type === 'element' && c.tagName === 'table') {
         labelCells(c);
         walk(c);
@@ -62,7 +67,17 @@ export function rehypeWeb() {
         kids.push(c);
       }
     }
-    node.children = kids;
+    /* 이어 붙은 각주 번호는 한 덩어리 — 줄 끝에서 「4, 2,」와 「5, 1」로 갈라지지 않게 */
+    const isRef = (k) => k?.type === 'element' && k.tagName === 'sup';
+    const merged = [];
+    for (let i = 0; i < kids.length; i++) {
+      if (!isRef(kids[i]) || !isRef(kids[i + 1])) { merged.push(kids[i]); continue; }
+      const group = [];
+      while (isRef(kids[i])) group.push(kids[i++]);
+      i--;
+      merged.push({ type: 'element', tagName: 'span', properties: { className: ['nb'] }, children: group });
+    }
+    node.children = merged;
   };
   return (tree) => walk(tree);
 }

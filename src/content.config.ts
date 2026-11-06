@@ -37,7 +37,7 @@ const analysis = defineCollection({
     brief: z.object({                                   // 처음 보는 사람이 읽는 요약. 본문 전체는 /full 에 둔다
       glance: z.array(row),
       context: z.array(row),
-      shot: z.object({ src: z.string(), w: z.number(), h: z.number(), alt: z.string(), caption: z.string() }),
+      shot: z.object({ src: z.string().optional(), w: z.number().optional(), h: z.number().optional(), alt: z.string(), caption: z.string(), pairs: z.array(z.array(z.string())).optional() }),  // pairs: 사진 대신 쓰는 단계 도식
       problem: z.array(z.string()),
       candidates: z.array(z.object({ name: z.string(), weak: z.string(), picked: z.boolean().default(false) })),
       why: z.string(),

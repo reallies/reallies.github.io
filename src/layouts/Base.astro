@@ -60,6 +60,8 @@ const schemas = [personSchema, siteSchema, ...jsonld];
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
+    {/* 고른 테마를 첫 그림 전에 입힌다(늦으면 깜빡인다). 고른 적 없으면 기기 설정을 따른다 */}
+    <script is:inline>try{const t=localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch{}</script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={desc} />
@@ -95,6 +97,7 @@ const schemas = [personSchema, siteSchema, ...jsonld];
           {/* 첫 화면은 히어로 버튼이 PDF를 맡아 머리 메뉴에서는 뺀다(👤 10-12) */}
           {!heroPdf && <a class="btn nav-pdf" href={`${base}/hyunseok-oh-portfolio.pdf`} download="오현석_포트폴리오.pdf"><span class="wide">포트폴리오 </span>PDF</a>}
           <a class="btn primary" href="#" data-mail>이메일</a>
+          <button type="button" class="btn theme" data-theme-toggle aria-label="다크 모드로 전환"><i aria-hidden="true"></i></button>
         </nav>
       </div>
     </div>
@@ -118,6 +121,20 @@ const schemas = [personSchema, siteSchema, ...jsonld];
       <p class="pnote"></p>
     </dialog>
     <script>
+      /* 테마 전환 — 지금 보이는 테마의 반대로 바꾸고 기억한다. 저장이 막힌 브라우저는 이 페이지에서만 바뀐다 */
+      const themeBtn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]')!;
+      const isDark = () => document.documentElement.dataset.theme
+        ? document.documentElement.dataset.theme === 'dark'
+        : matchMedia('(prefers-color-scheme: dark)').matches;
+      const themeLabel = () => themeBtn.setAttribute('aria-label', isDark() ? '라이트 모드로 전환' : '다크 모드로 전환');
+      themeLabel();
+      themeBtn.addEventListener('click', () => {
+        const next = isDark() ? 'light' : 'dark';
+        document.documentElement.dataset.theme = next;
+        try { localStorage.setItem('theme', next); } catch {}
+        themeLabel();
+      });
+
       const dlg = document.getElementById('player') as HTMLDialogElement;
       const frame = dlg.querySelector('.pframe')!;
       document.addEventListener('click', (e) => {
