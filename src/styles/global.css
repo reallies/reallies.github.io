@@ -1036,4 +1036,9 @@
 
 @media print { .wfs:has(> svg[aria-labelledby="rtitle rdesc"]) { max-width: none; } }
 
-@media print { .analysis:has(.brief img[src$="/observed-detail.jpg"]) .bshot > img { width: 400px; max-width: 100%; height: auto; margin-inline: auto; } }
+@media print { .analysis:has(.brief img[src$="/observed-detail-20261106.png"]) .bshot > img { width: 400px; max-width: 100%; height: auto; margin-inline: auto; } }
+
+/* Historical low-resolution evidence must not be stretched. */
+.analysis .prose img[src$="/observed-detail.jpg"]{width:655px;max-width:100%;height:auto}
+.analysis .prose img[src$="/observed-card-crop.png"]{width:580px;max-width:100%;height:auto}
+.analysis .prose img[src$="/observed-menu-20261106.png"]{width:640px;max-width:100%;height:auto;margin-inline:auto}
