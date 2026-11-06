@@ -31,6 +31,8 @@ const inline = (svg, label) => {
 
 export function wfHtml(src, label = '') {
   const svg = read(src);
+  // Spatial diagrams carry their layout; do not flatten them into text rows.
+  if (svg.includes('data-layout="spatial"')) return `<div class="wfs">${svg}</div>`;
   if (src.endsWith('/hackers-toeic/wireframe-2.svg')) {
     const lines = [...svg.matchAll(/<text[^>]*>([^<]*)<\/text>/g)].map((m) => m[1]).slice(1);
     const line = (i) => esc(lines[i]).replace(/\[([^\]]+)\]/g, '<span class="wf-b">$1</span>');

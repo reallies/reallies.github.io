@@ -1012,3 +1012,12 @@
 /* 이어 붙은 각주 번호는 쉼표로 나눈다(123 → 1, 2, 3) */
 .analysis .prose sup + sup::before { content: ", "; font-size: 1em; color: var(--muted); }
 .analysis .prose h2 { margin-top: 56px; }
+
+/* Connected steps: a visible path in both reading directions. */
+.dgm > ol:only-of-type li:not(:last-child)::after { content: ""; position: absolute; top: 4px; left: calc(50% + 12px); width: calc(100% - 8px); height: 2px; background: var(--accent); opacity: .7; }
+@media (max-width: 620px) {
+ .dgm > ol:only-of-type { grid-auto-flow: row; grid-template-columns: 1fr; gap: 0; padding: 0 12px; }
+ .dgm > ol:only-of-type li { text-align: left; padding: 0 0 28px 30px; min-height: 48px; }
+ .dgm > ol:only-of-type li::before { left: 4px; top: 6px; transform: none; }
+ .dgm > ol:only-of-type li:not(:last-child)::after { left: 8px; top: 20px; width: 2px; height: calc(100% - 20px); }
+}
