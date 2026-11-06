@@ -129,7 +129,7 @@ async function syncProjects(figs = {}) {
     const parts = split(raw);
     if (!parts) continue;
     const slug = field(parts.fm, 'web_slug');
-    if (!slug) continue;                     // web_slug 없는 카드는 쇼케이스 제외 (예: care-hub)
+    if (!slug) continue;                     // web_slug 없는 카드는 쇼케이스 제외
 
     const fm = {
       slug,
@@ -322,5 +322,6 @@ const c = await syncCapabilities();
 console.log(`✓ 볼트 동기화 완료  프로필 1 · 프로젝트 ${p} · 역량 ${c} · 단계 사례 ${st.cases.length} · 본문 그림 ${Object.values(figs).flat().length}`);
 console.log(`  단계 원천: ${st.source}`);
 console.log(`  출처: ${VAULT}`);
-if (p !== 5) console.warn(`  ⚠ 프로젝트가 ${p}건입니다. web_slug 필드를 확인하세요.`);
+const missingProjects = st.rows.filter((r) => !existsSync(path.join(OUT_PROJECTS, `${r.slug}.md`)));
+if (missingProjects.length) die(`단계 표에서 연결할 프로젝트가 없습니다: ${missingProjects.map((r) => r.slug).join(', ')}`);
 if (c !== 6) console.warn(`  ⚠ 역량이 ${c}건입니다. 역량 카드 frontmatter를 확인하세요.`);
