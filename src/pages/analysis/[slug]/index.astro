@@ -46,7 +46,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <ul class="blist">{b.problem.map((x) => <li>{x}</li>)}</ul>
       </section>
 
-      {learning && <section><h2>실제 상품 상세에서 확인한 차이</h2><figure class="bshot"><a href={`${base}/analysis/coupang-amazon/CF2-S01.jpg`}><img src={`${base}/analysis/coupang-amazon/CF2-S01.jpg`} width="1098" height="482" alt="쿠팡 상세의 와우 가입 쿠폰가와 일반가, 판매자로켓 및 판매자 정보" loading="lazy" /></a><figcaption>쿠팡: 일반가·가입 쿠폰가, 판매자와 배송 약속을 함께 표시한다. 2026-11-05 관찰. 이미지를 누르면 원본으로 볼 수 있다.</figcaption></figure></section>}
+      {learning && a.slug === 'coupang-amazon' && <section><h2>실제 상품 상세에서 확인한 차이</h2><figure class="bshot"><a href={`${base}/analysis/coupang-amazon/CF2-S01.jpg`}><img src={`${base}/analysis/coupang-amazon/CF2-S01.jpg`} width="1098" height="482" alt="쿠팡 상세의 와우 가입 쿠폰가와 일반가, 판매자로켓 및 판매자 정보" loading="lazy" /></a><figcaption>쿠팡: 일반가·가입 쿠폰가, 판매자와 배송 약속을 함께 표시한다. 2026-11-05 관찰. 이미지를 누르면 원본으로 볼 수 있다.</figcaption></figure></section>}
       <section>
         <h2>{learning ? '어떤 조건에서 패턴이 달라지나' : '왜 이 문제인가'}</h2>
         <table class="bcand">
@@ -70,7 +70,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </ol>
       </section>
 
-      {learning && <section><h2>원리를 적용한 주요 화면</h2><p>가상 커머스의 정적 시안이다. 가격과 운영 정책은 설계 가정이다.</p><details><summary>검색·상세·반복 주문 관리 화면 펼쳐 보기</summary>{[1,2,3].map((n) => <figure class="bshot" style="margin-top:20px"><a href={`${base}/analysis/coupang-amazon/wireframe-${n}.svg`}><img src={`${base}/analysis/coupang-amazon/wireframe-${n}.svg`} width="470" height="1035" alt={['상품·도착 조건으로 후보를 좁히는 가상 검색 화면','상품가·배송비·회비와 구매 방식을 구분하는 가상 상세 화면','변경 마감과 건너뛰기·중단을 구분하는 가상 반복 주문 관리 화면'][n-1]} loading="lazy" style="max-width:470px;margin-inline:auto" /></a></figure>)}</details></section>}
+      {learning && a.slug === 'coupang-amazon' && <section><h2>원리를 적용한 주요 화면</h2><p>가상 커머스의 정적 시안이다. 가격과 운영 정책은 설계 가정이다.</p><details><summary>검색·상세·반복 주문 관리 화면 펼쳐 보기</summary>{[1,2,3].map((n) => <figure class="bshot" style="margin-top:20px"><a href={`${base}/analysis/coupang-amazon/wireframe-${n}.svg`}><img src={`${base}/analysis/coupang-amazon/wireframe-${n}.svg`} width="470" height="1035" alt={['상품·도착 조건으로 후보를 좁히는 가상 검색 화면','상품가·배송비·회비와 구매 방식을 구분하는 가상 상세 화면','변경 마감과 건너뛰기·중단을 구분하는 가상 반복 주문 관리 화면'][n-1]} loading="lazy" style="max-width:470px;margin-inline:auto" /></a></figure>)}</details></section>}
+      {a.application && <section><h2>원리를 적용한 주요 화면</h2><p>{a.application.note}</p><details><summary>가상 화면 3개 펼쳐 보기</summary>{a.application.shots.map((shot) => <figure class="bshot" style="margin-top:20px"><a href={`${base}/${shot.src}`}><img src={`${base}/${shot.src}`} alt={shot.alt} loading="lazy" style="max-width:640px;margin-inline:auto" /></a><figcaption>{shot.alt}</figcaption></figure>)}</details></section>}
       <section>
         <h2>어떻게 검증할까</h2>
         <dl class="brows">

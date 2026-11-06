@@ -30,6 +30,7 @@ const analysis = defineCollection({
     summary: z.string(),
     format: z.enum(['diagnosis', 'principles']).default('diagnosis'),
     pdf: z.boolean().default(true),
+    application: z.object({ note: z.string(), shots: z.array(z.object({ src: z.string(), alt: z.string() })) }).optional(),
     service: z.string(),                                // 목록에 쓰는 서비스명
     problem: z.string(),                                // 고른 문제 한 줄
     analyzed: z.string().regex(/^\d{4}\.\d{2}\.\d{2}$/),  // 분석일 — 최신순 정렬에도 쓴다
