@@ -961,17 +961,16 @@
 
 /* 원리 분석의 도식: 텍스트로도 읽히는 개념 관계 */
 /* 도식 — 상자 없이 사이트의 기존 표현을 쓴다(👤 11-06 상자는 여백만 크고 비어 보였다).
-   한 줄 흐름(ol 하나)은 사례 타임라인처럼 선과 점, 여러 줄 대응(ol 여럿)은 요약의 줄 표처럼 가는 선으로 나눈다.
+   한 줄 흐름(ol 하나)은 점과 가운데 정렬한 설명, 여러 줄 대응(ol 여럿)은 가는 선으로 나눈다.
    그림 파일이 아니라 글이라 테마를 따르고 줄바꿈을 손으로 정하지 않는다 */
 .dgm { margin: 22px 0 26px; }
 .dgm ol { list-style: none; margin: 0; padding: 0; }
 .dgm ol li { margin: 0; font-size: 14.5px; line-height: 1.45; text-wrap: balance; }
 
-/* 한 줄 흐름: 점 사이를 선이 잇고 마지막 점에서 끝난다 */
-.dgm > ol:only-of-type { display: flex; }
-.dgm > ol:only-of-type li { position: relative; flex: 1 1 0; min-width: 0; padding: 14px 16px 0 0; border-top: 1px solid var(--muted); font-weight: 560; }
-.dgm > ol:only-of-type li:last-child { flex: 0 1 auto; max-width: 26%; border-top-color: transparent; padding-right: 0; }   /* 마지막 칸은 글 폭만큼만 — 선이 본문 오른쪽 끝까지 간다 */
-.dgm > ol:only-of-type li::before { content: ""; position: absolute; left: 0; top: -5px; width: 0; height: 0; border: 4.5px solid var(--accent); border-radius: 50%; }
+/* 각 단계의 점과 설명은 같은 중심축을 쓴다. */
+.dgm > ol:only-of-type { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 16px; padding: 0 12px; }
+.dgm > ol:only-of-type li { min-width: 0; padding-top: 23px; position: relative; text-align: center; font-weight: 560; }
+.dgm > ol:only-of-type li::before { content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 9px; height: 9px; background: var(--accent); border-radius: 50%; }
 
 /* 여러 줄 대응: 왼쪽에서 오른쪽으로 읽는 줄 표 */
 .dgm:has(> ol ~ ol) { display: grid; grid-template-columns: minmax(0, 1fr); border-top: 1px solid var(--ink); }
@@ -979,27 +978,31 @@
 .dgm:has(> ol ~ ol) > ol, .dgm:has(> ol ~ ol) > p { margin: 0; padding: 10px 0; border-bottom: 1px solid var(--hairline); }
 .dgm:has(> ol ~ ol) > p { font-size: 13px; line-height: 1.6; color: var(--muted); }
 .dgm:has(> ol ~ ol) > ol { display: flex; flex-wrap: wrap; gap: 2px 26px; }
-.dgm:has(> ol ~ ol):not(:has(> p)) > ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px; }
+.dgm:has(> ol ~ ol):not(:has(> p)) > ol { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; text-align: center; padding: 14px 20px; }
 .dgm:has(> ol ~ ol) li { position: relative; }
 .dgm:has(> ol ~ ol) li:last-child { font-weight: 600; }
-.dgm:has(> ol ~ ol) li + li::before { content: "→"; position: absolute; left: -20px; font-weight: 400; color: var(--muted); }
+.dgm:has(> ol ~ ol) li + li::before { content: "→"; position: absolute; left: -26px; font-weight: 400; color: var(--muted); }
 
 .dgm-note { margin-top: -12px !important; font-size: 13px !important; color: var(--muted); }
 @media (max-width: 560px) {
-  .dgm > ol:only-of-type { flex-direction: column; }
-  .dgm > ol:only-of-type li, .dgm > ol:only-of-type li:last-child { flex: none; max-width: none; }
-  .dgm > ol:only-of-type li { padding: 0 0 14px 18px; border-top: 0; border-left: 1px solid var(--muted); }
-  .dgm > ol:only-of-type li:last-child { border-left-color: transparent; padding-bottom: 0; }
-  .dgm > ol:only-of-type li::before { left: -5px; top: 6px; }
+  .dgm > ol:only-of-type { grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; padding: 0 8px; }
+  .dgm:has(> ol ~ ol):not(:has(> p)) > ol { padding: 12px 0; gap: 28px; }
+  .dgm:has(> ol ~ ol) li + li::before { left: -21px; }
   .dgm:has(> ol ~ ol):has(> p) { grid-template-columns: 64px minmax(0, 1fr); }
 }
 @media print { .dgm { break-inside: avoid; } .dgm ol li { font-size: 9.5pt; } }
 
 /* 가상 화면 시안 */
-.wf { margin: 20px 0 8px; padding: 18px 20px; display: grid; gap: 10px; background: var(--surface); border: 1px solid var(--hairline); border-radius: 4px; }
+.wf { max-width: 640px; margin: 20px auto 8px; padding: 18px 20px; display: grid; gap: 10px; background: var(--surface); border: 1px solid var(--hairline); border-radius: 4px; }
 .wf p { margin: 0; font-size: 14.5px; line-height: 1.55; }
 .wf p + p { padding-top: 10px; border-top: 1px solid var(--hairline); }
-.wf-b { display: inline-block; margin: 2px 4px 2px 0; padding: 1px 9px; font-size: 13px; line-height: 1.6; white-space: nowrap; border: 1px solid var(--muted); border-radius: 3px; }
+.wf .wf-section { display: grid; gap: 10px; padding: 0; margin: 0; }
+.wf .wf-section + .wf-section { border-top: 1px solid var(--hairline); padding-top: 18px; margin-top: 8px; }
+.wf .wf-section h4 { margin: 0 0 2px; font-size: 15px; }
+.wf-section p + p { padding-top: 0; border-top: 0; }
+.wf-section .wf-note { color: var(--muted); font-size: 13px; }
+.wf-choice { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
+.wf-b { display: inline-block; margin: 2px 4px 2px 0; padding: 1px 9px; font-size: 13px; line-height: 1.6; white-space: normal; border: 1px solid var(--muted); border-radius: 3px; }
 .wfs { margin: 20px auto 8px; max-width: 470px; }
 .wfs svg { display: block; width: 100%; height: auto; }
 @media print { .wf, .wfs { break-inside: avoid; } }

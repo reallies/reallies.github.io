@@ -31,5 +31,21 @@ const inline = (svg, label) => {
 
 export function wfHtml(src, label = '') {
   const svg = read(src);
+  if (src.endsWith('/hackers-toeic/wireframe-2.svg')) {
+    const lines = [...svg.matchAll(/<text[^>]*>([^<]*)<\/text>/g)].map((m) => m[1]).slice(1);
+    const line = (i) => esc(lines[i]).replace(/\[([^\]]+)\]/g, '<span class="wf-b">$1</span>');
+    return `<div class="wf" role="group" aria-label="${esc(label)}">
+      <section class="wf-section"><h4>${line(0)}</h4>
+        <p class="wf-choice">${line(1)}</p>
+        <p class="wf-choice">${line(2)}</p>
+      </section>
+      <section class="wf-section"><h4>${line(3)}</h4>
+        <p class="wf-choice">${line(4).split('←')[0]}</p>
+        <p class="wf-note">${esc(lines[4].split('←')[1]?.trim() ?? '')}</p>
+        <p>${line(5)}</p>
+      </section>
+      <section class="wf-section"><p>${line(6)}</p></section>
+    </div>`;
+  }
   return /<g font-family/.test(svg) ? rows(svg, label) : inline(svg, label);
 }
