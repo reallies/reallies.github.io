@@ -23,6 +23,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       </div>
     </section>
     <section class="analysis-body">
+      <div class="decision-summary">
+        <dl>{a.brief.glance.map(r => <div><dt>{r.k}</dt><dd>{r.v}</dd></div>)}</dl>
+        <p class="summary-note">화면 관찰과 설계 비교 기록입니다. 사용자 테스트는 아직 실행하지 않았습니다.</p>
+        <a href={`${base}/analysis/${a.slug}/`}>대표 시안과 대안 비교 먼저 보기 →</a>
+      </div>
       <div class="prose">
         <Content />
       </div>
