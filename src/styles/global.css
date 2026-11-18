@@ -1045,3 +1045,55 @@
 @media print {
   .analysis:has(.brief img[src$="/observed-result-20261106.png"]) .bshot > img {width:400px;max-width:100%;height:auto;margin-inline:auto}
 }
+
+/* Content hierarchy revision, 2026-11-18. Existing palette and typography retained. */
+.hero-role { color: var(--muted); margin: 0 0 12px; font-size: 14px; }
+.hero-cta { display:flex; flex-wrap:wrap; gap:12px; }
+.hero-cta .btn { white-space:nowrap; }
+.card-decision { font-size:15px; line-height:1.65; margin:16px 0; color:var(--muted); }
+.project-thesis { font-size:clamp(21px,3vw,30px); line-height:1.45; margin:24px 0; font-weight:650; }
+.decision-summary { border-block:1px solid var(--hairline); padding:20px 0; margin:24px 0 36px; }
+.decision-summary dl { margin:0; }
+.decision-summary dl > div { display:grid; grid-template-columns:110px 1fr; gap:20px; padding:10px 0; }
+.decision-summary dt { color:var(--muted); font-size:14px; }
+.decision-summary dd { margin:0; line-height:1.75; }
+.summary-note,.analysis-status { font-size:14px; line-height:1.7; color:var(--muted); }
+.summary-note { margin:16px 0 0; }
+.project-compact { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; }
+.project-compact > a { display:block; border-top:1px solid var(--ink); padding:20px 0; text-decoration:none; }
+.project-compact .mono { font-size:13px; color:var(--muted); }
+.project-compact h3 { margin:12px 0; font-size:22px; }
+.project-compact p { line-height:1.7; }
+.all-roles { margin-top:28px; }
+.all-roles > summary { cursor:pointer; padding:18px 0; font-weight:600; border-top:1px solid var(--hairline); }
+.case-detail-link { margin-bottom:28px; font-size:14px; }
+@media screen and (min-width:900px) { .hero { padding-block:56px; } }
+@media screen and (max-width:700px) {
+ .project-compact { grid-template-columns:1fr; gap:8px; }
+ .decision-summary dl > div { grid-template-columns:1fr; gap:4px; padding:12px 0; }
+ .decision-summary { margin-block:20px; }
+}
+@media print {
+ .hero-role,.card-decision,.project-compact,.all-roles > summary,.decision-summary,.case-detail-link,.analysis-status { display:none; }
+ .all-roles::details-content { content-visibility:visible; display:block; }
+ .hero-cta { display:none; }
+}
+
+.prose details { border-block:1px solid var(--hairline); padding:16px 0; margin:16px 0 28px; }
+.prose details > summary { font-weight:600; cursor:pointer; line-height:1.6; }
+.prose details[open] > summary { margin-bottom:20px; }
+@media screen and (max-width:899px) {
+ .hero .facts { display:grid; grid-template-columns:1fr 1fr; gap:0 20px; }
+ .hero .facts > div { padding-block:14px; }
+ .hero .facts dt { margin-bottom:6px; }
+}
+@media screen and (max-width:450px) {
+ .hero .facts { display:none; }
+ .hero { padding-bottom:28px; }
+}
+@media print { .prose details::details-content { content-visibility:visible; display:block; } }
+
+.analysis .brief .hd-compare { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:16px 0; }
+.analysis .brief .hd-compare > div + div { border-left:1px solid var(--hairline);padding-left:16px; }
+.analysis .brief .hd-compare h4 { font-size:13px;font-weight:500;margin:0 0 8px;color:var(--muted); }
+.analysis .brief .hd-amount { font-size:clamp(20px,3vw,28px);font-weight:650;margin:0;line-height:1.5; }

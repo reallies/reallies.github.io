@@ -1,0 +1,15 @@
+---
+import editorial from '../data/editorial.json';
+const { slug, compact = false } = Astro.props;
+const e = editorial[slug];
+---
+{e && <div class:list={['decision-summary', { compact }]}>
+  <dl>
+    <div><dt>문제</dt><dd>{e.problem}</dd></div>
+    <div><dt>내 판단</dt><dd>{e.decision}</dd></div>
+    <div><dt>확인한 결과</dt><dd>{e.result}</dd></div>
+    <div><dt>내 역할</dt><dd>{e.role}</dd></div>
+    <div><dt>팀과의 구분</dt><dd>{e.team}</dd></div>
+  </dl>
+  <p class="summary-note">{e.note}</p>
+</div>}

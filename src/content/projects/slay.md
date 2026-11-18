@@ -6,11 +6,11 @@ spark: false
 meta: "2025.02 ~ 06 · 캡스톤 · 4인 · 팀장"
 kind: "여행 일정 공동 편집·AI 검수 플랫폼"
 summary: "여행 일정이 날씨·영업시간·동선 조건과 맞지 않는 문제를 AI 검수로 다뤘습니다. 세 가지 축을 점검해 문제를 알리고 대안을 제시하는 서비스를 4인 캡스톤 팀에서 기획·개발했습니다."
-result: "서비스 배포 · 시연 영상 공개"
+result: "서비스 배포"
 resultNote: ""
 caveat: ""
 name: "SLAY"
-links: [{"label":"GitHub","url":"https://github.com/reallies/SLAY"},{"label":"시연 영상","url":"https://youtu.be/KaoIwXgxQhs"}]
+links: [{"label":"GitHub","url":"https://github.com/reallies/SLAY"}]
 linksNote: ""
 tags: ["웹사이트 개발","UI/UX","DB","Node","AI","기획","팀프로젝트"]
 ---
@@ -50,6 +50,9 @@ tags: ["웹사이트 개발","UI/UX","DB","Node","AI","기획","팀프로젝트"
 
 ## 직접 만든 것
 
+<details>
+<summary>구현 범위와 기술 상세</summary>
+
 ### 공동 편집·협업 기능
 
 - **친구·동행 초대**: 친구 요청과 수락 뒤 여행 동행으로 초대해 같은 일정을 편집하게 했다.
@@ -82,16 +85,21 @@ AWS와 Nginx로 서비스를 배포하고 프록시 장애에 대응했다. 레�
 
 전체 구조는 React 프론트와 Node.js 백엔드, Prisma와 PostgreSQL로 구성했다. 외부 API 6종을 서비스 기능에 연결했다.
 
+</details>
 
-<figure class="cfig pfig"><p class="gsrc">시연 영상 화면</p><div class="gal"><div class="gtrack" tabindex="0" aria-label="화면 — 옆으로 넘겨 보기"><figure class="gitem"><img src="/img/slay-10.jpg" width="1280" height="560" alt="AI 검수 · 일정 피드백" loading="eager" decoding="async"><figcaption>AI 검수 · 일정 피드백</figcaption></figure><figure class="gitem"><img src="/img/slay-8.jpg" width="1280" height="560" alt="일정 공동 편집 · 드래그앤드롭 재정렬" loading="lazy" decoding="async"><figcaption>일정 공동 편집 · 드래그앤드롭 재정렬</figcaption></figure><figure class="gitem"><img src="/img/slay-14.jpg" width="1280" height="720" alt="경비 · 1/N 정산" loading="lazy" decoding="async"><figcaption>경비 · 1/N 정산</figcaption></figure></div><div class="gnav"><button type="button" data-dir="-1" aria-label="이전 화면">←</button><span class="gcount mono"><b>1</b> / 3</span><button type="button" data-dir="1" aria-label="다음 화면">→</button></div></div></figure>
+
+<figure class="cfig pfig"><p class="gsrc">서비스 화면</p><div class="gal"><div class="gtrack" tabindex="0" aria-label="화면 — 옆으로 넘겨 보기"><figure class="gitem"><img src="/img/slay-10.jpg" width="1280" height="560" alt="AI 검수 · 일정 피드백" loading="eager" decoding="async"><figcaption>AI 검수 · 일정 피드백</figcaption></figure><figure class="gitem"><img src="/img/slay-8.jpg" width="1280" height="560" alt="일정 공동 편집 · 드래그앤드롭 재정렬" loading="lazy" decoding="async"><figcaption>일정 공동 편집 · 드래그앤드롭 재정렬</figcaption></figure><figure class="gitem"><img src="/img/slay-14.jpg" width="1280" height="720" alt="경비 · 1/N 정산" loading="lazy" decoding="async"><figcaption>경비 · 1/N 정산</figcaption></figure></div><div class="gnav"><button type="button" data-dir="-1" aria-label="이전 화면">←</button><span class="gcount mono"><b>1</b> / 3</span><button type="button" data-dir="1" aria-label="다음 화면">→</button></div></div></figure>
 
 ## 결과
 
-13개 도메인 모델과 외부 API 6종을 통합한 **배포 가능한 서비스**를 만들고 시연 영상을 공개했다.
+13개 도메인 모델과 외부 API 6종을 통합한 **배포 가능한 서비스**를 만들었다.
 
 공동 일정 편집과 날씨·영업시간·동선 검수를 한 서비스 안에 구성했다.
 
 ## 역할 구분
+
+<details>
+<summary>영역별 역할 상세</summary>
 
 | 영역 | 내가 맡은 것 | 팀 |
 | --- | --- | --- |
@@ -101,6 +109,8 @@ AWS와 Nginx로 서비스를 배포하고 프록시 장애에 대응했다. 레�
 | AI 검수 구현 | **동선 판정 · 영업시간 판정 로직 구현** | 날씨 예보 수집·판정, Google Places 호출·파싱 |
 | 운영·배포 | AWS·Nginx 배포와 프록시 장애 대응 | — |
 | 추천·지도·리뷰 | — | 팀원 분담 |
+
+</details>
 
 ## 배운 점
 

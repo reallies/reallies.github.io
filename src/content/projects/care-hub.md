@@ -10,9 +10,9 @@ result: "생활 상황을 감지·대응 규칙과 조건별 시연으로 구체
 resultNote: ""
 caveat: "하드웨어·웹 연동 프로토타입"
 name: "care-hub"
-links: [{"label": "GitHub", "url": "https://github.com/reallies/care-hub"}, {"label": "시연 영상", "url": "https://youtu.be/w6YHWd7dkNI"}]
+links: [{"label":"GitHub","url":"https://github.com/reallies/care-hub"},{"label":"시연 영상","url":"https://youtu.be/w6YHWd7dkNI"}]
 linksNote: "공개 저장소와 시연 영상입니다. 하드웨어 구성과 실행 방법은 README에서 볼 수 있습니다."
-tags: ["IoT", "Python", "Flask", "Raspberry Pi", "개인 프로젝트"]
+tags: ["IoT","Python","Flask","Raspberry Pi","개인 프로젝트"]
 ---
 
 ## 사용자와 사용 환경
@@ -28,6 +28,9 @@ tags: ["IoT", "Python", "Flask", "Raspberry Pi", "개인 프로젝트"]
 
 ## 생활 상황을 감지·대응 규칙으로 정의
 
+<details>
+<summary>전체 감지·대응 규칙</summary>
+
 재실과 외출에서는 같은 움직임을 다르게 해석하도록 모드를 나눴다. 재실 중에는 활동 시점을 갱신하고, 빈집으로 설정한 외출 모드에서는 사진 촬영으로 연결한다. 긴급 요청은 두 모드 모두에서 받을 수 있도록 별도로 처리한다. 주간인 06:00부터 22:00까지는 장기 미활동을 경고하고, 야간인 22:00부터 다음 날 06:00까지는 감지 시 조명을 반응시키도록 했다.
 
 | 사용 상황 | 감지·입력 조건 | 대응하도록 정한 동작 |
@@ -41,6 +44,8 @@ tags: ["IoT", "Python", "Flask", "Raspberry Pi", "개인 프로젝트"]
 박수 두 번을 긴급 요청 동작으로 정했으며, 구현에서는 위의 소리 센서 신호 간격을 사용한다. 박수와 다른 생활 소음을 분류하는 기능은 없다. 움직임은 초음파 거리가 150cm 미만일 때 감지된 것으로 처리한다. 환경 경고 설정값은 고온 30°C 이상, 저온 18°C 이하, 습도 70% 이상이다.
 
 <figure class="cfig pfig"><div class="cscope"><div class="sc"><b>사용자·환경</b><span>고령자 본인과 보호자</span><span>이동이 잦은 입구 등에 설치</span></div><div class="sc"><b>상황·대응</b><span>재실·외출을 나눠 감지 해석</span><span>긴급 요청은 별도로 처리</span></div><div class="sc out"><b>확인·해제</b><span>보호자는 웹에서 상황 확인</span><span>장치 긴급 해제는 물리 버튼</span></div></div><figcaption>과제 보고서의 사용자·상황 정의와 구현 코드를 대조한 설계 흐름</figcaption></figure>
+
+</details>
 
 ## 보호자가 판단할 정보와 조작 흐름
 
@@ -57,6 +62,9 @@ tags: ["IoT", "Python", "Flask", "Raspberry Pi", "개인 프로젝트"]
 
 ## 조건별 시연과 확인 범위
 
+<details>
+<summary>시연 조건과 기록</summary>
+
 과제 보고서에는 입력 조건을 바꿔 LED·사진·웹 알림으로 이어지는지 시연한 기록을 남겼다.
 
 | 확인할 동작 | 시연 조건 | 보고서에 기록한 결과 |
@@ -68,7 +76,12 @@ tags: ["IoT", "Python", "Flask", "Raspberry Pi", "개인 프로젝트"]
 | 외출 중 감지 | 버튼으로 AWAY 전환 후 움직임 감지 | 사진 촬영과 웹 전송 |
 | 긴급 요청·해제 | 두 번의 박수 후 물리 버튼 입력 | LED·웹 팝업 반응과 장치 긴급 상태 해제 |
 
+</details>
+
 ## 직접 구현한 범위와 연결 구조
+
+<details>
+<summary>장치·웹 연결과 기술 상세</summary>
 
 개인 프로젝트로 Raspberry Pi의 센서·GPIO 제어, MQTT 송수신, Flask 기반 웹 대시보드를 구현했다. Python 장치 코드가 센서값과 감지 이벤트를 MQTT 브로커로 발행하고, 브라우저가 WebSocket으로 환경·활동·카메라·경고의 네 토픽을 직접 구독한다. Flask는 대시보드 HTML을 제공한다.
 
@@ -80,6 +93,8 @@ tags: ["IoT", "Python", "Flask", "Raspberry Pi", "개인 프로젝트"]
 | 제어 | Python · gpiozero · OpenCV |
 | 통신 | paho-mqtt · MQTT · WebSocket |
 | 웹 | Flask · JavaScript · Chart.js · localStorage |
+
+</details>
 
 ## 구현의 한계와 다음 검증
 

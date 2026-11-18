@@ -14,7 +14,7 @@ import { figHtml } from '../src/lib/figs.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const VAULT = process.env.VAULT_DIR
-  ?? path.resolve(process.env.HOME, 'Documents/Obsidian/ohs/Notion/오현석');
+  ?? path.resolve(process.env.HOME, 'Documents/Obsidian/원천/ohs/Notion/오현석');
 
 const OUT_PROJECTS = path.join(ROOT, 'src/content/projects');
 const OUT_CAPS = path.join(ROOT, 'src/content/capabilities');
@@ -313,6 +313,8 @@ async function syncStages() {
   return data;
 }
 
+await mkdir(OUT_DATA, { recursive: true });
+await writeFile(path.join(OUT_DATA, 'editorial.json'), await readFile(path.join(VAULT, '웹_편집.json'), 'utf8'));
 const profile = await syncProfile();
 const st = await syncStages();
 const figs = await syncFigs(st);

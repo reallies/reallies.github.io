@@ -1,5 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
+import ProjectSummary from '../../components/ProjectSummary.astro';
+import editorial from '../../data/editorial.json';
 import Base from '../../layouts/Base.astro';
 import MediaBlock from '../../components/MediaBlock.astro';
 
@@ -39,6 +41,7 @@ const workSchema = {
       <div class="case-head">
         <h1>{d.name}{d.live && <span class="live">운영 중</span>}</h1>
         <p class="kind">{d.kind}</p>
+        <p class="project-thesis">{editorial[d.slug]?.title}</p>
         <p class="meta parts">{d.meta.split(' · ').map((x) => <span>{x}</span>)}</p>
         <div class="presult">
           <span class="arrow">결과</span>
@@ -48,6 +51,7 @@ const workSchema = {
         {d.caveat && <p class="caveat parts">{d.caveat.split(' · ').map((x) => <span>{x}</span>)}</p>}
       </div>
 
+      <ProjectSummary slug={d.slug} />
       <div class="prose">
         <Content />
       </div>
@@ -66,6 +70,14 @@ const workSchema = {
     </div>
   </div>
   <script>
+    const revealHash = () => {
+      let id; try { id = decodeURIComponent(location.hash.slice(1)); } catch { return; }
+      const target = document.getElementById(id);
+      if (!target) return;
+      let parent = target.parentElement;
+      while (parent) { if (parent instanceof HTMLDetailsElement) parent.open = true; parent = parent.parentElement; }
+    };
+    addEventListener('hashchange', revealHash); revealHash();
     // 지금 읽는 절을 목차에 표시 — 화면 위 1/3 지점을 지난 마지막 제목
     const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc a[data-toc]')];
     const targets = links.map((a) => document.getElementById(a.dataset.toc!)).filter(Boolean) as HTMLElement[];

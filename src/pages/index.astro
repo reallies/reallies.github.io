@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import profile from '../data/profile.json';
 import stages from '../data/stages.json';
+import editorial from '../data/editorial.json';
 import { getCollection } from 'astro:content';
 import MediaChips from '../components/MediaChips.astro';
 import AnalysisList from '../components/AnalysisList.astro';
@@ -27,12 +28,14 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
     <header class="hero">
       <div class="hero-main">
         {/* 눈썹 라벨(profile.eyebrow)은 화면에 싣지 않는다 — 지역·직함 띠는 템플릿 인상을 준다. 데이터는 볼트 원본이라 남겨 둔다 */}
+        <p class="hero-role">서비스 기획 · PM</p>
         <h1>{profile.name}</h1>
         <p class="latin" lang="en">{nameCase(profile.name_latin)}</p>
         <p class="thesis">{profile.thesis.split(/(?<=,) /).map((x, i) => <>{i > 0 && ' '}<span class="seg">{x}</span></>)}</p>
 
         {/* 첫 행동 = PDF. 「대표 사례 보기」는 사례 칸이 바로 아래라 뺐다(👤 10-13). 인쇄본에서는 숨긴다 */}
         <div class="hero-cta">
+          <a class="btn" href="#cases">대표 사례 보기</a>
           <a class="btn" href={`${base}/hyunseok-oh-portfolio.pdf`} download="오현석_포트폴리오.pdf">포트폴리오 PDF</a>
         </div>
 
@@ -57,7 +60,7 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
 
     {/* 대표 사례가 먼저, 단계 표는 그 아래 탐색용(외부 피드백 #1 · 04 §3-B 2026-10-12 보정). 인쇄본(PDF)은 CSS order로 표 → 사례 그대로 */}
     <section id="cases" class="reveal">
-      <div class="shead"><h2>단계별 대표 사례</h2></div>
+      <div class="shead"><h2>세 가지 판단으로 보는 대표 사례</h2></div>
       <div class="cases">
         {stages.cases.map((c, i) => (
           <a class="ccard" href={`${base}/cases/${c.path}`}>
@@ -65,25 +68,22 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
             <span class="cno"><span class="mono">Step {String(c.stage).padStart(2, '0')}</span><span>{c.stageName}</span></span>
             <h3>{c.title.split(/(?<=때) /).map((x, i) => <>{i > 0 && ' '}<span class="seg">{x}</span></>)}</h3>
             <span class="cmeta">{c.meta.split(' · ').slice(0, 2).map((m) => <span>{m}</span>)}</span>
-            <span class="cgo">사례 읽기</span>
+            <p class="card-decision">{editorial[stages.rows.find(r => r.pj === c.pj)!.slug].result}</p>
+            <span class="cgo">판단 과정 읽기</span>
             <span class="cpage parts"><span>이 PDF {i + 2}쪽</span><span>웹에서 보기</span></span>
           </a>
         ))}
       </div>
     </section>
 
-    <section id="analysis" class="reveal">
-      <div class="shead shead-link">
-        <h2>서비스 분석</h2>
-        {analyses.length > HOME_ANALYSES && <a href={`${base}/analysis/`}>전체 {analyses.length}건 보기</a>}
-      </div>
-      <AnalysisList items={analyses.slice(0, HOME_ANALYSES)} />
-    </section>
-
     {/* 단계 × 프로젝트 표 — "어느 단계를 어디서 했나"(04 §3-B · 2026-10-11 D형).
         칸 문장은 볼트 지원서 원고의 「단계표」 칸 그대로(sync). 「→」 = 내가 다음에 한 일 → 한 단계 한 줄로 끊는다 */}
     <section id="overview" class="reveal">
-      <div class="shead"><h2>{stages.title}</h2></div>
+      <div class="shead"><h2>추가 프로젝트</h2></div>
+      <div class="project-compact">
+        {stages.rows.filter(r => !stages.cases.some(c => c.pj === r.pj)).map(r => <a href={`${base}/projects/${r.slug}`}><span class="mono">{r.when}</span><h3>{r.pj}</h3><p>{editorial[r.slug].title}</p><span class="cgo">프로젝트 읽기 →</span></a>)}
+      </div>
+      <details class="all-roles"><summary>전체 6개 프로젝트의 단계별 역할 비교</summary>
       {/* 단계 거르기 — 고른 단계 열만 남기고(넓은 화면은 나머지를 흐리게, 좁은 화면은 감춘다) · 표시만 바꾼다 */}
       <div class="sfilter" role="group" aria-label="단계로 거르기">
         <span class="sfpill" aria-hidden="true"></span>
@@ -122,6 +122,15 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
           </div>
         ))}
       </div>
+      </details>
+    </section>
+
+    <section id="analysis" class="reveal">
+      <div class="shead shead-link">
+        <h2>서비스 분석</h2>
+        {analyses.length > HOME_ANALYSES && <a href={`${base}/analysis/`}>전체 {analyses.length}건 보기</a>}
+      </div>
+      <AnalysisList items={analyses.slice(0, HOME_ANALYSES)} />
     </section>
 
     <section class="reveal">
@@ -171,6 +180,7 @@ const leadOf = (pj, no) => stages.cases.find((c) => c.pj === pj && c.stage === n
       const r = filter.clientWidth - on.offsetLeft - on.offsetWidth, b = filter.clientHeight - on.offsetTop - on.offsetHeight;
       pill.style.clipPath = `inset(${on.offsetTop}px ${r}px ${b}px ${on.offsetLeft}px round 999px)`;
     };
+    document.querySelector('.all-roles')?.addEventListener('toggle', place);
     place(); filter.classList.add('js-pill');
     requestAnimationFrame(() => requestAnimationFrame(() => filter.classList.add('ready')));   // 첫 자리는 움직이지 않고 놓는다
     addEventListener('resize', place);

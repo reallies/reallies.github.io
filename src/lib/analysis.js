@@ -8,5 +8,5 @@ export async function getAnalyses() {
   const entries = await getCollection('analysis');
   return entries
     .map((entry) => ({ entry, slug: entry.id, ...entry.data, evidence: countEvidence(entry.body) }))
-    .sort((a, b) => b.analyzed.localeCompare(a.analyzed));
+    .sort((a, b) => b.analyzed.localeCompare(a.analyzed) || a.slug.localeCompare(b.slug));
 }

@@ -24,7 +24,7 @@ tags: ["웹사이트 개발","데이터","데이터 분석","Frontend","PM","팀
 
 ## 조사·기획
 
-사전조사 문서 **「주제 선정 이유 + 자료조사」**를 작성했다. 자료는 시장 규모, 문제 사례, 사용자 페르소나, 시장조사 요약의 네 부분으로 구성했다.
+사전조사 문서 「주제 선정 이유 + 자료조사」를 작성했다. 자료는 시장 규모, 문제 사례, 사용자 페르소나, 시장조사 요약의 네 부분으로 구성했다.
 
 시장 규모에는 KB금융 2025 반려동물 보고서와 농식품부 2024 양육 실태조사를 인용했다. 반려인 1,546만 명이라는 외부 자료도 함께 정리했다. 이 수치는 시장을 설명하는 조사 자료로만 사용했다.
 
@@ -46,6 +46,9 @@ tags: ["웹사이트 개발","데이터","데이터 분석","Frontend","PM","팀
 
 `검색 → 상세 → 조건 확인 → 방문의향 → 재방문`
 
+<details>
+<summary>설계 단계의 목표값 보기 · 실측 아님</summary>
+
 검증 기준으로 아래 목표값도 정했다.
 
 - 검색→상세 ≥25%
@@ -58,10 +61,17 @@ tags: ["웹사이트 개발","데이터","데이터 분석","Frontend","PM","팀
 
 이 값들은 실제 달성 수치가 아니라 설계 단계에서 정한 **목표값**이다.
 
+목표값의 설정 근거와 실제 달성 여부는 이 페이지에서 검증하지 않았다.
+
+</details>
+
 
 <figure class="cfig pfig"><p class="ftitle">5단 퍼널</p><div class="cflow"><div class="fbox"><b>검색</b></div><span class="farr" aria-hidden="true"><em>≥25%</em><i>→</i></span><div class="fbox"><b>상세</b></div><span class="farr" aria-hidden="true"><em>≥50%</em><i>→</i></span><div class="fbox"><b>조건 확인</b></div><span class="farr" aria-hidden="true"><em>≥30%</em><i>→</i></span><div class="fbox hi"><b>방문의향</b></div><span class="farr" aria-hidden="true"><i>→</i></span><div class="fbox"><b>재방문</b></div></div><figcaption class="fcap">화살표의 값 = 설계 단계에서 정한 목표값(실측 아님)</figcaption></figure>
 
 ## 직접 만든 것
+
+<details>
+<summary>구현 범위와 기술 상세</summary>
 
 ### 데이터 분석
 
@@ -84,6 +94,8 @@ React·Vite·TypeScript 모노레포에서 화면 구현을 맡았다. 구조는
 | Frontend | **React · Vite · TypeScript** (모노레포) |
 | 데이터 모델 | event_logs 중심 이벤트 스키마 |
 
+</details>
+
 
 <figure class="cfig pfig"><p class="gsrc">시연 영상 화면</p><div class="gal"><div class="gtrack" tabindex="0" aria-label="화면 — 옆으로 넘겨 보기"><figure class="gitem"><img src="/img/dangnyang-6.jpg" width="1280" height="720" alt="검색 · 상세 필터와 지도" loading="eager" decoding="async"><figcaption>검색 · 상세 필터와 지도</figcaption></figure><figure class="gitem"><img src="/img/dangnyang-14.jpg" width="1280" height="720" alt="시설 상세" loading="lazy" decoding="async"><figcaption>시설 상세</figcaption></figure></div><div class="gnav"><button type="button" data-dir="-1" aria-label="이전 화면">←</button><span class="gcount mono"><b>1</b> / 2</span><button type="button" data-dir="1" aria-label="다음 화면">→</button></div></div></figure>
 
@@ -97,6 +109,9 @@ React·Vite·TypeScript 모노레포에서 화면 구현을 맡았다. 구조는
 
 ## 역할 구분
 
+<details>
+<summary>영역별 역할 상세</summary>
+
 7인 팀에서 **무엇을 잴지 정하고, 그것을 잴 수 있게 만드는 일**을 맡았다.
 
 | 영역 | 내가 맡은 것 | 팀 |
@@ -107,6 +122,8 @@ React·Vite·TypeScript 모노레포에서 화면 구현을 맡았다. 구조는
 | **측정 구현** | **Streamlit 대시보드**를 직접 구현 | event 스키마와 쿼리는 분석 담당 팀원 몫 |
 | 프론트 | React·Vite·TypeScript 모노레포 화면 구현 주도 | 프론트 1인과 공동 |
 | 서비스 기획·디자인 | — | 팀원 분담 |
+
+</details>
 
 ## 배운 점
 

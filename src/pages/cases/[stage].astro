@@ -1,4 +1,5 @@
 ---
+import ProjectSummary from '../../components/ProjectSummary.astro';
 import Base from '../../layouts/Base.astro';
 import stages from '../../data/stages.json';
 import { getCollection } from 'astro:content';
@@ -42,6 +43,8 @@ const pd = row ? (await getCollection('projects')).find((p) => p.data.slug === r
         <p class="chips">{c.meta.split(' · ').map((m) => <span>{m}</span>)}</p>
       </header>
 
+      {row && <ProjectSummary slug={row.slug} compact />}
+
       <figure class="cfig">
         {fig.gallery && <Fragment set:html={gallery(fig.gallery, base, `${c.pj} 화면`)} />}
         {fig.bars && (
@@ -79,6 +82,7 @@ const pd = row ? (await getCollection('projects')).find((p) => p.data.slug === r
         )}
       </figure>
 
+      {row && <p class="case-detail-link"><a href={`${base}/projects/${row.slug}`}>역할·구현 상세 보기 →</a></p>}
       <div class="csteps">
         {c.steps.map((s, k) => (
           <section class="cstep">

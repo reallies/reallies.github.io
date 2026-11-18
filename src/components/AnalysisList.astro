@@ -8,7 +8,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       <a class="arow" href={`${base}/analysis/${a.slug}/`}>
         <span class="aname">{a.service}</span>
         <span class="aproblem">{a.problem}</span>
-        <span class="ameta"><span class="mono">{a.analyzed}</span><span>근거 {a.evidence}건</span></span>
+        <span class="ameta"><span class="mono">{a.analyzed}</span><span>설계 비교</span></span>
       </a>
     </li>
   ))}

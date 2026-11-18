@@ -31,6 +31,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     </section>
 
     <div class="brief">
+      <p class="analysis-status">화면 관찰·설계 비교 · 사용자 테스트 미실행</p>
+      {a.slug === 'hyundai-duty-free' && <section><h2>검토한 대안: 두 예상금액을 함께 비교</h2><p>동일 상품의 기본값과 개인 혜택 미리보기를 나란히 놓은 정적 시안입니다. 현행안보다 이해하기 쉬운지는 검증 전입니다.</p><Fragment set:html={a.entry.body.match(/<div class="wf" role="group" aria-label="가상 화면 B[\s\S]*?(?=\n\n)/)?.[0] ?? ''} /></section>}
+      {learning && a.slug === 'coupang-amazon' && <section><h2>원리를 적용한 주요 화면</h2><p>가상 커머스의 정적 시안이다. 가격과 운영 정책은 설계 가정이다.</p><details open><summary>검색·상세·반복 주문 관리 화면</summary>{[1,2,3].map((n) => <Fragment set:html={wfHtml(`analysis/coupang-amazon/wireframe-${n}.svg`, ['상품·도착 조건으로 후보를 좁히는 가상 검색 화면','상품가·배송비·회비와 구매 방식을 구분하는 가상 상세 화면','변경 마감과 건너뛰기·중단을 구분하는 가상 반복 주문 관리 화면'][n-1])} />)}</details></section>}
+      {a.application && <section><h2>원리를 적용한 주요 화면</h2><p>{a.application.note}</p><details open={a.application.shots.length === 1}><summary>적용 화면 {a.application.shots.length}개 펼쳐 보기</summary>{a.application.shots.map((shot) => <figure class="bshot" style="margin-top:20px"><figcaption style="margin:0 0 -12px">{shot.alt}</figcaption><Fragment set:html={wfHtml(shot.src, shot.alt)} /></figure>)}</details></section>}
       <section>
         <h2>{learning ? '어떤 조건을 비교했나' : '어떤 서비스인가'}</h2>
         <dl class="brows">
@@ -73,8 +77,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </ol>
       </section>}
 
-      {learning && a.slug === 'coupang-amazon' && <section><h2>원리를 적용한 주요 화면</h2><p>가상 커머스의 정적 시안이다. 가격과 운영 정책은 설계 가정이다.</p><details><summary>검색·상세·반복 주문 관리 화면 펼쳐 보기</summary>{[1,2,3].map((n) => <Fragment set:html={wfHtml(`analysis/coupang-amazon/wireframe-${n}.svg`, ['상품·도착 조건으로 후보를 좁히는 가상 검색 화면','상품가·배송비·회비와 구매 방식을 구분하는 가상 상세 화면','변경 마감과 건너뛰기·중단을 구분하는 가상 반복 주문 관리 화면'][n-1])} />)}</details></section>}
-      {a.application && <section><h2>원리를 적용한 주요 화면</h2><p>{a.application.note}</p><details open={a.application.shots.length === 1}><summary>적용 화면 {a.application.shots.length}개 펼쳐 보기</summary>{a.application.shots.map((shot) => <figure class="bshot" style="margin-top:20px"><figcaption style="margin:0 0 -12px">{shot.alt}</figcaption><Fragment set:html={wfHtml(shot.src, shot.alt)} /></figure>)}</details></section>}
       <section>
         <h2>어떻게 검증할까</h2>
         <dl class="brows">

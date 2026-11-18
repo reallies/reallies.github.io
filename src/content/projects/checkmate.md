@@ -5,8 +5,8 @@ live: true
 spark: false
 meta: "2026.04 ~ 운영 중 · 멋쟁이사자처럼 부트캠프 · 7인 · 팀장"
 kind: "AI 여행 준비물 체크리스트 서비스"
-summary: "탐색 비율이 20.2%에 그치자 퍼널로 원인을 규명했습니다. 광고 채널을 일주일씩 번갈아 집행해 비교한 뒤 유입 전략을 다시 잡았고, 백엔드는 AI 코딩 도구로 구현해 직접 검증했습니다."
-result: "방문 세션 중 탐색 비율 20.2%(5월 초·중순) · 42.0%(홍보가 없던 7월)"
+summary: "계측을 점검하고 진입 화면 개선을 논의한 뒤 채널별 사용을 비교해 카페 집중을 제안했습니다."
+result: "방문 세션 중 탐색 비율 20.2%(5월 초·중순) · 42.0%(7.1~8.3 · 홍보 없음)"
 resultNote: "팀 해산 후에도 운영 중"
 caveat: "부트캠프 최우수상 · 7인 팀 공동 수상 · 초기 소규모 트래픽"
 name: "CheckMate"
@@ -28,7 +28,7 @@ tags: ["웹사이트 개발","AI","Backend","데이터","PM","팀프로젝트"]
 
 ## 배포하고 본 것
 
-1차 배포 후 방문은 집계되는데 **핵심 행동이 한 자릿수**였다. 방문자 중 체크리스트를 한 번이라도 연 비율이 **20.2%**.
+1차 배포 후 방문은 집계되는데 **핵심 행동이 한 자릿수**였다. 방문 이벤트가 있는 세션 중 준비물 목록을 불러온 세션의 비율이 **20.2%**.
 
 퍼널로 이탈 지점을 특정했다. `랜딩 → [탐색에서 막힘] → 생성 → 사용`. 유입을 갈라 보니 대부분이 지인이었고, 여행이 확정된 실수요층에는 닿지 못하고 있었다.
 
@@ -37,9 +37,9 @@ tags: ["웹사이트 개발","AI","Backend","데이터","PM","팀프로젝트"]
 ## 내린 결정
 
 - **광고 채널을 바꿨다**\
-  인스타그램 광고와 네이버 카페 홍보를 **일주일 단위로 번갈아 집행**하고 GA4로 유입 경로를 비교했다. 인스타는 도달은 되는데 실사용으로 이어지지 않았고, 카페는 비용 대비 실수요 타깃 도달이 좋았다. **대규모 집행은 카페로 집중하고 인스타 예산은 멈추자고 팀에 제안**했다.
+  인스타그램 광고와 네이버 카페 홍보를 **일주일 단위로 번갈아 집행**하고 유입 경로별 사용을 비교했다. 인스타는 도달은 되는데 실사용으로 이어지지 않았고, 카페는 비용 대비 실수요 타깃 도달이 좋았다. **대규모 집행은 카페로 집중하고 인스타 예산은 멈추자고 팀에 제안**했다.
 - **진입 경로를 줄였다**\
-  스크롤을 내려야 보이던 시작 버튼을 첫 화면으로 올리고, 소개 섹션을 줄였다. 빈 체크리스트를 주던 방식을 **전체 항목을 채운 뒤 지워나가는 방식**으로 바꿨다. 카카오톡 인앱 브라우저에서 로그인이 끊기던 문제도 함께 고쳤다.
+  시작 버튼을 첫 화면으로 올리고 소개를 줄이는 개선안을 팀과 정했다. 화면 구현은 팀원이 맡았다. 빈 체크리스트를 주던 방식을 **전체 항목을 채운 뒤 지워나가는 방식**으로 바꿨다. 카카오톡 인앱 브라우저에서 로그인이 끊기던 문제도 함께 고쳤다.
 - **못 끝낼 것은 뒤로 미뤘다**\
   LLM 호출을 비동기 큐로 처리하려던 계획은 동기 처리로 우선 출시하고 후속 과제로 남겼다. 기간 안에 끝낼 수 있는 것과 아닌 것을 나눈 결정이다.
 
@@ -49,6 +49,9 @@ tags: ["웹사이트 개발","AI","Backend","데이터","PM","팀프로젝트"]
 
 ## 직접 만든 것
 
+<details>
+<summary>구현 범위와 기술 상세</summary>
+
 결정을 검증하려고 백엔드를 직접 맡았다. **AI 코딩 도구로 구현 속도를 내고, 나온 코드를 읽어 검증했다.** **NestJS · Prisma · PostgreSQL(Supabase) · OpenAI**. 프론트는 Vercel, 백엔드는 **AWS EC2에 Nginx + PM2**로 올렸다.
 
 - **LLM 체크리스트 자동 생성** — 같은 조건의 재요청은 캐시로 받아 호출 비용을 줄이고, 호출 빈도 제한을 걸었다 (`modules/llm`)
@@ -57,32 +60,39 @@ tags: ["웹사이트 개발","AI","Backend","데이터","PM","팀프로젝트"]
 - **여행/동행 협업 도메인** — 도시·항공편·동행·권한 관리
 - 12개 모듈 · ~30개 Prisma 모델 · Swagger 문서화
 
+</details>
+
 
 <figure class="cfig pfig"><p class="gsrc">운영 중인 서비스 화면</p><div class="gal"><div class="gtrack" tabindex="0" aria-label="화면 — 옆으로 넘겨 보기"><figure class="gitem pair"><div class="gpair"><span class="gp" style="flex:1.600"><img src="/img/checkmate-home-desktop.jpg" width="2000" height="1250" alt="첫 화면 · 데스크톱·모바일" loading="eager" decoding="async"></span><span class="gp" style="flex:0.632"><img src="/img/checkmate-home-mobile.jpg" width="1290" height="2040" alt="첫 화면 · 데스크톱·모바일" loading="eager" decoding="async"></span></div><figcaption>첫 화면 · 데스크톱·모바일</figcaption></figure><figure class="gitem"><img src="/img/checkmate-dashboard.webp" width="1300" height="725" alt="관리자 대시보드" loading="lazy" decoding="async"><figcaption>관리자 대시보드</figcaption></figure></div><div class="gnav"><button type="button" data-dir="-1" aria-label="이전 화면">←</button><span class="gcount mono"><b>1</b> / 2</span><button type="button" data-dir="1" aria-label="다음 화면">→</button></div></div></figure>
 
 ## 결과
 
-**탐색 비율 — 방문 대비 체크리스트 탐색**
+**방문→탐색 비율**
 
-| 구간 | 기간 | 세션 | 탐색 세션 | 탐색 비율 |
-| --- | --- | --- | --- | --- |
-| 1차 배포 | 5.5–5.19 | 272 | 53 | 20.2% |
-| 진입 수정·홍보 병행 | 5.20–6.4 | 1,140 | 383 | 34.0% |
-| 프로젝트 종료 후 | 7.1–8.3 | 562 | 236 | 42.0% |
+탐색은 준비물 항목 목록을 불러온 단계다. 비율의 분모는 전체 세션이 아니라 방문(visited) 이벤트가 있는 세션이다. 아래 탐색 세션 수만으로 비율을 재계산할 수 없으며, 방문 이벤트 세션 수는 이 표에 별도로 싣지 않았다.
 
-- **7월 42.0%는 성격이 다르다** — 홍보를 멈춘 구간이라 전환율은 올랐지만 **탐색 세션은 383에서 236으로 줄었다**
-- **보류했던 「제품이 어렵다」는 여기서 기각** — 탐색률이 검색 66.7% > 커뮤니티 47.2% > 직접 유입 29.0%로 갈렸다. 같은 제품인데 채널에 따라 2배 넘게 차이 났다. 유입의 문제였다
+| 구간 | 기간 | 탐색 세션 | 방문→탐색 비율 |
+| --- | --- | --- | --- |
+| 1차 배포 | 5.5–5.19 | 53 | 20.2% |
+| 진입 수정·홍보 병행 | 5.20–6.4 | 383 | 34.0% |
+| 프로젝트 종료 후 | 7.1–8.3 | 236 | 42.0% |
+
+- **7.1~8.3의 42.0%는 성격이 다르다** — 홍보를 멈춘 구간이라 전환율은 올랐지만 **탐색 세션은 383에서 236으로 줄었다**
+- **채널별 탐색 비율에 차이가 있었다** — 검색 66.7%, 커뮤니티 47.2%, 직접 유입 29.0%였다. 유입 구성에 따라 비율이 달랐지만, 이 차이만으로 제품 난이도 가설을 기각할 수는 없다.
 
 ### 기타 결과
 
-- **저장 = 리텐션 선행지표 검증** — 저장 경험자 재방문율 35.9% vs 미경험자 15.6%, **2.3배**. 다음 개선 순서를 이 데이터로 정했다
-- **누적** 방문 3,861 · 탐색 1,167 · 가입 108 · 여행 194 · 저장 137 · **제휴 첫 실수익 발생** · **현재 운영 중**(7/7 재배포)
+- **저장 경험과 재방문의 연관성 관찰** — 저장 경험자 재방문율 35.9% vs 미경험자 15.6%, **2.3배**. 다음 개선 순서를 이 데이터로 정했다
+- **누적** 방문 3,861 · 탐색 1,167 · 누적 로그인 유저 108 · 여행 194 · 저장 세션 137 (2026.08.19 기준) · **제휴 첫 실수익 발생** · **현재 운영 중**(7/7 재배포)
 - **부트캠프 프로젝트 최우수상** — "깊이 있는 분석과 우수한 실행력", **7인 팀(4조) 공동 수상**
 
 
 <figure class="cfig pfig"><div class="cbars"><div class="bgroup"><p class="btitle">탐색 비율</p><div class="brow"><span class="bl">1차 배포</span><span class="bar"><i style="width:20.2%"></i></span><span class="bv mono">20.2%</span></div><div class="brow"><span class="bl">진입 수정·홍보 병행</span><span class="bar"><i style="width:34.0%"></i></span><span class="bv mono">34.0%</span></div><div class="brow hi"><span class="bl">프로젝트 종료 후</span><span class="bar"><i style="width:42.0%"></i></span><span class="bv mono">42.0%</span></div></div><div class="bgroup"><p class="btitle">탐색 세션</p><div class="brow"><span class="bl">1차 배포</span><span class="bar"><i style="width:13.8%"></i></span><span class="bv mono">53</span></div><div class="brow hi"><span class="bl">진입 수정·홍보 병행</span><span class="bar"><i style="width:100.0%"></i></span><span class="bv mono">383</span></div><div class="brow"><span class="bl">프로젝트 종료 후</span><span class="bar"><i style="width:61.6%"></i></span><span class="bv mono">236</span></div></div><div class="bgroup"><p class="btitle">유입별 탐색률</p><div class="brow hi"><span class="bl">검색</span><span class="bar"><i style="width:66.7%"></i></span><span class="bv mono">66.7%</span></div><div class="brow"><span class="bl">커뮤니티</span><span class="bar"><i style="width:47.2%"></i></span><span class="bv mono">47.2%</span></div><div class="brow"><span class="bl">직접 유입</span><span class="bar"><i style="width:29.0%"></i></span><span class="bv mono">29.0%</span></div></div></div></figure>
 
 ## 역할 구분
+
+<details>
+<summary>영역별 역할 상세</summary>
 
 | 영역 | 내가 결정하고 실행한 것 | 팀 |
 | --- | --- | --- |
@@ -91,6 +101,8 @@ tags: ["웹사이트 개발","AI","Backend","데이터","PM","팀프로젝트"]
 | 유입 채널 | 일주일 단위 집행 비교 후 **카페 집중 결정, 인스타 중단 제안** | 콘텐츠·홍보 실행 |
 | 화면 | 요구사항을 시안으로 옮겨 논의 시작 · 진입 경로 개선안 | 프론트 개발 1인 · 디자인 |
 | 구현 | **백엔드 단독** — 전 모듈·LLM·지표·인증·배포 | 프론트 공동 |
+
+</details>
 
 ## 배운 점
 

@@ -2,7 +2,7 @@
 {
   "title": "적립금 보유액에서 혜택적용가까지",
   "service": "현대면세점",
-  "problem": "회원의 예상 혜택과 결제예정금액을 구분하는 설계",
+  "problem": "적립금 보유액에서 혜택적용가까지",
   "analyzed": "2026.11.07",
   "format": "principles",
   "pdf": true,
