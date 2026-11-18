@@ -1097,3 +1097,13 @@
 .analysis .brief .hd-compare > div + div { border-left:1px solid var(--hairline);padding-left:16px; }
 .analysis .brief .hd-compare h4 { font-size:13px;font-weight:500;margin:0 0 8px;color:var(--muted); }
 .analysis .brief .hd-amount { font-size:clamp(20px,3vw,28px);font-weight:650;margin:0;line-height:1.5; }
+
+/* Print QA: allow long analysis sections to flow; keep diagrams within a page. */
+@media print {
+ .analysis .brief section { break-inside:auto; }
+ .analysis .brief h2,.analysis .brief h3 { break-after:avoid; }
+ .analysis .brief .wfs { max-width:290px; margin:12px auto; }
+ .analysis .brief .wfs svg { max-height:155mm; width:100%; }
+ .analysis .brief details > summary { display:none; }
+ .analysis .brief details::details-content { content-visibility:visible; display:block; }
+}
